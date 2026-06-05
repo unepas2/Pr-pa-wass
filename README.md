@@ -1,22 +1,41 @@
-# Bilan développemental indicatif (3–12 mois)
+# Carnet d'éveil — Bilan développemental indicatif (3–12 mois)
 
-Application web autonome qui fonctionne en **deux phases** :
+Application web autonome (un seul `index.html`, sans dépendance) pour **estimer et
+suivre le développement de bébé** entre 3 et 12 mois.
 
-1. **Estimation « à l'aveugle »** — un questionnaire adaptatif (motricité globale, motricité
-   fine, langage & communication, compréhension & exploration, interactions sociales &
-   émotionnelles) estime l'âge développemental probable de l'enfant **sans connaître son âge
-   réel** : âge estimé, fourchette probable, score de confiance et profil par domaine.
-2. **Comparaison avec l'âge réel** — l'utilisateur renseigne l'âge réel (et la prématurité
-   éventuelle, avec calcul d'un âge corrigé indicatif). L'application produit alors un
-   **bilan personnalisé** : indice de cohérence, classification du profil, forces observées,
-   points à observer, activités conseillées et recommandation finale.
+## Fonctionnement
+
+### Le bilan, en deux phases
+1. **Estimation « à l'aveugle »** — un questionnaire adaptatif (motricité globale,
+   motricité fine, langage & communication, compréhension & exploration,
+   interactions sociales & émotionnelles) estime l'âge développemental probable
+   **sans connaître l'âge réel** : âge estimé, fourchette, score de confiance,
+   profil par domaine.
+2. **Comparaison avec l'âge réel** — saisie de l'âge réel (+ prématurité et âge
+   corrigé). L'application produit un **bilan personnalisé** : indice de cohérence,
+   classification du profil, conclusion en langage naturel, forces, points à
+   observer, activités conseillées et recommandation.
+
+### Le carnet de suivi
+- **Profils enfants** (prénom ou pseudo, plusieurs enfants possibles).
+- **Historique** des bilans, consultables à tout moment.
+- **Courbes d'évolution** (âge estimé vs âge de référence, et par domaine).
+- **Commentaires automatiques de progrès** : ce qui s'améliore, ce qui reste
+  stable, ce qui est à surveiller, d'un bilan à l'autre.
+
+### Comptes et synchronisation (optionnel)
+- Par défaut : **mode local**, tout reste sur l'appareil (aucun envoi sur Internet).
+- En option : **connexion Google + synchronisation cloud** via Firebase, pour
+  retrouver son historique sur tous ses appareils. Voir **[SETUP-FIREBASE.md](SETUP-FIREBASE.md)**.
 
 ## Utilisation
+Ouvrez `index.html` dans un navigateur, ou publiez le dépôt via **GitHub Pages**.
+Le fichier est entièrement autonome (aucun serveur requis en mode local).
 
-Ouvrez simplement `index.html` dans un navigateur, ou publiez le dépôt via **GitHub Pages**
-(le fichier est entièrement autonome : aucun serveur, aucune dépendance externe).
+## Accessibilité
+Navigation au clavier, éléments interactifs natifs (`<button>`), focus visible.
 
-## Avertissement important
-
-Cet outil est **indicatif et non médical**. Il ne pose **aucun diagnostic** et ne conclut
-jamais à une pathologie. En cas de doute, parlez-en à un pédiatre, un médecin ou une PMI.
+## Avertissement
+Outil **indicatif et non médical**. Il ne pose **aucun diagnostic** et ne conclut
+jamais à une pathologie. En cas de doute, parlez-en à un pédiatre, un médecin ou
+une PMI.
