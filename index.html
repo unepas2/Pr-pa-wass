@@ -2,156 +2,275 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Carnet d'éveil — Bilan développemental indicatif (3–12 mois)</title>
 <meta name="description" content="Carnet de suivi du développement de bébé (3 à 12 mois) : estimation à l'aveugle, comparaison avec l'âge réel, historique et courbes d'évolution. Outil indicatif, non médical.">
+<meta name="theme-color" content="#f2f5fc" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e1320" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#f4f7fb; --card:#fff; --ink:#28324a; --muted:#6b7892;
-    --primary:#5b8def; --primary-d:#3f6fd1; --accent:#7dc4a5; --warm:#f6b26b;
-    --soft:#eef3fb; --green:#5fb98a; --amber:#e9a83a; --red:#e07a6f; --violet:#9b8ad6;
-    --radius:18px; --shadow:0 10px 30px rgba(40,50,74,.08); --shadow-sm:0 4px 14px rgba(40,50,74,.07);
+    --bg:#f2f5fc; --bg2:#e7eefb; --card:#ffffff; --ink:#222b42; --muted:#69748f;
+    --primary:#5b7cfa; --primary-2:#7c5bfa; --primary-d:#3d5ce0; --on-primary:#fff;
+    --accent:#37c391; --warm:#f6a851; --soft:#eef2fc; --line:#e9edf7;
+    --green:#37b57e; --amber:#e9a83a; --red:#e26d60; --violet:#9b8ad6;
+    --chart-grid:#e9edf7; --chart-text:#9aa6bd;
+    --r-lg:24px; --r-md:16px; --r-sm:12px;
+    --shadow:0 18px 40px -18px rgba(34,43,66,.18), 0 2px 8px rgba(34,43,66,.04);
+    --shadow-sm:0 6px 18px -8px rgba(34,43,66,.16);
+    --glass:rgba(255,255,255,.72);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0e1320; --bg2:#121a2c; --card:#1a2235; --ink:#e9edf8; --muted:#94a0bb;
+      --primary:#6e8cff; --primary-2:#8f6eff; --primary-d:#a5b8ff; --on-primary:#0e1320;
+      --soft:#222c45; --line:#27314c;
+      --chart-grid:#27314c; --chart-text:#7c89a8;
+      --shadow:0 18px 40px -18px rgba(0,0,0,.5), 0 2px 8px rgba(0,0,0,.25);
+      --shadow-sm:0 6px 18px -8px rgba(0,0,0,.45);
+      --glass:rgba(20,27,44,.72);
+    }
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Segoe UI',system-ui,-apple-system,Tahoma,sans-serif;color:var(--ink);
-    background:linear-gradient(180deg,#eaf1fb 0%,var(--bg) 240px);line-height:1.55;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:900px;margin:0 auto;padding:18px 18px 80px}
-  /* Top bar */
-  .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 4px}
-  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.05rem;cursor:pointer;background:none;border:none;color:var(--ink)}
-  .brand .logo{font-size:1.6rem}
-  .account{display:flex;align-items:center;gap:8px;font-size:.85rem}
-  .account .who{color:var(--muted)}
-  header.hero{text-align:center;padding:14px 12px 6px}
-  header.hero h1{font-size:1.45rem;margin:.2rem 0}
-  header.hero p.sub{color:var(--muted);font-size:.95rem;max-width:560px;margin:0 auto}
-  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin:16px 0}
-  .card h2{font-size:1.22rem;margin-bottom:.4rem}
-  .card h3{font-size:1.05rem;margin:1.1rem 0 .5rem}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Plus Jakarta Sans','Segoe UI',system-ui,-apple-system,sans-serif;
+    color:var(--ink); line-height:1.55; -webkit-font-smoothing:antialiased;
+    background:
+      radial-gradient(900px 420px at 85% -160px, color-mix(in srgb, var(--primary) 16%, transparent), transparent 70%),
+      radial-gradient(700px 380px at -10% -120px, color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%),
+      linear-gradient(180deg,var(--bg2) 0%,var(--bg) 360px);
+    min-height:100vh;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:0 18px 90px}
+  /* ---- Top bar (glass) ---- */
+  .topbar{
+    position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:12px 16px;margin:0 -18px 6px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    background:var(--glass);border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.02rem;cursor:pointer;background:none;border:none;color:var(--ink);font-family:inherit}
+  .brand .logo{font-size:1.5rem;filter:drop-shadow(0 3px 6px rgba(91,124,250,.35))}
+  .account{display:flex;align-items:center;gap:8px;font-size:.82rem}
+  .account .who{color:var(--muted);font-weight:600}
+  /* ---- Hero ---- */
+  header.hero{text-align:center;padding:30px 10px 8px}
+  header.hero h1{font-size:clamp(1.5rem,4.6vw,2.1rem);font-weight:800;letter-spacing:-.02em;
+    background:linear-gradient(95deg,var(--ink) 30%,var(--primary) 75%,var(--primary-2));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  header.hero p.sub{color:var(--muted);font-size:.97rem;max-width:540px;margin:10px auto 0}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:560px;margin:22px auto 4px}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:var(--r-md);padding:12px 10px;text-align:center;box-shadow:var(--shadow-sm)}
+  .step .ic{font-size:1.4rem}
+  .step .t{font-size:.78rem;font-weight:700;margin-top:4px}
+  .step .s{font-size:.7rem;color:var(--muted);margin-top:2px}
+  /* ---- Cards & screens ---- */
+  .screen{animation:rise .38s cubic-bezier(.22,.9,.3,1) both}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:26px;margin:16px 0}
+  .card.tight{padding:20px}
+  .card h2{font-size:1.22rem;font-weight:800;letter-spacing:-.01em;margin-bottom:.4rem}
+  .card h3{font-size:1.02rem;font-weight:700;margin:1.1rem 0 .5rem}
   .muted{color:var(--muted)} .center{text-align:center} .small{font-size:.85rem}
-  .row{display:flex;gap:12px;flex-wrap:wrap}
-  .grow{flex:1;min-width:200px}
-  /* Buttons */
-  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border:none;border-radius:12px;
-    padding:13px 20px;font-size:1rem;font-weight:600;cursor:pointer;transition:transform .12s,box-shadow .15s,background .2s;
-    text-decoration:none;font-family:inherit}
-  .btn:active{transform:translateY(1px)}
-  .btn:focus-visible{outline:3px solid #b9d0fb;outline-offset:2px}
-  .btn-primary{background:var(--primary);color:#fff;box-shadow:0 6px 16px rgba(91,141,239,.35)}
-  .btn-primary:hover{background:var(--primary-d)}
-  .btn-ghost{background:var(--soft);color:var(--primary-d)} .btn-ghost:hover{background:#e2ebfa}
-  .btn-soft{background:#fff;border:2px solid var(--soft);color:var(--ink)} .btn-soft:hover{border-color:var(--primary)}
-  .btn-danger{background:#fff;border:2px solid #f3dad5;color:var(--red)} .btn-danger:hover{background:#fbece9}
-  .btn-block{width:100%} .btn-sm{padding:8px 14px;font-size:.85rem;border-radius:10px}
+  .row{display:flex;gap:12px;flex-wrap:wrap} .grow{flex:1;min-width:200px}
+  /* ---- Buttons ---- */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border:none;border-radius:14px;
+    padding:14px 22px;font-size:.98rem;font-weight:700;cursor:pointer;font-family:inherit;text-decoration:none;
+    transition:transform .12s ease, box-shadow .2s ease, background .2s ease, filter .2s;
+  }
+  .btn:active{transform:scale(.97)}
+  .btn:focus-visible{outline:3px solid color-mix(in srgb,var(--primary) 40%,transparent);outline-offset:2px}
+  .btn-primary{background:linear-gradient(115deg,var(--primary),var(--primary-2));color:#fff;
+    box-shadow:0 10px 24px -8px color-mix(in srgb,var(--primary) 65%,transparent)}
+  .btn-primary:hover{filter:brightness(1.06)}
+  .btn-ghost{background:var(--soft);color:var(--primary-d)} .btn-ghost:hover{filter:brightness(1.03)}
+  .btn-soft{background:var(--card);border:1.5px solid var(--line);color:var(--ink)} .btn-soft:hover{border-color:var(--primary)}
+  .btn-danger{background:transparent;border:1.5px solid color-mix(in srgb,var(--red) 35%,transparent);color:var(--red)}
+  .btn-danger:hover{background:color-mix(in srgb,var(--red) 10%,transparent)}
+  .btn-block{width:100%} .btn-sm{padding:8px 14px;font-size:.84rem;border-radius:11px}
   .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
   .btn-row .btn{flex:1;min-width:150px}
   .link-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:.9rem;text-decoration:underline;font-family:inherit}
-  /* Mode / choice cards */
-  .choice{border:2px solid var(--soft);border-radius:16px;padding:18px;cursor:pointer;width:100%;text-align:left;
-    background:#fff;transition:border-color .2s,box-shadow .2s,transform .12s;margin-top:12px;font-family:inherit;color:inherit}
+  .link-btn:focus-visible{outline:3px solid color-mix(in srgb,var(--primary) 40%,transparent);border-radius:6px}
+  /* ---- Choice cards ---- */
+  .choice{border:1.5px solid var(--line);border-radius:18px;padding:20px;cursor:pointer;width:100%;text-align:left;
+    background:var(--card);transition:border-color .2s,box-shadow .2s,transform .14s;margin-top:12px;font-family:inherit;color:inherit}
   .choice:hover{border-color:var(--primary);box-shadow:var(--shadow-sm);transform:translateY(-2px)}
-  .choice:focus-visible{outline:3px solid #b9d0fb;outline-offset:2px}
-  .choice .tag{display:inline-block;font-size:.7rem;font-weight:700;color:#fff;background:var(--accent);border-radius:20px;padding:3px 10px;margin-bottom:8px}
-  .choice h3{margin:0 0 .25rem;font-size:1.05rem} .choice p{color:var(--muted);font-size:.9rem}
-  /* Child cards */
-  .child-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:14px}
-  .child-card{background:#fff;border:2px solid var(--soft);border-radius:16px;padding:18px;cursor:pointer;text-align:left;
-    transition:border-color .2s,transform .12s,box-shadow .2s;font-family:inherit;color:inherit}
-  .child-card:hover{border-color:var(--primary);transform:translateY(-2px);box-shadow:var(--shadow-sm)}
-  .child-card:focus-visible{outline:3px solid #b9d0fb;outline-offset:2px}
-  .child-card .avatar{font-size:2rem} .child-card .nm{font-weight:700;font-size:1.1rem;margin-top:4px}
-  .child-card .meta{color:var(--muted);font-size:.82rem;margin-top:2px}
+  .choice:focus-visible{outline:3px solid color-mix(in srgb,var(--primary) 40%,transparent);outline-offset:2px}
+  .choice .tag{display:inline-block;font-size:.68rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#fff;
+    background:linear-gradient(100deg,var(--accent),#2da57b);border-radius:20px;padding:4px 11px;margin-bottom:10px}
+  .choice h3{margin:0 0 .25rem;font-size:1.06rem} .choice p{color:var(--muted);font-size:.9rem}
+  /* ---- Child cards ---- */
+  .child-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;margin-top:14px}
+  .child-card{background:var(--card);border:1.5px solid var(--line);border-radius:20px;padding:18px;cursor:pointer;text-align:left;
+    transition:border-color .2s,transform .14s,box-shadow .2s;font-family:inherit;color:inherit;position:relative;overflow:hidden}
+  .child-card::before{content:'';position:absolute;inset:0 0 auto;height:64px;
+    background:linear-gradient(115deg,color-mix(in srgb,var(--primary) 14%,transparent),color-mix(in srgb,var(--accent) 12%,transparent));}
+  .child-card:hover{border-color:var(--primary);transform:translateY(-3px);box-shadow:var(--shadow-sm)}
+  .child-card:focus-visible{outline:3px solid color-mix(in srgb,var(--primary) 40%,transparent);outline-offset:2px}
+  .avatar-circle{position:relative;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:1.7rem;background:linear-gradient(135deg,var(--soft),var(--card));border:2px solid var(--card);
+    box-shadow:var(--shadow-sm)}
+  .child-card .nm{font-weight:800;font-size:1.12rem;margin-top:10px}
+  .child-card .meta{color:var(--muted);font-size:.8rem;margin-top:2px}
   .child-card.add{display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--primary-d);
-    border-style:dashed;min-height:120px;font-weight:600}
-  /* Progress */
-  .progress{height:10px;background:var(--soft);border-radius:20px;overflow:hidden;margin:6px 0 4px}
-  .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));width:0;transition:width .3s}
-  .progress-label{font-size:.8rem;color:var(--muted);text-align:right;margin-bottom:14px}
-  .domain-pill{display:inline-block;font-size:.78rem;font-weight:600;color:var(--primary-d);background:var(--soft);border-radius:20px;padding:4px 12px;margin-bottom:12px}
-  /* Question */
-  .question h2{font-size:1.28rem;line-height:1.4;margin:6px 0 18px}
+    border-style:dashed;min-height:140px;font-weight:700;background:transparent}
+  .child-card.add::before{display:none}
+  /* ---- Quiz ---- */
+  .progress{height:9px;background:var(--soft);border-radius:20px;overflow:hidden;margin:8px 0 4px}
+  .progress > i{display:block;height:100%;width:0;border-radius:20px;transition:width .4s cubic-bezier(.22,.9,.3,1);
+    background:linear-gradient(90deg,var(--primary),var(--primary-2),var(--accent));background-size:200% 100%;animation:shimmer 2.4s linear infinite}
+  @keyframes shimmer{to{background-position:-200% 0}}
+  .progress-label{font-size:.78rem;color:var(--muted);text-align:right;margin-bottom:6px}
+  .dots{display:flex;gap:8px;justify-content:center;margin:4px 0 16px}
+  .dots .dot{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;
+    background:var(--soft);opacity:.45;transition:all .25s}
+  .dots .dot.done{opacity:.9}
+  .dots .dot.now{opacity:1;background:linear-gradient(135deg,color-mix(in srgb,var(--primary) 22%,var(--soft)),var(--soft));
+    box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 25%,transparent);transform:scale(1.08)}
+  .domain-pill{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:700;color:var(--primary-d);
+    background:var(--soft);border-radius:20px;padding:5px 13px;margin-bottom:10px}
+  .question h2{font-size:1.32rem;line-height:1.42;margin:8px 0 20px;letter-spacing:-.01em}
   .answers{display:flex;flex-direction:column;gap:12px}
-  .ans{border:2px solid var(--soft);background:#fff;border-radius:14px;padding:15px 18px;font-size:1rem;font-weight:600;
-    cursor:pointer;text-align:left;transition:all .12s;display:flex;align-items:center;gap:12px;font-family:inherit;color:inherit}
-  .ans .em{font-size:1.3rem}
-  .ans:focus-visible{outline:3px solid #b9d0fb;outline-offset:2px}
-  .ans.yes:hover{border-color:var(--green);background:#f0fbf5}
-  .ans.no:hover{border-color:var(--warm);background:#fff7ee}
-  .ans.unknown:hover{border-color:var(--violet);background:#f6f4fd}
+  .ans{border:1.5px solid var(--line);background:var(--card);border-radius:16px;padding:16px 18px;font-size:1rem;font-weight:700;
+    cursor:pointer;text-align:left;transition:all .14s;display:flex;align-items:center;gap:14px;font-family:inherit;color:inherit}
+  .ans .em{width:42px;height:42px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;background:var(--soft);flex:0 0 42px}
+  .ans:focus-visible{outline:3px solid color-mix(in srgb,var(--primary) 40%,transparent);outline-offset:2px}
+  .ans.yes:hover{border-color:var(--green);background:color-mix(in srgb,var(--green) 7%,var(--card))}
+  .ans.no:hover{border-color:var(--warm);background:color-mix(in srgb,var(--warm) 8%,var(--card))}
+  .ans.unknown:hover{border-color:var(--violet);background:color-mix(in srgb,var(--violet) 8%,var(--card))}
+  .ans.picked{border-color:var(--primary);background:color-mix(in srgb,var(--primary) 10%,var(--card));transform:scale(.985)}
+  .answers.locked .ans{pointer-events:none}
   .quiz-foot{display:flex;justify-content:space-between;align-items:center;margin-top:20px}
-  /* Result hero */
-  .age-hero{text-align:center;padding:8px 0 4px}
-  .age-hero .big{font-size:3rem;font-weight:800;color:var(--primary-d);line-height:1}
-  .age-hero .big small{font-size:1.1rem;font-weight:600;color:var(--muted)}
-  .age-hero .range{color:var(--muted);margin-top:6px}
-  .conf{display:inline-flex;align-items:center;gap:8px;margin-top:12px;font-weight:600;font-size:.85rem;padding:6px 14px;border-radius:20px}
-  .conf.eleve{background:#eaf7f0;color:#2f8a5e} .conf.moyen{background:#fbf2e0;color:#a9791f} .conf.faible{background:#fbece9;color:#bf5042}
-  /* Domain bars */
+  /* ---- Recap ---- */
+  .recap-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-top:10px}
+  .recap-cell{background:var(--soft);border-radius:14px;padding:12px;text-align:center}
+  .recap-cell .e{font-size:1.2rem} .recap-cell .n{font-weight:800;font-size:1.05rem;margin-top:2px}
+  .recap-cell .l{font-size:.66rem;color:var(--muted);font-weight:600}
+  .fix-item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:12px 14px;margin-top:8px;
+    border:1.5px dashed color-mix(in srgb,var(--violet) 45%,transparent);border-radius:14px;background:color-mix(in srgb,var(--violet) 6%,var(--card));
+    cursor:pointer;font-family:inherit;color:inherit;font-size:.92rem;font-weight:600;transition:border-color .15s}
+  .fix-item:hover{border-color:var(--violet)} .fix-item:focus-visible{outline:3px solid color-mix(in srgb,var(--violet) 40%,transparent)}
+  .fix-item .go{margin-left:auto;color:var(--violet);font-weight:800;white-space:nowrap;font-size:.8rem}
+  /* ---- Result hero ---- */
+  .age-hero{text-align:center;padding:10px 0 4px}
+  .age-hero .big{font-size:3.4rem;font-weight:800;letter-spacing:-.03em;line-height:1;
+    background:linear-gradient(110deg,var(--primary),var(--primary-2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .age-hero .big small{font-size:1.1rem;-webkit-text-fill-color:var(--muted);font-weight:700}
+  .age-hero .range{color:var(--muted);margin-top:8px}
+  .conf{display:inline-flex;align-items:center;gap:8px;margin-top:14px;font-weight:700;font-size:.85rem;padding:7px 15px;border-radius:20px}
+  .conf.eleve{background:color-mix(in srgb,var(--green) 14%,transparent);color:var(--green)}
+  .conf.moyen{background:color-mix(in srgb,var(--amber) 16%,transparent);color:#b07f17}
+  .conf.faible{background:color-mix(in srgb,var(--red) 14%,transparent);color:var(--red)}
+  /* ---- Domain bars ---- */
   .bars{margin-top:8px}
-  .bar-row{margin:14px 0}
-  .bar-row .lab{display:flex;justify-content:space-between;font-size:.9rem;margin-bottom:5px}
-  .bar-row .lab .age{font-weight:700;color:var(--primary-d)}
-  .track{position:relative;height:16px;background:var(--soft);border-radius:20px}
-  .track > i{display:block;height:100%;border-radius:20px;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width .5s}
+  .bar-row{margin:15px 0}
+  .bar-row .lab{display:flex;justify-content:space-between;font-size:.9rem;margin-bottom:6px;font-weight:600}
+  .bar-row .lab .age{font-weight:800;color:var(--primary-d)}
+  .track{position:relative;height:14px;background:var(--soft);border-radius:20px}
+  .track > i{display:block;height:100%;width:0;border-radius:20px;background:linear-gradient(90deg,var(--primary),var(--accent));
+    transition:width .8s cubic-bezier(.22,.9,.3,1)}
   .track .refline{position:absolute;top:-5px;bottom:-5px;width:3px;background:var(--red);border-radius:3px}
-  .track .refline::after{content:'âge réel';position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:.62rem;color:var(--red);white-space:nowrap;font-weight:700}
-  .scale{display:flex;justify-content:space-between;font-size:.68rem;color:var(--muted);margin-top:2px}
-  /* Lists */
+  .track .refline::after{content:'âge réel';position:absolute;top:-17px;left:50%;transform:translateX(-50%);
+    font-size:.6rem;color:var(--red);white-space:nowrap;font-weight:800}
+  .scale{display:flex;justify-content:space-between;font-size:.66rem;color:var(--muted);margin-top:3px}
+  /* ---- Lists ---- */
   ul.clean{list-style:none;margin:6px 0}
-  ul.clean li{padding:8px 0 8px 28px;position:relative;border-bottom:1px solid #f0f3f8;font-size:.95rem}
+  ul.clean li{padding:9px 0 9px 30px;position:relative;border-bottom:1px solid var(--line);font-size:.94rem}
   ul.clean li:last-child{border-bottom:none}
-  ul.clean li::before{position:absolute;left:0;top:8px}
-  ul.yes li::before{content:'✅'} ul.no li::before{content:'•';color:var(--warm);font-size:1.4rem;top:2px}
+  ul.clean li::before{position:absolute;left:0;top:9px}
+  ul.yes li::before{content:'✅'} ul.no li::before{content:'•';color:var(--warm);font-size:1.5rem;top:1px}
   ul.unk li::before{content:'❔'} ul.activity li::before{content:'🎯'} ul.strong li::before{content:'⭐'}
-  ul.watch li::before{content:'👀'} ul.alert li::before{content:'⚑';color:var(--red)} ul.up li::before{content:'📈'}
-  .prudence{background:var(--soft);border-left:4px solid var(--primary);border-radius:10px;padding:12px 16px;font-size:.9rem;margin-top:16px}
-  /* Form */
-  .field{margin:16px 0}.field label{display:block;font-weight:600;margin-bottom:6px}
-  .field .hint{font-weight:400;color:var(--muted);font-size:.85rem}
+  ul.watch li::before{content:'👀'} ul.alert li::before{content:'⚑';color:var(--red)}
+  .prudence{background:var(--soft);border-left:4px solid var(--primary);border-radius:12px;padding:13px 16px;font-size:.9rem;margin-top:16px}
+  details.tech{margin-top:14px;background:color-mix(in srgb,var(--soft) 50%,var(--card));border:1px solid var(--line);border-radius:14px;padding:6px 14px}
+  details.tech summary{cursor:pointer;font-weight:700;font-size:.88rem;color:var(--muted);padding:8px 0}
+  /* ---- Form ---- */
+  .field{margin:16px 0}.field label{display:block;font-weight:700;margin-bottom:7px}
+  .field .hint{font-weight:500;color:var(--muted);font-size:.83rem}
   .inputs{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-  input[type=number],input[type=text]{padding:12px 14px;border:2px solid var(--soft);border-radius:12px;font-size:1rem;font-family:inherit}
-  input[type=number]{width:110px} input[type=text]{width:100%;max-width:340px}
-  input:focus{outline:none;border-color:var(--primary)}
+  input[type=number],input[type=text],input[type=date]{
+    padding:13px 14px;border:1.5px solid var(--line);border-radius:13px;font-size:1rem;font-family:inherit;
+    background:var(--card);color:var(--ink);transition:border-color .15s}
+  input[type=number]{width:108px} input[type=text]{width:100%;max-width:340px} input[type=date]{min-width:170px}
+  input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 18%,transparent)}
   .radio-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
-  .radio-chip{border:2px solid var(--soft);border-radius:12px;padding:10px 16px;cursor:pointer;font-weight:600;transition:all .12s;background:#fff;font-family:inherit;color:inherit}
-  .radio-chip:hover{border-color:var(--primary)} .radio-chip:focus-visible{outline:3px solid #b9d0fb;outline-offset:2px}
-  .radio-chip.sel{border-color:var(--primary);background:var(--soft);color:var(--primary-d)}
-  .corrected-note{background:#eaf7f0;border-radius:10px;padding:10px 14px;color:#2f8a5e;font-size:.9rem;margin-top:10px;display:none}
-  /* Summary */
-  .summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:8px}
-  .stat{background:var(--soft);border-radius:14px;padding:14px;text-align:center}
-  .stat .k{font-size:.78rem;color:var(--muted);font-weight:600} .stat .v{font-size:1.4rem;font-weight:800;color:var(--primary-d);margin-top:2px}
-  .stat .v small{font-size:.78rem;color:var(--muted);font-weight:600}
-  .badge{display:inline-flex;align-items:center;gap:8px;font-weight:700;padding:10px 18px;border-radius:30px;font-size:1rem;margin-top:6px}
-  .badge.coherent{background:#eaf7f0;color:#2f8a5e} .badge.avance1{background:#eaf2fd;color:var(--primary-d)}
-  .badge.avance2{background:#e9e6f8;color:#6a59b8} .badge.hetero{background:#fdf1e6;color:#b9761f}
-  .badge.observer{background:#fbf2e0;color:#a9791f} .badge.pro{background:#fbece9;color:#bf5042}
-  details.tech{margin-top:14px;background:#fafbfe;border:1px solid #eef2f8;border-radius:12px;padding:6px 14px}
-  details.tech summary{cursor:pointer;font-weight:600;font-size:.9rem;color:var(--muted);padding:8px 0}
-  .conclusion{font-size:1.02rem;line-height:1.7}
-  .section-note{font-size:.85rem;color:var(--muted)}
-  .when-box{background:#fbf6f5;border:1px solid #f3dad5;border-radius:14px;padding:16px}
-  .when-box.flagged{background:#fbece9;border-color:#e8b9b1}
-  /* History */
-  .hist-item{display:flex;align-items:center;gap:12px;padding:12px;border:2px solid var(--soft);border-radius:14px;margin-top:10px;
-    cursor:pointer;background:#fff;width:100%;text-align:left;font-family:inherit;color:inherit;transition:border-color .15s}
-  .hist-item:hover{border-color:var(--primary)} .hist-item:focus-visible{outline:3px solid #b9d0fb;outline-offset:2px}
-  .hist-item .d{font-weight:700;min-width:92px} .hist-item .a{color:var(--primary-d);font-weight:700}
+  .radio-chip{border:1.5px solid var(--line);border-radius:13px;padding:11px 17px;cursor:pointer;font-weight:700;
+    transition:all .14s;background:var(--card);font-family:inherit;color:inherit}
+  .radio-chip:hover{border-color:var(--primary)}
+  .radio-chip:focus-visible{outline:3px solid color-mix(in srgb,var(--primary) 40%,transparent);outline-offset:2px}
+  .radio-chip.sel{border-color:var(--primary);background:color-mix(in srgb,var(--primary) 11%,var(--card));color:var(--primary-d)}
+  .corrected-note{background:color-mix(in srgb,var(--green) 11%,transparent);border-radius:12px;padding:10px 14px;color:var(--green);font-size:.88rem;margin-top:10px;display:none;font-weight:600}
+  .or-divider{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:.78rem;font-weight:700;margin:14px 0 4px}
+  .or-divider::before,.or-divider::after{content:'';flex:1;height:1px;background:var(--line)}
+  /* ---- Avatar picker ---- */
+  .avatar-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:8px;margin-top:8px}
+  .avatar-opt{font-size:1.5rem;padding:9px 0;border:1.5px solid var(--line);border-radius:13px;background:var(--card);cursor:pointer;transition:all .14s}
+  .avatar-opt:hover{border-color:var(--primary);transform:scale(1.06)}
+  .avatar-opt.sel{border-color:var(--primary);background:color-mix(in srgb,var(--primary) 12%,var(--card));box-shadow:var(--shadow-sm)}
+  .avatar-opt:focus-visible{outline:3px solid color-mix(in srgb,var(--primary) 40%,transparent)}
+  /* ---- Summary / badge ---- */
+  .summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:14px}
+  .stat{background:var(--soft);border-radius:16px;padding:14px;text-align:center}
+  .stat .k{font-size:.72rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+  .stat .v{font-size:1.45rem;font-weight:800;color:var(--primary-d);margin-top:3px}
+  .stat .v small{font-size:.76rem;color:var(--muted);font-weight:700}
+  .badge{display:inline-flex;align-items:center;gap:8px;font-weight:800;padding:11px 20px;border-radius:30px;font-size:1rem;margin-top:8px;
+    animation:pop .5s cubic-bezier(.2,1.4,.4,1) both}
+  @keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+  .badge.coherent{background:color-mix(in srgb,var(--green) 15%,transparent);color:var(--green)}
+  .badge.avance1{background:color-mix(in srgb,var(--primary) 14%,transparent);color:var(--primary-d)}
+  .badge.avance2{background:color-mix(in srgb,var(--violet) 18%,transparent);color:var(--violet)}
+  .badge.hetero{background:color-mix(in srgb,var(--warm) 18%,transparent);color:#b9761f}
+  .badge.observer{background:color-mix(in srgb,var(--amber) 18%,transparent);color:#b07f17}
+  .badge.pro{background:color-mix(in srgb,var(--red) 14%,transparent);color:var(--red)}
+  .mini-badge{font-size:.7rem;font-weight:800;padding:4px 10px;border-radius:20px;white-space:nowrap;animation:none;margin:0}
+  .conclusion{font-size:1.02rem;line-height:1.75}
+  .section-note{font-size:.84rem;color:var(--muted)}
+  .when-box{background:color-mix(in srgb,var(--red) 4%,var(--card));border:1px solid color-mix(in srgb,var(--red) 18%,transparent);border-radius:16px;padding:16px}
+  .when-box.flagged{background:color-mix(in srgb,var(--red) 9%,var(--card));border-color:color-mix(in srgb,var(--red) 35%,transparent)}
+  /* ---- History ---- */
+  .hist-item{display:flex;align-items:center;gap:12px;padding:13px 14px;border:1.5px solid var(--line);border-radius:15px;margin-top:10px;
+    cursor:pointer;background:var(--card);width:100%;text-align:left;font-family:inherit;color:inherit;transition:border-color .15s,transform .12s}
+  .hist-item:hover{border-color:var(--primary);transform:translateX(2px)}
+  .hist-item:focus-visible{outline:3px solid color-mix(in srgb,var(--primary) 40%,transparent)}
+  .hist-item .d{font-weight:700;min-width:90px;font-size:.86rem} .hist-item .a{color:var(--primary-d);font-weight:800}
   .hist-item .b{margin-left:auto}
-  .mini-badge{font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:20px;white-space:nowrap}
-  /* Chart */
+  .resume-card{border:1.5px dashed color-mix(in srgb,var(--primary) 50%,transparent);border-radius:18px;padding:16px;
+    background:color-mix(in srgb,var(--primary) 6%,var(--card));margin-top:14px}
+  /* ---- Charts ---- */
   .chart-wrap{overflow-x:auto}
   svg.chart{display:block;width:100%;height:auto;min-width:320px}
-  .legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px;font-size:.8rem}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:.8rem;color:var(--muted);font-weight:600}
   .legend span{display:inline-flex;align-items:center;gap:6px}
-  .legend i{width:14px;height:4px;border-radius:3px;display:inline-block}
-  .pill-note{display:inline-block;background:#eef7f1;color:#2f8a5e;border-radius:20px;padding:4px 12px;font-size:.78rem;font-weight:600;margin:4px 6px 0 0}
-  .pill-warn{background:#fbf2e0;color:#a9791f} .pill-flat{background:var(--soft);color:var(--muted)}
-  .rgpd{font-size:.8rem;color:var(--muted);background:#fafbfe;border:1px solid #eef2f8;border-radius:12px;padding:10px 14px;margin-top:12px}
-  footer.app{text-align:center;color:var(--muted);font-size:.78rem;padding:28px 12px 0}
+  .legend i{width:16px;height:5px;border-radius:3px;display:inline-block}
+  .pill-note{display:inline-block;background:color-mix(in srgb,var(--green) 13%,transparent);color:var(--green);border-radius:20px;padding:5px 13px;font-size:.78rem;font-weight:700;margin:4px 6px 0 0}
+  .pill-warn{background:color-mix(in srgb,var(--amber) 16%,transparent);color:#b07f17}
+  .pill-flat{background:var(--soft);color:var(--muted)}
+  .rgpd{font-size:.8rem;color:var(--muted);background:color-mix(in srgb,var(--soft) 55%,var(--card));border:1px solid var(--line);border-radius:14px;padding:11px 14px;margin-top:14px}
+  footer.app{text-align:center;color:var(--muted);font-size:.76rem;padding:28px 12px 0}
   .hidden{display:none!important}
-  @media(max-width:560px){header.hero h1{font-size:1.2rem}.age-hero .big{font-size:2.4rem}.hist-item .b{margin-left:0}}
-  @media print{body{background:#fff}.no-print{display:none!important}.card{box-shadow:none;border:1px solid #e4e9f2;page-break-inside:avoid}}
+  /* ---- Confetti ---- */
+  .confetti{position:fixed;inset:0;pointer-events:none;z-index:99;overflow:hidden}
+  .confetti span{position:absolute;top:-30px;font-size:1.3rem;animation:fall 1.6s ease-in forwards}
+  @keyframes fall{to{transform:translateY(105vh) rotate(360deg);opacity:.4}}
+  @media(max-width:560px){
+    .steps{grid-template-columns:repeat(3,1fr);gap:8px}
+    .age-hero .big{font-size:2.6rem}
+    .card{padding:20px}
+    .hist-item .b{margin-left:0}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important}
+  }
+  @media print{
+    body{background:#fff}
+    .no-print,.topbar{display:none!important}
+    .card{box-shadow:none;border:1px solid #e4e9f2;page-break-inside:avoid}
+  }
 </style>
 </head>
 <body>
@@ -160,7 +279,7 @@
     <button class="brand" id="brand-home" aria-label="Accueil"><span class="logo">👶</span><span>Carnet d'éveil</span></button>
     <div class="account" id="account-area"></div>
   </div>
-  <div id="app"></div>
+  <main id="app"></main>
   <footer class="app no-print">
     Outil indicatif et non médical — il ne pose aucun diagnostic.<br>
     En cas de doute, parlez-en à votre pédiatre, votre médecin ou votre PMI.
@@ -174,9 +293,7 @@
    0. CONFIGURATION CLOUD (Firebase) — OPTIONNELLE
    Laissez `null` pour fonctionner 100% en local (données sur l'appareil).
    Pour activer le compte Google + la synchronisation cloud, collez ici la
-   config de votre projet Firebase (voir SETUP-FIREBASE.md), par ex. :
-   const FIREBASE_CONFIG = { apiKey:"...", authDomain:"...", projectId:"...",
-     storageBucket:"...", messagingSenderId:"...", appId:"..." };
+   config de votre projet Firebase (voir SETUP-FIREBASE.md).
 ============================================================ */
 const FIREBASE_CONFIG = null;
 
@@ -184,11 +301,11 @@ const FIREBASE_CONFIG = null;
    1. DONNÉES — Jalons développementaux (3 à 12 mois)
 ============================================================ */
 const DOMAINS = {
-  global:   { label:"Motricité globale",     emoji:"🤸", color:"#5b8def" },
-  fine:     { label:"Motricité fine",        emoji:"✋", color:"#7dc4a5" },
-  langage:  { label:"Langage & communication", emoji:"💬", color:"#f6b26b" },
+  global:   { label:"Motricité globale",     emoji:"🤸", color:"#5b7cfa" },
+  fine:     { label:"Motricité fine",        emoji:"✋", color:"#37c391" },
+  langage:  { label:"Langage & communication", emoji:"💬", color:"#f6a851" },
   cognition:{ label:"Compréhension & exploration", emoji:"🔍", color:"#9b8ad6" },
-  social:   { label:"Interactions sociales & émotions", emoji:"💞", color:"#e07a6f" }
+  social:   { label:"Interactions sociales & émotions", emoji:"💞", color:"#e26d60" }
 };
 const DOMAIN_ORDER = ["global","fine","langage","cognition","social"];
 
@@ -273,17 +390,18 @@ const WATCH = {
   cognition:["Proposer davantage de jeux de coucou-caché et de cause à effet","Observer la recherche d'objets cachés"],
   social:["Proposer davantage de jeux d'imitation et d'échange en face à face","Observer la recherche du regard et du contact"]
 };
-const AVATARS = ["🐣","🐻","🦊","🐰","🐨","🐼","🦁","🐯","🐸","🐧","🦉","🐵"];
+const AVATARS = ["🐣","🐻","🦊","🐰","🐨","🐼","🦁","🐯","🐸","🐧","🦉","🐵","🐶","🐱","🦄","🐢"];
 
 /* ============================================================
-   2. STORE — persistance locale (+ pont cloud)
+   2. STORE — persistance locale (+ session de bilan en cours)
 ============================================================ */
 const STORE_KEY = "bdb_store_v2";
+const SESSION_KEY = "bdb_session_v1";
 let store = { children:[], activeChildId:null, version:2 };
 
 function loadStore(){
-  try{ const raw=localStorage.getItem(STORE_KEY); if(raw){ store=JSON.parse(raw);
-    store.children=store.children||[]; } }catch(e){ console.warn("store load",e); }
+  try{ const raw=localStorage.getItem(STORE_KEY); if(raw){ store=JSON.parse(raw); store.children=store.children||[]; } }
+  catch(e){ console.warn("store load",e); }
 }
 function saveStore(){
   try{ localStorage.setItem(STORE_KEY, JSON.stringify(store)); }catch(e){ console.warn("store save",e); }
@@ -291,14 +409,17 @@ function saveStore(){
 }
 function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
 function getChild(id){ return store.children.find(c=>c.id===id)||null; }
-function addChild(name){
-  const c={ id:uid(), name:name.trim()||"Mon bébé", avatar:AVATARS[store.children.length%AVATARS.length],
+function addChild(name, avatar){
+  const c={ id:uid(), name:(name||"").trim()||"Mon bébé", avatar:avatar||AVATARS[store.children.length%AVATARS.length],
+    birthdate:null, premature:null, premWeeks:0,
     createdAt:new Date().toISOString(), records:[] };
   store.children.push(c); store.activeChildId=c.id; saveStore(); return c;
 }
 function deleteChild(id){
   store.children=store.children.filter(c=>c.id!==id);
-  if(store.activeChildId===id) store.activeChildId=null; saveStore();
+  if(store.activeChildId===id) store.activeChildId=null;
+  const s=loadSession(); if(s && s.childId===id) clearSession();
+  saveStore();
 }
 function addRecord(childId, record){
   const c=getChild(childId); if(!c) return;
@@ -308,10 +429,18 @@ function addRecord(childId, record){
 function deleteRecord(childId, recId){
   const c=getChild(childId); if(!c) return; c.records=c.records.filter(r=>r.id!==recId); saveStore();
 }
+/* Session en cours (reprise après fermeture) */
+function saveSession(){
+  if(!session) return;
+  try{ localStorage.setItem(SESSION_KEY, JSON.stringify({ s:session, q:quiz })); }catch(e){}
+}
+function loadSession(){
+  try{ const raw=localStorage.getItem(SESSION_KEY); return raw?JSON.parse(raw):null; }catch(e){ return null; }
+}
+function clearSession(){ try{ localStorage.removeItem(SESSION_KEY); }catch(e){} }
 
 /* ============================================================
    3. CLOUD — Firebase optionnel (login Google + synchro)
-   Tout est défensif : si pas de config ou échec, on reste en local.
 ============================================================ */
 const Cloud = (function(){
   let enabled=false, user=null, db=null, auth=null, fns=null, syncTimer=null, ready=false;
@@ -344,7 +473,6 @@ const Cloud = (function(){
     }catch(e){ console.warn("pull",e); }
   }
   function mergeInto(cloud){
-    // fusion par id : on garde tous les enfants et tous les records (union)
     const byId={}; (store.children||[]).forEach(c=>byId[c.id]=c);
     (cloud.children||[]).forEach(cc=>{
       if(!byId[cc.id]){ byId[cc.id]=cc; }
@@ -505,28 +633,65 @@ function buildRecommendation(cat){
 }
 
 /* ============================================================
-   5. SESSION de diagnostic en cours
+   5. SESSION de bilan en cours
 ============================================================ */
 let session=null;
 function newSession(childId, mode){
-  session={ childId, mode, answers:{}, flags:{}, realMonths:null, realDays:0, premature:null, premWeeks:0, est:null };
+  session={ childId, mode, stage:'quiz', answers:{}, flags:{}, realMonths:null, realDays:0, premature:null, premWeeks:0, est:null };
 }
 
 /* ============================================================
-   6. ROUTER
+   6. ROUTER + helpers
 ============================================================ */
 let currentRoute={name:'home',params:{}};
 function route(name, params){
   currentRoute={name,params:params||{}};
-  const fn={ home:renderHome, child:renderChild, evolution:renderEvolution,
-    record:renderRecordView, mode:renderMode, quiz:renderQuiz, result1:renderResult1,
-    ageform:renderAgeForm, bilan:renderBilan }[name];
+  const fn={ home:renderHome, addchild:renderAddChild, editchild:renderEditChild,
+    child:renderChild, evolution:renderEvolution, record:renderRecordView,
+    mode:renderMode, quiz:renderQuiz, recap:renderRecap, fix:renderFixQuestion,
+    result1:renderResult1, ageform:renderAgeForm, bilan:renderBilan }[name];
   if(fn) fn(params||{});
   scrollTop();
 }
 function scrollTop(){ window.scrollTo({top:0,behavior:'smooth'}); }
 const $app=()=>document.getElementById('app');
+function setScreen(html){ $app().innerHTML=`<div class="screen">${html}</div>`; }
 function escapeHtml(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function formatDate(iso){ try{ return new Date(iso).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'}); }catch(e){ return iso; } }
+function fmt(m){ if(m==null)return'—'; return (Math.round(m*10)/10).toString().replace('.0',''); }
+function ageFromBirthdate(dob){
+  const b=new Date(dob), now=new Date();
+  if(isNaN(b)||b>now) return null;
+  let months=(now.getFullYear()-b.getFullYear())*12+(now.getMonth()-b.getMonth());
+  let days=now.getDate()-b.getDate();
+  if(days<0){ months--; days+=30; }
+  if(months<0) return null;
+  return { months, days:Math.min(days,30) };
+}
+function animateBars(){
+  requestAnimationFrame(()=>{ document.querySelectorAll('.track > i[data-w]').forEach(el=>{ el.style.width=el.dataset.w; }); });
+}
+function countUp(el, target){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){ el.textContent=fmt(target); return; }
+  const t0=performance.now(), dur=700;
+  function tick(t){ const p=Math.min(1,(t-t0)/dur), eased=1-Math.pow(1-p,3);
+    el.textContent=fmt(Math.round(target*eased*2)/2);
+    if(p<1) requestAnimationFrame(tick); }
+  requestAnimationFrame(tick);
+}
+function celebrate(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const box=document.createElement('div'); box.className='confetti'; box.setAttribute('aria-hidden','true');
+  const emo=["🎉","✨","🌟","💛","🎈","⭐"];
+  for(let i=0;i<16;i++){ const s=document.createElement('span');
+    s.textContent=emo[i%emo.length];
+    s.style.left=(4+Math.random()*92)+'vw';
+    s.style.animationDelay=(Math.random()*0.5)+'s';
+    s.style.animationDuration=(1.2+Math.random()*0.9)+'s';
+    box.appendChild(s); }
+  document.body.appendChild(box);
+  setTimeout(()=>box.remove(),2600);
+}
 
 /* ============================================================
    7. ÉCRANS — Accueil / profils
@@ -534,17 +699,20 @@ function escapeHtml(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<'
 function renderHome(){
   const kids=store.children;
   let html=`<header class="hero"><h1>Le carnet d'éveil de bébé</h1>
-    <p class="sub">Estimez le développement de votre enfant (3–12 mois), comparez avec son âge réel, et suivez son évolution dans le temps.</p></header>`;
+    <p class="sub">Estimez le développement de votre enfant (3–12 mois), comparez avec son âge réel et suivez ses progrès dans le temps.</p>
+    <div class="steps" aria-hidden="true">
+      <div class="step"><div class="ic">📝</div><div class="t">Répondez</div><div class="s">à quelques questions</div></div>
+      <div class="step"><div class="ic">✨</div><div class="t">Découvrez</div><div class="s">l'âge d'éveil estimé</div></div>
+      <div class="step"><div class="ic">📈</div><div class="t">Suivez</div><div class="s">l'évolution bilan après bilan</div></div>
+    </div></header>`;
   if(kids.length===0){
     html+=`<div class="card center">
-      <div style="font-size:2.4rem">🐣</div>
+      <div style="font-size:2.6rem">🐣</div>
       <h2>Commençons par créer un profil</h2>
-      <p class="muted">Donnez un prénom (ou un pseudo) à votre enfant. Vous pourrez ensuite faire des bilans régulièrement et voir ses progrès.</p>
-      <div class="field" style="max-width:360px;margin:18px auto 0">
-        <label for="new-name">Prénom ou pseudo de l'enfant</label>
-        <input type="text" id="new-name" placeholder="ex. Léa" autocomplete="off">
+      <p class="muted">Un prénom (ou un pseudo) suffit. Vous pourrez ensuite faire des bilans régulièrement et voir ses progrès.</p>
+      <div class="btn-row" style="max-width:340px;margin:18px auto 0">
+        <button class="btn btn-primary btn-block" id="goto-add">Créer le profil de mon enfant →</button>
       </div>
-      <button class="btn btn-primary" id="create-child" style="margin-top:6px">Créer le profil →</button>
       ${rgpdNote()}
     </div>`;
   }else{
@@ -552,28 +720,23 @@ function renderHome(){
       <div class="child-grid">
         ${kids.map(c=>{
           const n=c.records.length, last=c.records[c.records.length-1];
-          const lastTxt=last?`Dernier bilan : ~${last.est.roundedOverall} mois`:`Aucun bilan pour l'instant`;
+          const age=c.birthdate?ageFromBirthdate(c.birthdate):null;
+          const meta=[ age?`${age.months} mois`:null, n?`${n} bilan${n>1?'s':''}`:'aucun bilan',
+            last?`dernier : ~${last.est.roundedOverall} m`:null ].filter(Boolean).join(' · ');
           return `<button class="child-card" data-id="${c.id}">
-            <div class="avatar">${c.avatar||'🐣'}</div>
+            <div class="avatar-circle">${c.avatar||'🐣'}</div>
             <div class="nm">${escapeHtml(c.name)}</div>
-            <div class="meta">${n} bilan${n>1?'s':''} · ${escapeHtml(lastTxt)}</div>
+            <div class="meta">${escapeHtml(meta)}</div>
           </button>`;
         }).join('')}
-        <button class="child-card add" id="add-child">＋<br>Ajouter un enfant</button>
+        <button class="child-card add" id="goto-add">＋ Ajouter un enfant</button>
       </div>
       ${rgpdNote()}
     </div>`;
   }
-  $app().innerHTML=html;
-  const create=document.getElementById('create-child');
-  if(create){
-    const input=document.getElementById('new-name');
-    const go=()=>{ const c=addChild(input.value); route('child',{id:c.id}); };
-    create.onclick=go; input.addEventListener('keydown',e=>{ if(e.key==='Enter')go(); }); input.focus();
-  }
+  setScreen(html);
+  document.querySelectorAll('#goto-add').forEach(b=>b.onclick=()=>route('addchild'));
   document.querySelectorAll('.child-card[data-id]').forEach(b=> b.onclick=()=>route('child',{id:b.dataset.id}));
-  const add=document.getElementById('add-child');
-  if(add) add.onclick=promptAddChild;
 }
 function rgpdNote(){
   return `<div class="rgpd">🔒 <strong>Confidentialité.</strong> ${Cloud.configured
@@ -581,9 +744,75 @@ function rgpdNote(){
     : "Vos données restent uniquement sur cet appareil (aucun envoi sur Internet)."}
     Outil d'éveil et de dialogue, <strong>non médical</strong> — il ne remplace pas l'avis d'un professionnel.</div>`;
 }
-function promptAddChild(){
-  const name=prompt("Prénom ou pseudo du nouvel enfant :");
-  if(name!==null){ const c=addChild(name); route('child',{id:c.id}); }
+
+/* --- Création de profil (nom + avatar + date de naissance optionnelle) --- */
+function renderAddChild(){
+  setScreen(`<div class="card">
+    <h2>👋 Faisons connaissance</h2>
+    <p class="muted">Seul le prénom (ou un pseudo) est nécessaire. La date de naissance est optionnelle : elle permet de calculer l'âge automatiquement à chaque bilan.</p>
+    <div class="field"><label for="new-name">Prénom ou pseudo de l'enfant</label>
+      <input type="text" id="new-name" placeholder="ex. Léa" autocomplete="off"></div>
+    <div class="field"><label>Choisissez son avatar</label>
+      <div class="avatar-grid" id="avgrid" role="radiogroup" aria-label="Avatar">
+        ${AVATARS.map((a,i)=>`<button type="button" class="avatar-opt ${i===0?'sel':''}" data-a="${a}" role="radio" aria-checked="${i===0}">${a}</button>`).join('')}
+      </div></div>
+    <div class="field"><label for="new-dob">Date de naissance <span class="hint">(optionnel)</span></label>
+      <input type="date" id="new-dob"></div>
+    <div class="btn-row">
+      <button class="btn btn-soft" id="cancel" style="flex:0 0 auto">← Annuler</button>
+      <button class="btn btn-primary" id="create-child">Créer le profil →</button>
+    </div>
+  </div>`);
+  let avatar=AVATARS[0];
+  document.querySelectorAll('.avatar-opt').forEach(b=> b.onclick=()=>{
+    document.querySelectorAll('.avatar-opt').forEach(x=>{x.classList.remove('sel');x.setAttribute('aria-checked','false');});
+    b.classList.add('sel'); b.setAttribute('aria-checked','true'); avatar=b.dataset.a; });
+  const input=document.getElementById('new-name');
+  const go=()=>{
+    const c=addChild(input.value, avatar);
+    const dob=document.getElementById('new-dob').value;
+    if(dob){ c.birthdate=dob; saveStore(); }
+    route('child',{id:c.id});
+  };
+  document.getElementById('create-child').onclick=go;
+  input.addEventListener('keydown',e=>{ if(e.key==='Enter')go(); });
+  document.getElementById('cancel').onclick=()=>route('home');
+  input.focus();
+}
+
+/* --- Édition de profil --- */
+function renderEditChild(p){
+  const c=getChild(p.id); if(!c){ route('home'); return; }
+  setScreen(`<div class="card">
+    <h2>✏️ Modifier le profil</h2>
+    <div class="field"><label for="ed-name">Prénom ou pseudo</label>
+      <input type="text" id="ed-name" value="${escapeHtml(c.name)}"></div>
+    <div class="field"><label>Avatar</label>
+      <div class="avatar-grid" role="radiogroup" aria-label="Avatar">
+        ${AVATARS.map(a=>`<button type="button" class="avatar-opt ${a===c.avatar?'sel':''}" data-a="${a}" role="radio" aria-checked="${a===c.avatar}">${a}</button>`).join('')}
+      </div></div>
+    <div class="field"><label for="ed-dob">Date de naissance <span class="hint">(optionnel — calcule l'âge automatiquement)</span></label>
+      <input type="date" id="ed-dob" value="${c.birthdate||''}"></div>
+    <div class="btn-row">
+      <button class="btn btn-soft" id="cancel" style="flex:0 0 auto">← Annuler</button>
+      <button class="btn btn-primary" id="save-child">Enregistrer</button>
+    </div>
+    <div class="center" style="margin-top:14px"><button class="link-btn" id="del-child">Supprimer ce profil et tout son historique</button></div>
+  </div>`);
+  let avatar=c.avatar;
+  document.querySelectorAll('.avatar-opt').forEach(b=> b.onclick=()=>{
+    document.querySelectorAll('.avatar-opt').forEach(x=>{x.classList.remove('sel');x.setAttribute('aria-checked','false');});
+    b.classList.add('sel'); b.setAttribute('aria-checked','true'); avatar=b.dataset.a; });
+  document.getElementById('save-child').onclick=()=>{
+    c.name=document.getElementById('ed-name').value.trim()||c.name;
+    c.avatar=avatar;
+    c.birthdate=document.getElementById('ed-dob').value||null;
+    saveStore(); route('child',{id:c.id});
+  };
+  document.getElementById('cancel').onclick=()=>route('child',{id:c.id});
+  document.getElementById('del-child').onclick=()=>{
+    if(confirm(`Supprimer le profil de ${c.name} et tout son historique ? Cette action est définitive.`)){ deleteChild(c.id); route('home'); }
+  };
 }
 
 /* --- Tableau de bord d'un enfant --- */
@@ -591,12 +820,26 @@ function renderChild(p){
   const c=getChild(p.id); if(!c){ route('home'); return; }
   store.activeChildId=c.id;
   const recs=c.records; const last=recs[recs.length-1];
+  const age=c.birthdate?ageFromBirthdate(c.birthdate):null;
+  const pending=loadSession();
+  const hasPending=pending && pending.s && pending.s.childId===c.id;
+
   let html=`<div class="card">
     <div class="row" style="align-items:center">
-      <div class="grow"><div style="font-size:2rem">${c.avatar||'🐣'}</div>
-        <h2 style="margin-top:4px">${escapeHtml(c.name)}</h2>
-        <p class="muted small">${recs.length} bilan${recs.length>1?'s':''} enregistré${recs.length>1?'s':''}</p></div>
+      <div class="avatar-circle" style="width:64px;height:64px;font-size:2rem">${c.avatar||'🐣'}</div>
+      <div class="grow">
+        <h2 style="margin:0">${escapeHtml(c.name)}</h2>
+        <p class="muted small">${age?`${age.months} mois${age.days?` et ${age.days} j`:''} · `:''}${recs.length} bilan${recs.length>1?'s':''}</p>
+      </div>
+      <button class="btn btn-soft btn-sm" id="edit-child" aria-label="Modifier le profil">✏️ Modifier</button>
     </div>
+    ${hasPending?`<div class="resume-card">
+      <strong>⏳ Un bilan est en cours</strong>
+      <p class="muted small" style="margin:4px 0 10px">Vous pouvez le reprendre là où vous vous étiez arrêté.</p>
+      <div class="btn-row" style="margin-top:0">
+        <button class="btn btn-primary btn-sm" id="resume-bilan">Reprendre le bilan</button>
+        <button class="btn btn-soft btn-sm" id="discard-bilan" style="flex:0 0 auto">Abandonner</button>
+      </div></div>`:''}
     <div class="btn-row">
       <button class="btn btn-primary" id="new-bilan">➕ Nouveau bilan</button>
       ${recs.length>=2?`<button class="btn btn-ghost" id="see-evo">📈 Voir l'évolution</button>`:''}
@@ -604,52 +847,64 @@ function renderChild(p){
   </div>`;
 
   if(last){
-    html+=`<div class="card">
-      <h3>Dernier bilan — ${formatDate(last.date)}</h3>
+    html+=`<div class="card tight">
+      <h3 style="margin-top:0">Dernier bilan — ${formatDate(last.date)}</h3>
       <div class="summary-grid">
         <div class="stat"><div class="k">Âge réel</div><div class="v">${fmt(last.realMonths)} <small>m</small></div></div>
         ${last.corr!=null?`<div class="stat"><div class="k">Âge corrigé</div><div class="v">${last.corr} <small>m</small></div></div>`:''}
         <div class="stat"><div class="k">Estimé</div><div class="v">${last.est.rangeLow}–${last.est.rangeHigh} <small>m</small></div></div>
-        <div class="stat"><div class="k">Cohérence</div><div class="v">${last.cmp.index} <small>%</small></div></div>
       </div>
-      <div class="center" style="margin-top:14px"><span class="badge ${last.cmp.cat.badge}">${last.cmp.cat.emoji} ${last.cmp.cat.label}</span></div>
+      <div class="center" style="margin-top:14px"><span class="badge ${last.cmp.cat.badge}" style="animation:none">${last.cmp.cat.emoji} ${last.cmp.cat.label}</span></div>
     </div>`;
   }
 
   if(recs.length){
-    html+=`<div class="card"><h3>Historique</h3>
+    html+=`<div class="card tight"><h3 style="margin-top:0">Historique</h3>
       ${recs.slice().reverse().map(r=>`
         <button class="hist-item" data-rec="${r.id}">
           <span class="d">${formatDate(r.date)}</span>
           <span class="a">~${r.est.roundedOverall} mois</span>
-          <span class="b"><span class="mini-badge badge ${r.cmp.cat.badge}">${r.cmp.cat.label}</span></span>
+          <span class="b"><span class="badge mini-badge ${r.cmp.cat.badge}">${r.cmp.cat.label}</span></span>
         </button>`).join('')}
     </div>`;
   }
 
-  html+=`<div class="card no-print"><div class="btn-row">
+  html+=`<div class="card tight no-print"><div class="btn-row" style="margin-top:0">
       <button class="btn btn-soft" id="back-home">← Tous les enfants</button>
-      <button class="btn btn-danger" id="del-child">🗑️ Supprimer ce profil</button>
     </div></div>`;
 
-  $app().innerHTML=html;
-  document.getElementById('new-bilan').onclick=()=>{ newSession(c.id, null); route('mode',{}); };
+  setScreen(html);
+  document.getElementById('new-bilan').onclick=()=>{
+    if(hasPending && !confirm("Un bilan est déjà en cours. En commencer un nouveau l'effacera. Continuer ?")) return;
+    clearSession(); newSession(c.id,null); route('mode',{});
+  };
+  if(hasPending){
+    document.getElementById('resume-bilan').onclick=()=>resumeSession(pending);
+    document.getElementById('discard-bilan').onclick=()=>{ clearSession(); route('child',{id:c.id}); };
+  }
   const evo=document.getElementById('see-evo'); if(evo) evo.onclick=()=>route('evolution',{id:c.id});
   document.querySelectorAll('.hist-item[data-rec]').forEach(b=>b.onclick=()=>route('record',{id:c.id,rec:b.dataset.rec}));
   document.getElementById('back-home').onclick=()=>route('home');
-  document.getElementById('del-child').onclick=()=>{
-    if(confirm(`Supprimer le profil de ${c.name} et tout son historique ? Cette action est définitive.`)){ deleteChild(c.id); route('home'); }
-  };
+  document.getElementById('edit-child').onclick=()=>route('editchild',{id:c.id});
 }
-function formatDate(iso){ try{ return new Date(iso).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'}); }catch(e){ return iso; } }
-function fmt(m){ if(m==null)return'—'; return (Math.round(m*10)/10).toString().replace('.0',''); }
+
+function resumeSession(saved){
+  session=saved.s;
+  Object.assign(quiz, saved.q||{});
+  const stage=session.stage||'quiz';
+  if(stage==='quiz'||stage==='flags') route('quiz',{});
+  else if(stage==='recap') route('recap',{});
+  else if(stage==='result1'){ session.est=runEstimation(session.answers,session.flags); route('result1',{}); }
+  else if(stage==='ageform'){ session.est=runEstimation(session.answers,session.flags); route('ageform',{next:'bilan'}); }
+  else route('quiz',{});
+}
 
 /* ============================================================
    8. ÉCRAN — Choix du mode
 ============================================================ */
 function renderMode(){
   const c=getChild(session.childId);
-  $app().innerHTML=`<div class="card">
+  setScreen(`<div class="card">
     <h2>Nouveau bilan${c?` — ${escapeHtml(c.name)}`:''}</h2>
     <p class="muted">Choisissez votre approche. La première est recommandée : elle estime l'âge développemental sans connaître l'âge réel, pour un repérage plus neutre.</p>
     <button class="choice" id="m-blind"><span class="tag">Recommandé</span>
@@ -659,19 +914,26 @@ function renderMode(){
       <h3>📅 Analyse directe avec l'âge connu</h3>
       <p>Je renseigne dès maintenant l'âge réel, puis je réponds au questionnaire.</p></button>
     <div class="quiz-foot"><button class="link-btn" id="cancel">← Annuler</button><span></span></div>
-  </div>`;
+  </div>`);
   document.getElementById('m-blind').onclick=()=>{ session.mode='blind'; startQuiz(); };
-  document.getElementById('m-direct').onclick=()=>{ session.mode='direct'; route('ageform',{next:'quiz'}); };
-  document.getElementById('cancel').onclick=()=>route('child',{id:session.childId});
+  document.getElementById('m-direct').onclick=()=>{ session.mode='direct'; session.stage='ageform'; saveSession(); route('ageform',{next:'quiz'}); };
+  document.getElementById('cancel').onclick=()=>{ clearSession(); session=null; route('child',{id:currentRoute.params.id||store.activeChildId}); };
 }
 
 /* ============================================================
    9. QUIZ adaptatif
 ============================================================ */
 const quiz={di:0,mi:0,consecNo:0,phase:'milestones',fi:0};
-function startQuiz(){ quiz.di=0;quiz.mi=0;quiz.consecNo=0;quiz.phase='milestones';quiz.fi=0; route('quiz',{}); }
+function startQuiz(){ quiz.di=0;quiz.mi=0;quiz.consecNo=0;quiz.phase='milestones';quiz.fi=0;
+  session.stage='quiz'; saveSession(); route('quiz',{}); }
 function currentDomainMs(){ const key=DOMAIN_ORDER[quiz.di]; return MILESTONES.filter(m=>m.d===key).sort((a,b)=>a.age-b.age); }
 function answeredCount(){ return Object.keys(session.answers).length; }
+function dotsHtml(){
+  return `<div class="dots" aria-hidden="true">${DOMAIN_ORDER.map((k,i)=>{
+    const cls = quiz.phase==='flags' ? 'done' : (i<quiz.di?'done':(i===quiz.di?'now':''));
+    return `<span class="dot ${cls}">${DOMAINS[k].emoji}</span>`; }).join('')}
+    <span class="dot ${quiz.phase==='flags'?'now':''}">🛟</span></div>`;
+}
 
 function renderQuiz(){
   if(quiz.phase==='flags') return renderFlagQuestion();
@@ -679,78 +941,144 @@ function renderQuiz(){
   if(quiz.mi>=ms.length){ quiz.di++; quiz.mi=0; quiz.consecNo=0;
     if(quiz.di>=DOMAIN_ORDER.length){ quiz.phase='flags'; quiz.fi=0; } return renderQuiz(); }
   const m=ms[quiz.mi]; const dom=DOMAINS[key];
+  const c=getChild(session.childId);
+  const who=c?escapeHtml(c.name):"Votre enfant";
   const totalApprox=MILESTONES.length+FLAG_QUESTIONS.length;
   const done=answeredCount()+Object.keys(session.flags).length;
   const pct=Math.min(98,Math.round(done/totalApprox*100));
-  $app().innerHTML=`<div class="card question">
+  setScreen(`<div class="card question">
+    ${dotsHtml()}
     <div class="domain-pill">${dom.emoji} ${dom.label}</div>
     <div class="progress"><i style="width:${pct}%"></i></div>
-    <div class="progress-label">${done} / ~${totalApprox} questions</div>
-    <h2>Votre enfant : ${m.t} ?</h2>
-    <div class="answers" role="group" aria-label="Réponse">
+    <div class="progress-label">${done} / ~${totalApprox}</div>
+    <h2>${who} : ${m.t} ?</h2>
+    <div class="answers" id="answers" role="group" aria-label="Réponse">
       <button class="ans yes" data-v="oui"><span class="em">😊</span> Oui, il/elle le fait</button>
       <button class="ans no" data-v="non"><span class="em">🕓</span> Pas encore</button>
       <button class="ans unknown" data-v="idk"><span class="em">🤔</span> Je ne sais pas</button>
     </div>
     <div class="quiz-foot">
       <button class="link-btn" id="back" ${(quiz.di===0&&quiz.mi===0)?'style="visibility:hidden"':''}>← Précédent</button>
-      <button class="link-btn" id="quit">Quitter</button>
-    </div></div>`;
-  $app().querySelectorAll('.ans').forEach(b=> b.onclick=()=>answerMilestone(m,b.dataset.v));
-  document.getElementById('quit').onclick=()=>route('child',{id:session.childId});
+      <button class="link-btn" id="quit">Mettre en pause</button>
+    </div></div>`);
+  const box=document.getElementById('answers');
+  box.querySelectorAll('.ans').forEach(b=> b.onclick=()=>{
+    box.classList.add('locked'); b.classList.add('picked');
+    setTimeout(()=>answerMilestone(m,b.dataset.v),150);
+  });
+  document.getElementById('quit').onclick=pauseQuiz;
   const back=document.getElementById('back'); if(back) back.onclick=quizBack;
 }
+function pauseQuiz(){ saveSession(); route('child',{id:session.childId}); }
 function answerMilestone(m,v){
   session.answers[m.id]=v;
   if(v==='non')quiz.consecNo++; else if(v==='oui')quiz.consecNo=0;
   const ms=currentDomainMs();
   if(quiz.consecNo>=2){ for(let i=quiz.mi+1;i<ms.length;i++){ if(!session.answers[ms[i].id])session.answers[ms[i].id]='non'; }
     quiz.mi=ms.length; quiz.consecNo=0; } else quiz.mi++;
+  saveSession();
   renderQuiz();
 }
 function quizBack(){
   if(quiz.phase==='flags'){
-    if(quiz.fi>0){ quiz.fi--; delete session.flags[FLAG_QUESTIONS[quiz.fi].id]; return renderQuiz(); }
-    quiz.phase='milestones'; quiz.di=DOMAIN_ORDER.length-1; quiz.mi=currentDomainMs().length-1; quiz.consecNo=0; return renderQuiz();
+    if(quiz.fi>0){ quiz.fi--; delete session.flags[FLAG_QUESTIONS[quiz.fi].id]; saveSession(); return renderQuiz(); }
+    quiz.phase='milestones'; quiz.di=DOMAIN_ORDER.length-1; quiz.mi=currentDomainMs().length-1; quiz.consecNo=0; saveSession(); return renderQuiz();
   }
   if(quiz.mi>0)quiz.mi--; else if(quiz.di>0){ quiz.di--; quiz.mi=currentDomainMs().length-1; }
-  quiz.consecNo=0; renderQuiz();
+  quiz.consecNo=0; saveSession(); renderQuiz();
 }
 function renderFlagQuestion(){
-  if(quiz.fi>=FLAG_QUESTIONS.length) return finishQuiz();
+  if(quiz.fi>=FLAG_QUESTIONS.length){ session.stage='recap'; saveSession(); return route('recap',{}); }
   const f=FLAG_QUESTIONS[quiz.fi];
   const totalApprox=MILESTONES.length+FLAG_QUESTIONS.length;
   const done=answeredCount()+Object.keys(session.flags).length;
   const pct=Math.min(99,Math.round(done/totalApprox*100));
-  $app().innerHTML=`<div class="card question">
+  setScreen(`<div class="card question">
+    ${dotsHtml()}
     <div class="domain-pill">🛟 Quelques questions de repérage</div>
     <div class="progress"><i style="width:${pct}%"></i></div>
-    <div class="progress-label">${done} / ~${totalApprox} questions</div>
+    <div class="progress-label">${done} / ~${totalApprox}</div>
     <h2>${f.t}</h2>
-    <div class="answers" role="group" aria-label="Réponse">
+    <div class="answers" id="answers" role="group" aria-label="Réponse">
       <button class="ans yes" data-v="oui"><span class="em">👍</span> Oui</button>
       <button class="ans no" data-v="non"><span class="em">👎</span> Non</button>
     </div>
     <div class="quiz-foot"><button class="link-btn" id="back">← Précédent</button>
-      <button class="link-btn" id="quit">Quitter</button></div></div>`;
-  $app().querySelectorAll('.ans').forEach(b=> b.onclick=()=>{ session.flags[f.id]=b.dataset.v; quiz.fi++; renderQuiz(); });
-  document.getElementById('quit').onclick=()=>route('child',{id:session.childId});
+      <button class="link-btn" id="quit">Mettre en pause</button></div></div>`);
+  const box=document.getElementById('answers');
+  box.querySelectorAll('.ans').forEach(b=> b.onclick=()=>{
+    box.classList.add('locked'); b.classList.add('picked');
+    setTimeout(()=>{ session.flags[f.id]=b.dataset.v; quiz.fi++; saveSession(); renderQuiz(); },150);
+  });
+  document.getElementById('quit').onclick=pauseQuiz;
   document.getElementById('back').onclick=quizBack;
-}
-function finishQuiz(){
-  session.est=runEstimation(session.answers, session.flags);
-  if(session.mode==='blind') route('result1',{}); else route('bilan',{});
 }
 
 /* ============================================================
-   10. RÉSULTAT Phase 1
+   10. RÉCAP avant résultat (vérifier ses réponses)
+============================================================ */
+function renderRecap(){
+  const uncertain=MILESTONES.filter(m=>session.answers[m.id]==='idk');
+  const counts=DOMAIN_ORDER.map(k=>{
+    const ms=MILESTONES.filter(m=>m.d===k);
+    const yes=ms.filter(m=>session.answers[m.id]==='oui').length;
+    return {k, yes, total:ms.length};
+  });
+  setScreen(`<div class="card">
+    <h2>🧐 Un dernier coup d'œil</h2>
+    <p class="muted">Vérifiez vos réponses avant de découvrir le résultat. Vous pouvez préciser les « je ne sais pas » si vous le souhaitez — ou continuer directement.</p>
+    <div class="recap-grid">
+      ${counts.map(c=>`<div class="recap-cell"><div class="e">${DOMAINS[c.k].emoji}</div>
+        <div class="n">${c.yes}/${c.total}</div><div class="l">acquis</div></div>`).join('')}
+    </div>
+    ${uncertain.length?`<h3>❔ Réponses « je ne sais pas » (${uncertain.length})</h3>
+      <p class="section-note">Touchez une question pour y répondre maintenant (cela améliore la fiabilité de l'estimation).</p>
+      ${uncertain.map(m=>`<button class="fix-item" data-id="${m.id}">
+        <span>${DOMAINS[m.d].emoji}</span><span>${m.t}</span><span class="go">Préciser →</span></button>`).join('')}`
+      :`<p class="prudence" style="margin-top:18px">Toutes vos réponses sont précises. 👌</p>`}
+    <div class="btn-row">
+      <button class="btn btn-primary btn-block" id="see-result">${session.mode==='blind'?'Découvrir l’estimation ✨':'Voir le bilan ✨'}</button>
+    </div>
+  </div>`);
+  document.querySelectorAll('.fix-item').forEach(b=> b.onclick=()=>route('fix',{id:b.dataset.id}));
+  document.getElementById('see-result').onclick=()=>{
+    session.est=runEstimation(session.answers,session.flags);
+    if(session.mode==='blind'){ session.stage='result1'; saveSession(); route('result1',{}); }
+    else { route('bilan',{}); }
+  };
+}
+function renderFixQuestion(p){
+  const m=MILESTONES.find(x=>x.id===p.id); if(!m){ route('recap'); return; }
+  const dom=DOMAINS[m.d];
+  const c=getChild(session.childId);
+  const who=c?escapeHtml(c.name):"Votre enfant";
+  setScreen(`<div class="card question">
+    <div class="domain-pill">${dom.emoji} ${dom.label}</div>
+    <h2>${who} : ${m.t} ?</h2>
+    <div class="answers" id="answers" role="group" aria-label="Réponse">
+      <button class="ans yes" data-v="oui"><span class="em">😊</span> Oui, il/elle le fait</button>
+      <button class="ans no" data-v="non"><span class="em">🕓</span> Pas encore</button>
+      <button class="ans unknown" data-v="idk"><span class="em">🤔</span> Je ne sais toujours pas</button>
+    </div>
+    <div class="quiz-foot"><button class="link-btn" id="back">← Retour à la vérification</button><span></span></div>
+  </div>`);
+  const box=document.getElementById('answers');
+  box.querySelectorAll('.ans').forEach(b=> b.onclick=()=>{
+    box.classList.add('locked'); b.classList.add('picked');
+    setTimeout(()=>{ session.answers[m.id]=b.dataset.v; saveSession(); route('recap'); },150);
+  });
+  document.getElementById('back').onclick=()=>route('recap');
+}
+
+/* ============================================================
+   11. RÉSULTAT Phase 1
 ============================================================ */
 function domainBars(est, refAge){
   return `<div class="bars">${DOMAIN_ORDER.map(k=>{
-    const d=est.domains[k],dom=DOMAINS[k]; const pct=(d.est-3)/9*100;
+    const d=est.domains[k],dom=DOMAINS[k]; const pct=clamp((d.est-3)/9*100,3,100);
     const ref=(refAge!=null)?`<div class="refline" style="left:${clamp((refAge-3)/9*100,0,100)}%"></div>`:"";
     return `<div class="bar-row"><div class="lab"><span>${dom.emoji} ${dom.label}</span><span class="age">~${Math.round(d.est*2)/2} mois</span></div>
-      <div class="track"><i style="width:${clamp(pct,3,100)}%"></i>${ref}</div></div>`;
+      <div class="track"><i data-w="${pct}%"></i>${ref}</div></div>`;
   }).join('')}<div class="scale"><span>3 mois</span><span>7-8 mois</span><span>12 mois</span></div></div>`;
 }
 function listMs(arr,cls){ if(!arr.length)return'<p class="muted">—</p>';
@@ -762,10 +1090,10 @@ function renderResult1(){
   const ordered=DOMAIN_ORDER.slice().sort((a,b)=>est.domains[b].est-est.domains[a].est);
   const top=domainName(ordered[0]),low=domainName(ordered[ordered.length-1]);
   const lecture=`Les réponses correspondent principalement à des acquisitions observées autour de ${est.roundedOverall} mois. Certains éléments semblent plus présents en ${top}, tandis que la ${low} paraît un peu moins installée.`;
-  $app().innerHTML=`<div class="card">
+  setScreen(`<div class="card">
     <h2>🙈 Estimation à l'aveugle</h2>
     <p class="muted">Première estimation produite <strong>sans connaître l'âge réel</strong>.</p>
-    <div class="age-hero"><div class="big">~ ${est.roundedOverall} <small>mois</small></div>
+    <div class="age-hero"><div class="big">~ <span id="bignum">0</span> <small>mois</small></div>
       <div class="range">Fourchette probable : entre <strong>${est.rangeLow}</strong> et <strong>${est.rangeHigh}</strong> mois</div>
       <div class="conf ${confClass}">Score de confiance : ${cc}</div></div>
     <div class="prudence">${lecture}</div>
@@ -773,71 +1101,94 @@ function renderResult1(){
     <div class="prudence">Cette estimation est indicative. Les enfants ne progressent pas tous au même rythme.</div>
   </div>
   <div class="card">
-    <h3>✅ Acquisitions déjà présentes (${est.present.length})</h3>${listMs(est.present,'yes')}
-    <h3>🕓 Acquisitions non encore observées (${est.absent.length})</h3>${est.absent.length?listMs(est.absent,'no'):'<p class="muted">Aucune.</p>'}
-    ${est.uncertain.length?`<h3>❔ Réponses incertaines (${est.uncertain.length})</h3>${listMs(est.uncertain,'unk')}`:''}
+    <details class="tech"><summary>✅ Acquisitions déjà présentes (${est.present.length})</summary>${listMs(est.present,'yes')}</details>
+    <details class="tech"><summary>🕓 Acquisitions non encore observées (${est.absent.length})</summary>${est.absent.length?listMs(est.absent,'no'):'<p class="muted">Aucune.</p>'}</details>
+    ${est.uncertain.length?`<details class="tech"><summary>❔ Réponses incertaines (${est.uncertain.length})</summary>${listMs(est.uncertain,'unk')}</details>`:''}
   </div>
   <div class="card center">
     <h2>Comparez avec l'âge réel</h2>
     <p class="muted">Indiquez maintenant l'âge réel pour obtenir une analyse personnalisée : cohérence, points forts, points à observer et activités adaptées.</p>
     <button class="btn btn-primary btn-block" id="go" style="margin-top:14px">Comparer avec l'âge réel →</button>
-  </div>`;
-  document.getElementById('go').onclick=()=>route('ageform',{next:'bilan'});
+  </div>`);
+  countUp(document.getElementById('bignum'), est.roundedOverall);
+  animateBars();
+  document.getElementById('go').onclick=()=>{ session.stage='ageform'; saveSession(); route('ageform',{next:'bilan'}); };
 }
 
 /* ============================================================
-   11. FORMULAIRE âge réel
+   12. FORMULAIRE âge réel (avec date de naissance)
 ============================================================ */
 function renderAgeForm(p){
   const next=p.next||'bilan'; const s=session;
-  $app().innerHTML=`<div class="card">
-    <h2>📅 L'âge réel de votre enfant</h2>
-    <p class="muted">${(s.mode==='direct'&&next==='quiz')?"Renseignez l'âge réel, puis répondez au questionnaire.":"Indiquez l'âge réel pour obtenir une analyse personnalisée."}</p>
+  const c=getChild(s.childId);
+  // préremplissage : date de naissance du profil + prématurité du dernier bilan
+  let prefM=s.realMonths, prefD=s.realDays||'';
+  if(prefM==null && c && c.birthdate){ const a=ageFromBirthdate(c.birthdate); if(a){ prefM=a.months; prefD=a.days||''; } }
+  if(s.premature==null && c){
+    if(c.premature){ s.premature=c.premature; s.premWeeks=c.premWeeks||0; }
+    else{ const lr=c.records[c.records.length-1]; if(lr){ s.premature=lr.premature; s.premWeeks=lr.premWeeks||0; } }
+  }
+  setScreen(`<div class="card">
+    <h2>📅 L'âge réel de ${c?escapeHtml(c.name):"votre enfant"}</h2>
+    <p class="muted">${(s.mode==='direct'&&next==='quiz')?"Renseignez l'âge réel, puis répondez au questionnaire.":"Indiquez l'âge réel pour obtenir l'analyse personnalisée."}</p>
+    ${c&&c.birthdate?`<p class="corrected-note" style="display:block">📌 Âge calculé automatiquement depuis sa date de naissance — vérifiez et ajustez si besoin.</p>`:''}
     <div class="field"><label for="months">Âge de l'enfant <span class="hint">(les jours sont optionnels)</span></label>
-      <div class="inputs"><div><input type="number" id="months" min="0" max="36" placeholder="mois" value="${s.realMonths??''}"> <span class="muted">mois</span></div>
-      <div><input type="number" id="days" min="0" max="30" placeholder="jours" value="${s.realDays||''}"> <span class="muted">jours</span></div></div></div>
-    <div class="field"><label id="prem-lab">Votre enfant est-il né prématurément ?</label>
+      <div class="inputs"><div><input type="number" inputmode="numeric" id="months" min="0" max="36" placeholder="mois" value="${prefM!=null?Math.floor(prefM):''}"> <span class="muted">mois</span></div>
+      <div><input type="number" inputmode="numeric" id="days" min="0" max="30" placeholder="jours" value="${prefD}"> <span class="muted">jours</span></div></div>
+      ${!(c&&c.birthdate)?`<div class="or-divider">ou</div>
+      <div class="inputs" style="margin-top:6px"><input type="date" id="dob" aria-label="Date de naissance"> <span class="muted small">sa date de naissance — l'âge se calcule tout seul</span></div>`:''}
+    </div>
+    <div class="field"><label id="prem-lab">Est-${c&&c.name?'elle/il':'il'} né(e) prématurément ?</label>
       <div class="radio-row" id="prem" role="group" aria-labelledby="prem-lab">
         <button type="button" class="radio-chip ${s.premature==='non'?'sel':''}" data-v="non">Non</button>
         <button type="button" class="radio-chip ${s.premature==='oui'?'sel':''}" data-v="oui">Oui</button>
         <button type="button" class="radio-chip ${s.premature==='idk'?'sel':''}" data-v="idk">Je ne sais pas</button></div></div>
     <div class="field ${s.premature==='oui'?'':'hidden'}" id="pwf">
       <label for="premweeks">Nombre de semaines de prématurité <span class="hint">(par rapport à 40 semaines)</span></label>
-      <div class="inputs"><input type="number" id="premweeks" min="1" max="16" placeholder="semaines" value="${s.premWeeks||''}"> <span class="muted">semaines</span></div>
+      <div class="inputs"><input type="number" inputmode="numeric" id="premweeks" min="1" max="16" placeholder="semaines" value="${s.premWeeks||''}"> <span class="muted">semaines</span></div>
       <div class="corrected-note" id="corrnote"></div></div>
-    <p id="formerr" class="muted" style="color:var(--red);min-height:1em"></p>
+    <p id="formerr" class="muted" style="color:var(--red);min-height:1em" role="alert"></p>
     <div class="btn-row"><button class="btn btn-soft" id="cancel" style="flex:0 0 auto">← Retour</button>
-      <button class="btn btn-primary" id="submit">${next==='quiz'?'Commencer le questionnaire →':'Voir le bilan →'}</button></div>
-  </div>`;
+      <button class="btn btn-primary" id="submit">${next==='quiz'?'Commencer le questionnaire →':'Voir le bilan ✨'}</button></div>
+  </div>`);
   const prem=document.getElementById('prem');
-  prem.querySelectorAll('.radio-chip').forEach(c=> c.onclick=()=>{
-    prem.querySelectorAll('.radio-chip').forEach(x=>x.classList.remove('sel')); c.classList.add('sel'); s.premature=c.dataset.v;
+  prem.querySelectorAll('.radio-chip').forEach(chip=> chip.onclick=()=>{
+    prem.querySelectorAll('.radio-chip').forEach(x=>x.classList.remove('sel')); chip.classList.add('sel'); s.premature=chip.dataset.v;
     document.getElementById('pwf').classList.toggle('hidden', s.premature!=='oui'); updateCorr(); });
-  const upd=['months','premweeks'].forEach(id=>{ const el=document.getElementById(id); if(el)el.oninput=updateCorr; });
+  ['months','premweeks'].forEach(id=>{ const el=document.getElementById(id); if(el)el.oninput=updateCorr; });
+  const dobEl=document.getElementById('dob');
+  if(dobEl) dobEl.oninput=()=>{
+    const a=ageFromBirthdate(dobEl.value);
+    if(a){ document.getElementById('months').value=a.months; document.getElementById('days').value=a.days; updateCorr(); }
+  };
   function updateCorr(){ const note=document.getElementById('corrnote'); if(!note)return;
     const m=parseFloat(document.getElementById('months').value);
     const w=parseFloat((document.getElementById('premweeks')||{}).value);
-    if(s.premature==='oui'&&m>0&&w>0){ const c=Math.max(0,Math.round((m-w/4.345)*10)/10);
-      note.style.display='block'; note.textContent=`Âge corrigé indicatif : environ ${c} mois (utilisé comme âge de référence).`; }
+    if(s.premature==='oui'&&m>0&&w>0){ const cor=Math.max(0,Math.round((m-w/4.345)*10)/10);
+      note.style.display='block'; note.textContent=`Âge corrigé indicatif : environ ${cor} mois (utilisé comme âge de référence).`; }
     else note.style.display='none'; }
+  updateCorr();
   document.getElementById('cancel').onclick=()=> route(session.mode==='direct'?'mode':'result1',{});
   document.getElementById('submit').onclick=()=>{
     const m=parseFloat(document.getElementById('months').value);
     const d=parseFloat(document.getElementById('days').value)||0;
     const err=document.getElementById('formerr');
-    if(isNaN(m)||m<0){ err.textContent="Merci d'indiquer l'âge en mois."; return; }
+    if(isNaN(m)||m<0){ err.textContent="Merci d'indiquer l'âge en mois (ou la date de naissance)."; return; }
     if(!s.premature){ err.textContent="Merci d'indiquer si l'enfant est né prématurément."; return; }
     if(m<3||m>13) err.textContent="Note : l'outil est calibré pour 3 à 12 mois, l'analyse sera moins fiable hors de cette tranche.";
     s.realMonths=m+d/30; s.realDays=d;
     if(s.premature==='oui'){ const w=parseFloat(document.getElementById('premweeks').value);
       if(isNaN(w)||w<=0){ err.textContent="Merci d'indiquer le nombre de semaines de prématurité."; return; } s.premWeeks=w; }
     else s.premWeeks=0;
+    // mémoriser sur le profil pour les prochains bilans
+    if(c){ if(dobEl&&dobEl.value) c.birthdate=dobEl.value;
+      c.premature=s.premature; c.premWeeks=s.premWeeks; saveStore(); }
     if(next==='quiz') startQuiz(); else route('bilan',{});
   };
 }
 
 /* ============================================================
-   12. BILAN — calcule, enregistre l'historique, affiche
+   13. BILAN — calcule, enregistre, affiche
 ============================================================ */
 function computeRecordFromSession(){
   const s=session; const est=s.est;
@@ -857,22 +1208,22 @@ function computeRecordFromSession(){
 }
 
 function renderBilan(){
-  const s=session; const est=s.est;
-  // compute & SAVE record (once)
+  const s=session;
+  if(!s.est) s.est=runEstimation(s.answers,s.flags);
   if(!s._savedRecordId){
     const rec=computeRecordFromSession();
     addRecord(s.childId, rec); s._savedRecordId=rec.id; s._rec=rec;
+    clearSession();
   }
   const rec=s._rec; const c=getChild(s.childId);
-  renderBilanFromRecord(rec, c, est, /*live*/true);
+  renderBilanFromRecord(rec, c, s.est, true);
+  if(['coherent','avance1','avance2'].includes(rec.cmp.cat.id)) celebrate();
 }
 
-/* Affichage commun bilan, depuis un record sauvegardé (réutilisé par l'historique) */
 function renderBilanFromRecord(rec, child, liveEst, isLive){
   const cmp={ ref:rec.ref, corr:rec.corr, index:rec.cmp.index, diff:rec.cmp.diff,
     above:rec.cmp.above, farBelow:rec.cmp.farBelow, allAlerts:rec.cmp.allAlerts,
     cat:CATS[rec.cmp.cat.id] };
-  // Reconstituer un "est" minimal pour les barres / synthèse
   const est = liveEst || reconstructEst(rec);
   const childName=child?child.name:null;
   const confClass=rec.est.confidence==='élevé'?'eleve':(rec.est.confidence==='moyen'?'moyen':'faible');
@@ -884,21 +1235,21 @@ function renderBilanFromRecord(rec, child, liveEst, isLive){
   const indexPos=clamp((rec.cmp.index-60)/(150-60)*100,2,98);
   window._exp={rec,est,cmp,strengths,watch,activities,conclusion,reco,childName};
 
-  $app().innerHTML=`<div class="card">
+  setScreen(`<div class="card">
     <h2>📋 Bilan personnalisé${childName?` — ${escapeHtml(childName)}`:''}</h2>
     <p class="section-note">${formatDate(rec.date)} · Analyse indicative et non médicale.</p>
-    <div class="summary-grid" style="margin-top:14px">
+    <div class="summary-grid">
       <div class="stat"><div class="k">Âge réel</div><div class="v">${fmt(rec.realMonths)} <small>m</small></div></div>
-      <div class="stat"><div class="k">Âge corrigé</div><div class="v">${rec.corr!=null?rec.corr:'—'} ${rec.corr!=null?'<small>m</small>':''}</div></div>
+      ${rec.corr!=null?`<div class="stat"><div class="k">Âge corrigé</div><div class="v">${rec.corr} <small>m</small></div></div>`:''}
       <div class="stat"><div class="k">Estimé</div><div class="v">${rec.est.rangeLow}–${rec.est.rangeHigh} <small>m</small></div></div>
-      <div class="stat"><div class="k">Confiance</div><div class="v" style="font-size:1rem"><span class="conf ${confClass}" style="margin:0">${rec.est.confidence}</span></div></div>
+      <div class="stat"><div class="k">Confiance</div><div class="v" style="font-size:.95rem"><span class="conf ${confClass}" style="margin:0">${rec.est.confidence}</span></div></div>
     </div>
     <div class="center" style="margin-top:18px"><span class="badge ${cmp.cat.badge}">${cmp.cat.emoji} ${cmp.cat.label}</span></div>
     <details class="tech"><summary>Voir l'indice de cohérence (détail technique)</summary>
-      <div class="index-meter" style="margin-top:8px">
-        <div class="marker" style="position:relative;height:0"><span style="position:absolute;top:-30px;left:${indexPos}%;transform:translateX(-50%);background:var(--ink);color:#fff;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:8px">${rec.cmp.index}%</span></div>
-        <div style="height:14px;border-radius:20px;background:linear-gradient(90deg,#e07a6f 0%,#e9a83a 28%,#5fb98a 45% 60%,#5b8def 78%,#9b8ad6 100%)"></div>
-        <p class="section-note" style="margin-top:14px">Indice = âge estimé / âge de référence × 100 = <strong>${rec.cmp.index}%</strong> → ${indexReading(rec.cmp.index)}.</p>
+      <div style="margin-top:26px">
+        <div style="position:relative;height:0"><span style="position:absolute;top:-24px;left:${indexPos}%;transform:translateX(-50%);background:var(--ink);color:var(--card);font-size:.72rem;font-weight:800;padding:2px 9px;border-radius:8px">${rec.cmp.index}%</span></div>
+        <div style="height:13px;border-radius:20px;background:linear-gradient(90deg,#e26d60 0%,#e9a83a 28%,#37b57e 45% 60%,#5b7cfa 78%,#9b8ad6 100%)"></div>
+        <p class="section-note" style="margin-top:12px">Indice = âge estimé / âge de référence × 100 = <strong>${rec.cmp.index}%</strong> → ${indexReading(rec.cmp.index)}.</p>
       </div></details>
   </div>
   <div class="card"><h2>Conclusion</h2><p class="conclusion">${conclusion}</p>
@@ -918,16 +1269,17 @@ function renderBilanFromRecord(rec, child, liveEst, isLive){
     ${cmp.allAlerts.length?`<p>Les éléments suivants méritent d'en parler à un professionnel de santé :</p><ul class="clean alert">${cmp.allAlerts.map(a=>`<li>${a}</li>`).join('')}</ul>`:`<p class="muted">Aucun signal particulier n'a été repéré dans vos réponses.</p>`}
     <p class="section-note" style="margin-top:10px">Consultez en cas de : perte d'une compétence acquise, absence de réaction aux sons, absence importante d'interaction, asymétrie corporelle marquée, absence de babillage vers 9-10 mois, ou absence de réaction au prénom vers 10-12 mois.</p>
   </div><div class="prudence" style="margin-top:14px"><strong>Recommandation :</strong> ${reco}</div></div>
-  <div class="card no-print"><div class="btn-row">
+  <div class="card no-print"><div class="btn-row" style="margin-top:0">
     ${isLive?`<button class="btn btn-primary" id="to-child">💾 Enregistré ✓ — Retour au profil</button>`:`<button class="btn btn-soft" id="to-child">← Retour au profil</button>`}
     ${child&&child.records.length>=2?`<button class="btn btn-ghost" id="to-evo">📈 Voir l'évolution</button>`:''}
-    <button class="btn btn-ghost" id="export">⬇️ Exporter (.txt)</button>
-    <button class="btn btn-ghost" id="print">🖨️ Imprimer / PDF</button>
+    <button class="btn btn-ghost" id="export">⬇️ Exporter</button>
+    <button class="btn btn-ghost" id="print">🖨️ PDF</button>
   </div>
   ${!isLive?`<div class="center" style="margin-top:10px"><button class="link-btn" id="del-rec">Supprimer ce bilan</button></div>`:''}
-  <p class="section-note center" style="margin-top:14px">Ce bilan est indicatif et ne remplace pas l'avis d'un professionnel de santé.</p></div>`;
+  <p class="section-note center" style="margin-top:14px">Ce bilan est indicatif et ne remplace pas l'avis d'un professionnel de santé.</p></div>`);
 
-  const childId=child?child.id:session?.childId;
+  animateBars();
+  const childId=child?child.id:(session?session.childId:null);
   document.getElementById('to-child').onclick=()=>route('child',{id:childId});
   const toEvo=document.getElementById('to-evo'); if(toEvo) toEvo.onclick=()=>route('evolution',{id:childId});
   document.getElementById('export').onclick=()=>exportRecord(window._exp);
@@ -935,7 +1287,6 @@ function renderBilanFromRecord(rec, child, liveEst, isLive){
   const del=document.getElementById('del-rec'); if(del) del.onclick=()=>{ if(confirm("Supprimer ce bilan ?")){ deleteRecord(childId,rec.id); route('child',{id:childId}); } };
 }
 
-/* Reconstruire un "est" approximatif depuis un record (pour réafficher l'historique) */
 function reconstructEst(rec){
   const domains={}; let min=99,max=0;
   DOMAIN_ORDER.forEach(k=>{ const e=rec.est.domains[k]; min=Math.min(min,e); max=Math.max(max,e);
@@ -952,45 +1303,38 @@ function renderRecordView(p){
 }
 
 /* ============================================================
-   13. ÉVOLUTION — courbes + commentaires automatiques
+   14. ÉVOLUTION — courbes lissées + commentaires automatiques
 ============================================================ */
 function renderEvolution(p){
-  const c=getChild(p.id); if(!c||c.records.length<2){ route('child',{id:p?.id}); return; }
+  const c=getChild(p.id); if(!c||c.records.length<2){ route('child',{id:p?p.id:null}); return; }
   const recs=c.records.slice().sort((a,b)=>new Date(a.date)-new Date(b.date));
   const labels=recs.map(r=>formatDate(r.date));
-  // séries
   const overall=recs.map(r=>r.est.overall);
   const realAge=recs.map(r=>r.ref);
-  const domainSeries=DOMAIN_ORDER.map(k=>({ key:k, color:DOMAINS[k].color, label:DOMAINS[k].label,
-    values:recs.map(r=>r.est.domains[k]) }));
-
-  const mainChart=lineChart(labels, [
-    {label:"Âge estimé", color:"#3f6fd1", width:3, values:overall},
-    {label:"Âge de référence", color:"#e07a6f", width:2, dashed:true, values:realAge}
-  ], {yMin:3,yMax:12,yLabel:"mois"});
-
-  const domChart=lineChart(labels, domainSeries.map(d=>({label:d.label,color:d.color,width:2,values:d.values})),
-    {yMin:3,yMax:12,yLabel:"mois"});
-
-  const commentary=buildEvolutionCommentary(recs, c.name);
-
-  $app().innerHTML=`<div class="card">
+  const domainSeries=DOMAIN_ORDER.map(k=>({label:DOMAINS[k].label,color:DOMAINS[k].color,width:2,values:recs.map(r=>r.est.domains[k])}));
+  const mainChart=lineChart(labels,[
+    {label:"Âge estimé",color:"#5b7cfa",width:3,values:overall,area:true},
+    {label:"Âge de référence",color:"#e26d60",width:2,dashed:true,values:realAge}
+  ],{yMin:3,yMax:12,yLabel:"mois"});
+  const domChart=lineChart(labels,domainSeries,{yMin:3,yMax:12,yLabel:"mois"});
+  const commentary=buildEvolutionCommentary(recs,c.name);
+  setScreen(`<div class="card tight">
     <h2>📈 Évolution — ${escapeHtml(c.name)}</h2>
-    <p class="muted">${recs.length} bilans entre le ${formatDate(recs[0].date)} et le ${formatDate(recs[recs.length-1].date)}.</p>
+    <p class="muted small">${recs.length} bilans entre le ${formatDate(recs[0].date)} et le ${formatDate(recs[recs.length-1].date)}.</p>
   </div>
-  <div class="card"><h3>Âge développemental estimé vs âge de référence</h3>
+  <div class="card"><h3 style="margin-top:0">Âge développemental estimé vs âge de référence</h3>
     <div class="chart-wrap">${mainChart}</div>
-    <div class="legend"><span><i style="background:#3f6fd1"></i> Âge estimé</span><span><i style="background:#e07a6f"></i> Âge de référence (réel/corrigé)</span></div>
+    <div class="legend"><span><i style="background:#5b7cfa"></i> Âge estimé</span><span><i style="background:#e26d60"></i> Âge de référence (réel/corrigé)</span></div>
   </div>
-  <div class="card"><h3>Évolution par domaine</h3>
+  <div class="card"><h3 style="margin-top:0">Évolution par domaine</h3>
     <div class="chart-wrap">${domChart}</div>
     <div class="legend">${DOMAIN_ORDER.map(k=>`<span><i style="background:${DOMAINS[k].color}"></i> ${DOMAINS[k].label}</span>`).join('')}</div>
   </div>
   <div class="card"><h2>Ce qui a évolué</h2>${commentary}</div>
-  <div class="card no-print"><div class="btn-row">
+  <div class="card tight no-print"><div class="btn-row" style="margin-top:0">
     <button class="btn btn-soft" id="back">← Retour au profil</button>
     <button class="btn btn-ghost" id="print">🖨️ Imprimer / PDF</button>
-  </div></div>`;
+  </div></div>`);
   document.getElementById('back').onclick=()=>route('child',{id:c.id});
   document.getElementById('print').onclick=()=>window.print();
 }
@@ -999,16 +1343,12 @@ function buildEvolutionCommentary(recs, name){
   const who=name||"votre enfant";
   const first=recs[0], last=recs[recs.length-1], prev=recs[recs.length-2];
   let html="";
-  // tendance globale
   const dOverall=Math.round((last.est.overall-first.est.overall)*10)/10;
-  const months=monthsBetween(first.date,last.date);
   let trend;
   if(dOverall>=0.4) trend=`Depuis le premier bilan, l'âge développemental estimé de ${escapeHtml(who)} est passé d'environ ${first.est.roundedOverall} à ${last.est.roundedOverall} mois — une progression visible. 🎉`;
   else if(dOverall<=-0.4) trend=`L'estimation globale a légèrement reculé (de ${first.est.roundedOverall} à ${last.est.roundedOverall} mois). Cela peut venir de jours moins en forme ou de réponses « je ne sais pas » : à observer sur les prochains bilans.`;
   else trend=`L'âge développemental estimé est resté stable (autour de ${last.est.roundedOverall} mois) depuis le premier bilan.`;
   html+=`<p class="conclusion">${trend}</p>`;
-
-  // par domaine : dernier vs précédent
   if(prev){
     const ups=[],flats=[],downs=[];
     DOMAIN_ORDER.forEach(k=>{ const delta=Math.round((last.est.domains[k]-prev.est.domains[k])*10)/10;
@@ -1021,42 +1361,60 @@ function buildEvolutionCommentary(recs, name){
     if(ups.length) html+=`<p class="conclusion" style="margin-top:12px">Belle progression en ${listFr(ups.map(u=>domainName(u.k)))}. Continuez les activités qui fonctionnent !</p>`;
     if(downs.length) html+=`<p class="conclusion">En ${listFr(downs.map(d=>domainName(d.k)))}, l'estimation est un peu plus basse que la dernière fois. Ce n'est pas forcément un recul réel : à reproposer en jeu, et à observer sur le prochain bilan.</p>`;
   }
-  // position vs âge de référence au dernier bilan
   const aboveNames=last.cmp.above.map(domainName);
   if(aboveNames.length) html+=`<p class="conclusion">Au dernier bilan, ${escapeHtml(who)} semble en avance en ${listFr(aboveNames)} par rapport à son âge de référence.</p>`;
   html+=`<div class="prudence">Ces tendances sont indicatives. Un seul bilan ne dit pas grand-chose ; c'est la régularité dans le temps qui est intéressante. En cas d'inquiétude, parlez-en à un professionnel.</div>`;
   return html;
 }
-function monthsBetween(a,b){ const d=(new Date(b)-new Date(a))/(1000*3600*24*30.44); return Math.max(0,Math.round(d*10)/10); }
 
-/* SVG line chart simple, sans dépendance */
+/* SVG line chart — courbes lissées, aire dégradée, sans dépendance */
+function smoothPath(pts){
+  if(pts.length<3) return 'M'+pts.map(p=>p.x+','+p.y).join(' L');
+  let d=`M${pts[0].x},${pts[0].y}`;
+  for(let i=0;i<pts.length-1;i++){
+    const p0=pts[Math.max(0,i-1)],p1=pts[i],p2=pts[i+1],p3=pts[Math.min(pts.length-1,i+2)];
+    const c1x=p1.x+(p2.x-p0.x)/6,c1y=p1.y+(p2.y-p0.y)/6;
+    const c2x=p2.x-(p3.x-p1.x)/6,c2y=p2.y-(p3.y-p1.y)/6;
+    d+=`C${c1x.toFixed(1)},${c1y.toFixed(1)} ${c2x.toFixed(1)},${c2y.toFixed(1)} ${p2.x},${p2.y}`;
+  }
+  return d;
+}
+let _gradSeq=0;
 function lineChart(labels, series, opts){
   const W=640,H=260,pad={l:38,r:14,t:14,b:42};
-  const yMin=opts.yMin, yMax=opts.yMax;
-  const n=labels.length;
-  const plotW=W-pad.l-pad.r, plotH=H-pad.t-pad.b;
-  const x=i=> pad.l + (n<=1?plotW/2:(i/(n-1))*plotW);
-  const y=v=> pad.t + (1-(clamp(v,yMin,yMax)-yMin)/(yMax-yMin))*plotH;
+  const yMin=opts.yMin,yMax=opts.yMax,n=labels.length;
+  const plotW=W-pad.l-pad.r,plotH=H-pad.t-pad.b;
+  const x=i=> +(pad.l + (n<=1?plotW/2:(i/(n-1))*plotW)).toFixed(1);
+  const y=v=> +(pad.t + (1-(clamp(v,yMin,yMax)-yMin)/(yMax-yMin))*plotH).toFixed(1);
   let grid="";
-  for(let g=yMin; g<=yMax; g+=(yMax-yMin)<=9?1:2){
-    const yy=y(g); grid+=`<line x1="${pad.l}" y1="${yy}" x2="${W-pad.r}" y2="${yy}" stroke="#eef2f8"/>`+
-      `<text x="${pad.l-6}" y="${yy+3}" text-anchor="end" font-size="9" fill="#9aa6bd">${g}</text>`;
+  for(let g=yMin;g<=yMax;g+=(yMax-yMin)<=9?1:2){
+    const yy=y(g);
+    grid+=`<line x1="${pad.l}" y1="${yy}" x2="${W-pad.r}" y2="${yy}" stroke="var(--chart-grid)"/>`+
+      `<text x="${pad.l-6}" y="${yy+3}" text-anchor="end" font-size="9" fill="var(--chart-text)">${g}</text>`;
   }
   let xlabels="";
   labels.forEach((l,i)=>{ if(n>6 && i%Math.ceil(n/6)!==0 && i!==n-1) return;
-    xlabels+=`<text x="${x(i)}" y="${H-pad.b+16}" text-anchor="middle" font-size="8.5" fill="#9aa6bd">${escapeHtml(l)}</text>`; });
-  let paths="";
+    xlabels+=`<text x="${x(i)}" y="${H-pad.b+16}" text-anchor="middle" font-size="8.5" fill="var(--chart-text)">${escapeHtml(l)}</text>`; });
+  let defs="",paths="";
   series.forEach(s=>{
-    const pts=s.values.map((v,i)=>`${x(i)},${y(v)}`).join(" ");
-    paths+=`<polyline fill="none" stroke="${s.color}" stroke-width="${s.width||2}" ${s.dashed?'stroke-dasharray="5 4"':''} stroke-linejoin="round" stroke-linecap="round" points="${pts}"/>`;
-    s.values.forEach((v,i)=> paths+=`<circle cx="${x(i)}" cy="${y(v)}" r="${(s.width||2)+1}" fill="${s.color}"/>`);
+    const pts=s.values.map((v,i)=>({x:x(i),y:y(v)}));
+    const d=smoothPath(pts);
+    if(s.area && pts.length>1){
+      const gid="grad"+(++_gradSeq);
+      defs+=`<linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="${s.color}" stop-opacity=".22"/>
+        <stop offset="100%" stop-color="${s.color}" stop-opacity="0"/></linearGradient>`;
+      paths+=`<path d="${d} L${pts[pts.length-1].x},${H-pad.b} L${pts[0].x},${H-pad.b} Z" fill="url(#${gid})" stroke="none"/>`;
+    }
+    paths+=`<path d="${d}" fill="none" stroke="${s.color}" stroke-width="${s.width||2}" ${s.dashed?'stroke-dasharray="5 4"':''} stroke-linejoin="round" stroke-linecap="round"/>`;
+    pts.forEach(p=> paths+=`<circle cx="${p.x}" cy="${p.y}" r="${(s.width||2)+1}" fill="${s.color}"/>`);
   });
-  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Graphique d'évolution">${grid}${paths}${xlabels}
-    <text x="10" y="12" font-size="9" fill="#9aa6bd">${opts.yLabel||''}</text></svg>`;
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Graphique d'évolution"><defs>${defs}</defs>${grid}${paths}${xlabels}
+    <text x="10" y="12" font-size="9" fill="var(--chart-text)">${opts.yLabel||''}</text></svg>`;
 }
 
 /* ============================================================
-   14. EXPORT
+   15. EXPORT
 ============================================================ */
 function exportRecord(exp){
   const {rec,strengths,watch,activities,conclusion,reco,childName}=exp;
@@ -1090,7 +1448,7 @@ function exportRecord(exp){
 }
 
 /* ============================================================
-   15. DÉMARRAGE
+   16. DÉMARRAGE
 ============================================================ */
 document.getElementById('brand-home').onclick=()=>route('home');
 loadStore();

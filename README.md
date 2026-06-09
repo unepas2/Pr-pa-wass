@@ -17,11 +17,14 @@ suivre le développement de bébé** entre 3 et 12 mois.
    observer, activités conseillées et recommandation.
 
 ### Le carnet de suivi
-- **Profils enfants** (prénom ou pseudo, plusieurs enfants possibles).
+- **Profils enfants** (prénom ou pseudo, avatar, plusieurs enfants possibles).
+- **Date de naissance optionnelle** : l'âge est calculé automatiquement à chaque bilan.
 - **Historique** des bilans, consultables à tout moment.
-- **Courbes d'évolution** (âge estimé vs âge de référence, et par domaine).
+- **Courbes d'évolution** lissées (âge estimé vs âge de référence, et par domaine).
 - **Commentaires automatiques de progrès** : ce qui s'améliore, ce qui reste
   stable, ce qui est à surveiller, d'un bilan à l'autre.
+- **Reprise automatique** : un bilan interrompu se reprend là où on s'était arrêté.
+- **Écran de vérification** avant le résultat (préciser les « je ne sais pas »).
 
 ### Comptes et synchronisation (optionnel)
 - Par défaut : **mode local**, tout reste sur l'appareil (aucun envoi sur Internet).
@@ -32,8 +35,12 @@ suivre le développement de bébé** entre 3 et 12 mois.
 Ouvrez `index.html` dans un navigateur, ou publiez le dépôt via **GitHub Pages**.
 Le fichier est entièrement autonome (aucun serveur requis en mode local).
 
-## Accessibilité
-Navigation au clavier, éléments interactifs natifs (`<button>`), focus visible.
+## Design & accessibilité
+- Interface moderne mobile-first : barre supérieure « verre dépoli », dégradés
+  doux, animations légères, **mode sombre automatique** (selon le réglage du
+  téléphone), retour visuel au toucher.
+- Navigation au clavier, éléments interactifs natifs (`<button>`), focus visible,
+  respect de `prefers-reduced-motion`.
 
 ## Avertissement
 Outil **indicatif et non médical**. Il ne pose **aucun diagnostic** et ne conclut
