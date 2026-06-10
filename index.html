@@ -87,7 +87,7 @@ main{flex:1;padding:28px 0 40px}
 .coche{flex:none;width:22px;height:22px;border-radius:50%;background:var(--vert-clair);color:var(--vert);display:inline-flex;align-items:center;justify-content:center}
 .coche svg{width:12px;height:12px}
 .liste-axes-accueil{list-style:none;padding:0;display:flex;flex-direction:column;gap:10px}
-.liste-axes-accueil li{display:flex;align-items:center;gap:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.liste-axes-accueil li{display:flex;align-items:center;gap:12px;font-weight:600}
 .axe-lettre{flex:none;width:30px;height:30px;border:1.5px solid var(--vert);color:var(--vert);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem}
 .signature{font-size:.9rem;color:var(--secondaire);margin-top:24px}
 
@@ -111,7 +111,7 @@ main{flex:1;padding:28px 0 40px}
 .option .option-coche{flex:none;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--lignes);display:inline-flex;align-items:center;justify-content:center;color:#fff}
 .option[aria-pressed="true"] .option-coche{background:var(--vert);border-color:var(--vert)}
 .option .option-coche svg{width:11px;height:11px}
-.diag-nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+.diag-nav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;margin-top:18px}
 
 /* ----- Résultats ----- */
 .resultat-tete{display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;margin-bottom:20px}
@@ -152,7 +152,7 @@ main{flex:1;padding:28px 0 40px}
 .puce-vert{background:var(--vert-clair);border-color:var(--vert)}
 .puce-ambre{background:var(--ambre-clair);border-color:var(--ambre)}
 .puce-rouge{background:var(--rouge-clair);border-color:var(--rouge)}
-#liste-priorites{list-style:none;padding:0;counter-reset:prio}
+#liste-priorites{list-style:none;padding:0}
 #liste-priorites li{padding:14px 0;border-bottom:1px solid var(--lignes);display:flex;gap:14px}
 #liste-priorites li:last-child{border-bottom:none;padding-bottom:0}
 .prio-num{flex:none;width:28px;height:28px;border-radius:50%;background:var(--encre);color:#fff;font-weight:800;font-size:.85rem;display:inline-flex;align-items:center;justify-content:center;margin-top:2px}
@@ -195,7 +195,7 @@ main{flex:1;padding:28px 0 40px}
   .print-seulement{display:block}
   .carte{box-shadow:none;break-inside:avoid}
   .resultat-tete{flex-direction:row;text-align:left;justify-content:flex-start}
-  .tampon,.axe-remplissage,.puce,.seuil-vert,.seuil-ambre,.seuil-rouge{
+  .tampon,.axe-remplissage,.puce,.seuil-vert,.seuil-ambre,.seuil-rouge,.prio-num{
     -webkit-print-color-adjust:exact;print-color-adjust:exact;
   }
   .axe-remplissage{transition:none}
@@ -683,6 +683,15 @@ function avancer() {
     rendreQuestion(true);
   } else if (diagnosticComplet()) {
     location.hash = "#resultats";
+  } else {
+    /* dernière question répondue mais parcours incomplet (état restauré
+       partiel) : on ramène à la première question sans réponse */
+    const manquante = QUESTIONS.findIndex(function (q) { return etat.reponses[q.id] === undefined; });
+    if (manquante >= 0) {
+      etat.courante = manquante;
+      sauverEtat();
+      rendreQuestion(true);
+    }
   }
 }
 function reculer() {
@@ -738,8 +747,8 @@ function rendreResultats() {
     tete.appendChild(scoreAxe);
     const piste = document.createElement("div");
     piste.className = "axe-piste";
-    piste.setAttribute("role", "img");
-    piste.setAttribute("aria-label", AXES[axe] + " : " + valeur + " sur 100, " + seuil.libelle);
+    /* décorative : le nom, le score et la puce de seuil donnent déjà l'information */
+    piste.setAttribute("aria-hidden", "true");
     const remplissage = document.createElement("div");
     remplissage.className = "axe-remplissage fond-" + seuil.classe + (barresDejaAnimees ? " sans-anim" : "");
     piste.appendChild(remplissage);
