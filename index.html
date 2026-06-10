@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CADRE — Où en est votre entreprise avec l'IA ?</title>
 <meta name="description" content="Autodiagnostic de gouvernance IA pour les PME : 15 questions, 10 minutes, un score et un plan d'action. Un outil d'Escale Digitale Solutions.">
+<meta name="theme-color" content="#FBFAF7">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
@@ -43,7 +44,7 @@ h2{font-size:1.25rem;font-weight:800;line-height:1.3}
 .vue[hidden]{display:none}
 
 /* En-tête du site */
-.entete-site{border-bottom:1px solid var(--lignes);background:var(--blanc)}
+.entete-site{border-bottom:1px solid var(--lignes);background:var(--blanc);position:sticky;top:0;z-index:20}
 .entete-site .conteneur{display:flex;align-items:baseline;gap:10px;padding-top:14px;padding-bottom:14px}
 .marque{font-weight:800;font-size:1.1rem;letter-spacing:.14em;color:var(--encre);text-decoration:none}
 .marque-sous{font-size:.8rem;color:var(--secondaire)}
@@ -61,11 +62,15 @@ main{flex:1;padding:28px 0 40px}
   min-height:48px;padding:12px 22px;border-radius:8px;
   background:var(--vert);color:#fff;border:1px solid var(--vert);
   font-family:inherit;font-size:1rem;font-weight:600;cursor:pointer;
-  transition:background-color .15s ease,border-color .15s ease;
+  transition:background-color .15s ease,border-color .15s ease,transform .15s ease,box-shadow .2s ease;
   text-decoration:none;
+  box-shadow:0 1px 2px rgba(15,110,86,.18);
 }
-.btn:hover{background:var(--vert-fonce);border-color:var(--vert-fonce)}
-.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:hover{background:var(--vert-fonce);border-color:var(--vert-fonce);transform:translateY(-1px);box-shadow:0 6px 16px -6px rgba(15,110,86,.45)}
+.btn:active{transform:translateY(0) scale(.98);box-shadow:0 1px 2px rgba(15,110,86,.18)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+.btn .fleche{display:inline-block;margin-left:8px;transition:transform .2s ease}
+.btn:hover .fleche{transform:translateX(4px)}
 .btn-secondaire{background:var(--blanc);color:var(--encre);border:1px solid var(--lignes)}
 .btn-secondaire:hover{background:var(--papier);border-color:var(--secondaire)}
 .btn-lien{background:none;border:none;color:var(--secondaire);font-family:inherit;font-size:.85rem;text-decoration:underline;text-underline-offset:2px;cursor:pointer;padding:6px}
@@ -78,9 +83,16 @@ main{flex:1;padding:28px 0 40px}
 }
 
 /* ----- Accueil ----- */
+.heros{
+  background:linear-gradient(165deg,var(--vert-clair),#F2FAF6 62%,var(--papier));
+  border:1px solid #D5EBE2;border-radius:16px;
+  padding:28px 22px;margin-bottom:24px;
+}
+@media (min-width:720px){.heros{padding:42px 36px}.heros h1{font-size:2.15rem}}
 #vue-accueil h1{margin-bottom:12px}
 .sous-titre{color:var(--secondaire);font-size:1.05rem;margin-bottom:20px}
-.bloc-cta{margin-bottom:8px}
+.heros .sous-titre,.heros .note-reprise,.heros .btn-lien{color:#51606C}
+.bloc-cta{margin-bottom:0}
 .note-reprise{font-size:.85rem;color:var(--secondaire);margin-top:8px}
 .reassurances{list-style:none;display:flex;flex-direction:column;gap:8px;margin:24px 0;padding:0}
 .reassurances li{display:flex;align-items:center;gap:10px;font-size:.95rem}
@@ -95,8 +107,13 @@ main{flex:1;padding:28px 0 40px}
 .diag-tete{margin-bottom:16px}
 .progression-texte{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:.85rem;color:var(--secondaire);margin-bottom:8px}
 .progression-texte strong{color:var(--encre);font-weight:600}
-.progression-piste{height:6px;background:var(--lignes);border-radius:3px;overflow:hidden}
-#progression-remplie{height:100%;width:0;background:var(--vert);border-radius:3px;transition:width .2s ease}
+.progression-segments{display:flex;gap:6px}
+.segment{flex:1;display:flex;flex-direction:column;gap:5px}
+.segment-barre{height:6px;background:var(--lignes);border-radius:3px;overflow:hidden}
+.segment-remplissage{height:100%;width:0;background:var(--vert);border-radius:3px;transition:width .35s cubic-bezier(.22,1,.36,1)}
+.segment-lettre{font-size:.7rem;font-weight:600;color:var(--secondaire);text-align:center;letter-spacing:.08em;transition:color .2s ease}
+.segment.actif .segment-lettre{color:var(--vert);font-weight:800}
+.segment.fini .segment-lettre{color:var(--vert)}
 .carte-question h2{margin-bottom:18px;font-size:1.15rem}
 .options{display:flex;flex-direction:column;gap:10px}
 .option{
@@ -104,13 +121,15 @@ main{flex:1;padding:28px 0 40px}
   width:100%;min-height:56px;padding:14px 16px;text-align:left;
   background:var(--blanc);border:1px solid var(--lignes);border-radius:12px;
   font-family:inherit;font-size:1rem;color:var(--encre);cursor:pointer;
-  transition:border-color .15s ease,background-color .15s ease;
+  transition:border-color .15s ease,background-color .15s ease,transform .15s ease,box-shadow .2s ease;
 }
-.option:hover{border-color:var(--vert)}
+.option:hover{border-color:var(--vert);transform:translateY(-1px);box-shadow:0 4px 12px -4px rgba(28,43,58,.12)}
+.option:active{transform:translateY(0) scale(.99);box-shadow:none}
 .option[aria-pressed="true"]{border-color:var(--vert);background:var(--vert-clair);font-weight:600}
 .option .option-coche{flex:none;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--lignes);display:inline-flex;align-items:center;justify-content:center;color:#fff}
 .option[aria-pressed="true"] .option-coche{background:var(--vert);border-color:var(--vert)}
 .option .option-coche svg{width:11px;height:11px}
+.option[aria-pressed="true"] .option-coche svg path{stroke-dasharray:14;animation:tracerCoche .25s ease-out both}
 .diag-nav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;margin-top:18px}
 
 /* ----- Résultats ----- */
@@ -120,9 +139,11 @@ main{flex:1;padding:28px 0 40px}
   flex:none;width:176px;height:176px;border-radius:50%;
   border:3px solid currentColor;display:flex;align-items:center;justify-content:center;
   transform:rotate(-3deg);
+  box-shadow:0 14px 30px -18px rgba(28,43,58,.45);
 }
+.tampon.tamponne{animation:tamponner .55s cubic-bezier(.2,.85,.35,1) both}
 .tampon-int{
-  width:150px;height:150px;border-radius:50%;border:1.5px solid currentColor;
+  width:150px;height:150px;border-radius:50%;border:1.5px dashed currentColor;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-align:center;
 }
 .tampon-marque{font-size:.7rem;letter-spacing:.2em;font-weight:600;color:var(--encre)}
@@ -133,7 +154,7 @@ main{flex:1;padding:28px 0 40px}
 .seuil-ambre{color:var(--ambre);background:var(--ambre-clair)}
 .seuil-rouge{color:var(--rouge);background:var(--rouge-clair)}
 .mention-legale{
-  background:var(--blanc);border:1px solid var(--lignes);border-left:4px solid var(--encre);
+  background:var(--blanc);border:1px solid var(--lignes);border-left:4px solid var(--ambre);
   border-radius:8px;padding:12px 16px;font-size:.9rem;color:var(--encre);margin-bottom:16px;
 }
 .axe-ligne{padding:12px 0;border-bottom:1px solid var(--lignes)}
@@ -143,7 +164,7 @@ main{flex:1;padding:28px 0 40px}
 .axe-score{font-weight:800;white-space:nowrap}
 .axe-score .sur-cent{font-weight:400;font-size:.8rem;color:var(--secondaire)}
 .axe-piste{height:10px;background:var(--papier);border:1px solid var(--lignes);border-radius:5px;overflow:hidden;margin-bottom:6px}
-.axe-remplissage{height:100%;width:0;border-radius:5px;transition:width .2s ease}
+.axe-remplissage{height:100%;width:0;border-radius:5px;transition:width .55s cubic-bezier(.22,1,.36,1)}
 .axe-remplissage.sans-anim{transition:none}
 .fond-vert{background:var(--vert)}
 .fond-ambre{background:var(--ambre)}
@@ -183,11 +204,36 @@ main{flex:1;padding:28px 0 40px}
 .page-simple p{margin-bottom:10px}
 .page-simple .retour{display:inline-block;margin-top:20px}
 
+/* ----- Effets & animations (coupés par prefers-reduced-motion) ----- */
+@keyframes apparaitre{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes entreeSuivant{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:none}}
+@keyframes entreePrecedent{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:none}}
+@keyframes tracerCoche{from{stroke-dashoffset:14}to{stroke-dashoffset:0}}
+@keyframes tamponner{
+  0%{opacity:0;transform:rotate(-14deg) scale(1.45)}
+  55%{opacity:1;transform:rotate(-3deg) scale(.96)}
+  78%{transform:rotate(-3deg) scale(1.02)}
+  100%{opacity:1;transform:rotate(-3deg) scale(1)}
+}
+.vue:not([hidden]){animation:apparaitre .3s ease-out both}
+#vue-accueil .reassurances li{animation:apparaitre .4s ease-out both}
+#vue-accueil .reassurances li:nth-child(1){animation-delay:.08s}
+#vue-accueil .reassurances li:nth-child(2){animation-delay:.15s}
+#vue-accueil .reassurances li:nth-child(3){animation-delay:.22s}
+#vue-accueil .carte{animation:apparaitre .45s ease-out both;animation-delay:.28s}
+#vue-accueil .signature{animation:apparaitre .45s ease-out both;animation-delay:.36s}
+.carte-question.entree-suivant{animation:entreeSuivant .22s ease-out both}
+.carte-question.entree-precedent{animation:entreePrecedent .22s ease-out both}
+#liste-priorites li{animation:apparaitre .45s ease-out both}
+#liste-priorites.sans-entree li{animation:none}
+#email-message.succes{animation:apparaitre .3s ease-out both}
+
 /* Impression */
 .print-seulement{display:none}
 
 @media print{
   @page{size:A4;margin:14mm}
+  *,*::before,*::after{animation:none !important;transition:none !important}
   body{background:#fff;display:block}
   .entete-site,.pied-site,.pas-impression{display:none !important}
   main{padding:0}
@@ -225,12 +271,14 @@ main{flex:1;padding:28px 0 40px}
 
     <!-- ===== Accueil ===== -->
     <section id="vue-accueil" class="vue">
-      <h1 id="titre-accueil" tabindex="-1">Où en est votre entreprise avec l'IA ?</h1>
-      <p class="sous-titre">15 questions, 10 minutes, sans création de compte. Un score, un plan d'action, et une vision claire de ce qui vous reste à cadrer.</p>
-      <div class="bloc-cta">
-        <button id="btn-commencer" class="btn">Faire le diagnostic</button>
-        <p id="note-reprise" class="note-reprise" hidden></p>
-        <button id="btn-recommencer" class="btn-lien" hidden>Recommencer à zéro</button>
+      <div class="heros">
+        <h1 id="titre-accueil" tabindex="-1">Où en est votre entreprise avec l'IA ?</h1>
+        <p class="sous-titre">15 questions, 10 minutes, sans création de compte. Un score, un plan d'action, et une vision claire de ce qui vous reste à cadrer.</p>
+        <div class="bloc-cta">
+          <button id="btn-commencer" class="btn"><span id="btn-commencer-texte">Faire le diagnostic</span><span class="fleche" aria-hidden="true">→</span></button>
+          <p id="note-reprise" class="note-reprise" hidden></p>
+          <button id="btn-recommencer" class="btn-lien" hidden>Recommencer à zéro</button>
+        </div>
       </div>
       <ul class="reassurances">
         <li><span class="coche" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5 4.7 9 10 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Gratuit, sans inscription</li>
@@ -254,7 +302,7 @@ main{flex:1;padding:28px 0 40px}
     <section id="vue-diagnostic" class="vue" hidden>
       <div class="diag-tete">
         <p class="progression-texte"><strong id="diag-compteur">Question 1 / 15</strong><span id="diag-axe"></span></p>
-        <div class="progression-piste" aria-hidden="true"><div id="progression-remplie"></div></div>
+        <div id="progression-segments" class="progression-segments" aria-hidden="true"></div>
       </div>
       <div class="carte carte-question">
         <h2 id="diag-question" tabindex="-1"></h2>
@@ -566,6 +614,11 @@ function svgCoche() {
 /* ===== Navigation par hash ===== */
 let minuteurAvance = null;
 let barresDejaAnimees = false;
+let directionNav = 0; /* +1 question suivante, -1 précédente, 0 arrivée directe */
+
+function mouvementReduit() {
+  return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
 
 function afficherVue(nom) {
   document.querySelectorAll(".vue").forEach(function (v) { v.hidden = (v.id !== "vue-" + nom); });
@@ -601,35 +654,68 @@ function router() {
 
 /* ===== Accueil ===== */
 function rendreAccueil() {
-  const btn = $("btn-commencer");
+  const libelle = $("btn-commencer-texte");
   const note = $("note-reprise");
   const recommencer = $("btn-recommencer");
   const n = nbReponses();
   if (n > 0 && !diagnosticComplet()) {
-    btn.textContent = "Reprendre mon diagnostic";
+    libelle.textContent = "Reprendre mon diagnostic";
     note.textContent = "Vous avez répondu à " + n + " question" + (n > 1 ? "s" : "") + " sur 15. Vos réponses sont sauvegardées sur cet appareil.";
     note.hidden = false;
     recommencer.hidden = false;
   } else if (diagnosticComplet()) {
-    btn.textContent = "Reprendre mon diagnostic";
+    libelle.textContent = "Reprendre mon diagnostic";
     note.textContent = "Votre diagnostic est terminé. Vos réponses sont sauvegardées sur cet appareil.";
     note.hidden = false;
     recommencer.hidden = false;
   } else {
-    btn.textContent = "Faire le diagnostic";
+    libelle.textContent = "Faire le diagnostic";
     note.hidden = true;
     recommencer.hidden = true;
   }
 }
 
 /* ===== Diagnostic ===== */
+function construireSegments() {
+  const conteneur = $("progression-segments");
+  ORDRE_AXES.forEach(function (axe) {
+    const segment = document.createElement("div");
+    segment.className = "segment";
+    const barre = document.createElement("div");
+    barre.className = "segment-barre";
+    const remplissage = document.createElement("div");
+    remplissage.className = "segment-remplissage";
+    barre.appendChild(remplissage);
+    const lettre = document.createElement("span");
+    lettre.className = "segment-lettre";
+    lettre.textContent = axe;
+    segment.appendChild(barre);
+    segment.appendChild(lettre);
+    conteneur.appendChild(segment);
+  });
+}
+
 function rendreQuestion(avecFocus) {
   const i = etat.courante;
   const q = QUESTIONS[i];
   $("diag-compteur").textContent = "Question " + (i + 1) + " / 15";
   $("diag-axe").textContent = "Axe " + q.axe + " — " + AXES[q.axe];
-  $("progression-remplie").style.width = ((i + 1) / QUESTIONS.length * 100) + "%";
+  /* progression segmentée : un tronçon par axe, 3 questions chacun */
+  const segments = $("progression-segments").children;
+  ORDRE_AXES.forEach(function (axe, k) {
+    const part = Math.max(0, Math.min(3, (i + 1) - k * 3)) / 3;
+    segments[k].querySelector(".segment-remplissage").style.width = (part * 100) + "%";
+    segments[k].classList.toggle("actif", q.axe === axe);
+    segments[k].classList.toggle("fini", part === 1 && q.axe !== axe);
+  });
   $("diag-question").textContent = q.texte;
+  const carteQuestion = document.querySelector(".carte-question");
+  carteQuestion.classList.remove("entree-suivant", "entree-precedent");
+  if (directionNav !== 0 && !mouvementReduit()) {
+    void carteQuestion.offsetWidth; /* relance l'animation d'entrée */
+    carteQuestion.classList.add(directionNav > 0 ? "entree-suivant" : "entree-precedent");
+  }
+  directionNav = 0;
 
   const conteneur = $("diag-options");
   conteneur.innerHTML = "";
@@ -680,6 +766,7 @@ function avancer() {
   if (etat.courante < QUESTIONS.length - 1) {
     etat.courante += 1;
     sauverEtat();
+    directionNav = 1;
     rendreQuestion(true);
   } else if (diagnosticComplet()) {
     location.hash = "#resultats";
@@ -690,6 +777,7 @@ function avancer() {
     if (manquante >= 0) {
       etat.courante = manquante;
       sauverEtat();
+      directionNav = -1;
       rendreQuestion(true);
     }
   }
@@ -699,25 +787,41 @@ function reculer() {
   if (etat.courante > 0) {
     etat.courante -= 1;
     sauverEtat();
+    directionNav = -1;
     rendreQuestion(true);
   }
 }
 
 /* ===== Résultats ===== */
+function compterJusqua(noeud, cible) {
+  if (mouvementReduit()) { noeud.nodeValue = String(cible); return; }
+  const duree = 700;
+  const debut = performance.now();
+  function pas(t) {
+    const p = Math.min((t - debut) / duree, 1);
+    noeud.nodeValue = String(Math.round(cible * (1 - Math.pow(1 - p, 3))));
+    if (p < 1) requestAnimationFrame(pas);
+  }
+  requestAnimationFrame(pas);
+}
+
 function rendreResultats() {
   const resultat = calculerScores(etat.reponses);
+  const premierAffichage = !barresDejaAnimees;
 
-  /* Tampon */
+  /* Tampon : animation d'impact et compteur de score, une seule fois */
   const tampon = $("tampon");
   const seuilGlobal = seuilAxe(resultat.global);
-  tampon.className = "tampon seuil-" + seuilGlobal.classe;
+  tampon.className = "tampon seuil-" + seuilGlobal.classe + (premierAffichage && !mouvementReduit() ? " tamponne" : "");
   const score = $("tampon-score");
   score.innerHTML = "";
-  score.appendChild(document.createTextNode(String(resultat.global)));
+  const noeudScore = document.createTextNode(premierAffichage ? "0" : String(resultat.global));
+  score.appendChild(noeudScore);
   const surCent = document.createElement("span");
   surCent.className = "sur-cent";
   surCent.textContent = "/100";
   score.appendChild(surCent);
+  if (premierAffichage) compterJusqua(noeudScore, resultat.global);
   tampon.setAttribute("role", "img");
   tampon.setAttribute("aria-label", "Score global : " + resultat.global + " sur 100, le " + formaterDate(etat.modifieLe));
   $("tampon-date").textContent = formaterDate(etat.modifieLe);
@@ -726,7 +830,7 @@ function rendreResultats() {
   /* Barres d'axe */
   const liste = $("liste-axes");
   liste.innerHTML = "";
-  ORDRE_AXES.forEach(function (axe) {
+  ORDRE_AXES.forEach(function (axe, idx) {
     const valeur = resultat.axes[axe];
     const seuil = seuilAxe(valeur);
     const ligne = document.createElement("div");
@@ -762,20 +866,22 @@ function rendreResultats() {
     if (barresDejaAnimees) {
       remplissage.style.width = valeur + "%";
     } else {
-      /* animation une seule fois : départ à 0, puis largeur cible */
+      /* animation une seule fois : départ à 0, puis largeur cible, en cascade */
+      remplissage.style.transitionDelay = (idx * 90) + "ms";
       requestAnimationFrame(function () {
         requestAnimationFrame(function () { remplissage.style.width = valeur + "%"; });
       });
     }
   });
-  barresDejaAnimees = true;
 
   /* Priorités */
   const prios = axesPrioritaires(resultat.axes);
   const ol = $("liste-priorites");
+  ol.className = premierAffichage ? "" : "sans-entree";
   ol.innerHTML = "";
   prios.forEach(function (axe, i) {
     const li = document.createElement("li");
+    if (premierAffichage) li.style.animationDelay = (0.25 + i * 0.12) + "s";
     const num = document.createElement("span");
     num.className = "prio-num";
     num.setAttribute("aria-hidden", "true");
@@ -800,6 +906,8 @@ function rendreResultats() {
     li.appendChild(bloc);
     ol.appendChild(li);
   });
+
+  barresDejaAnimees = true;
 
   /* Pied d'impression */
   $("date-impression").textContent = formaterDate();
@@ -850,6 +958,7 @@ function envoyerEmail(evt) {
 }
 
 /* ===== Initialisation ===== */
+construireSegments();
 $("btn-commencer").addEventListener("click", function () {
   if (diagnosticComplet()) { location.hash = "#resultats"; return; }
   if (location.hash === "#diagnostic") { rendreQuestion(true); } else { location.hash = "#diagnostic"; }
