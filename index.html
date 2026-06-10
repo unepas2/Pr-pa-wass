@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CADRE — Où en est votre entreprise avec l'IA ?</title>
+<meta name="description" content="Autodiagnostic de gouvernance IA pour les PME : 15 questions, 10 minutes, un score et un plan d'action. Un outil d'Escale Digitale Solutions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --encre:#1C2B3A;
+  --papier:#FBFAF7;
+  --blanc:#FFFFFF;
+  --vert:#0F6E56;
+  --vert-fonce:#0B5A46;
+  --vert-clair:#E1F5EE;
+  --ambre:#B97514;
+  --ambre-clair:#FAEEDA;
+  --rouge:#A32D2D;
+  --rouge-clair:#FCEBEB;
+  --lignes:#E4E1D8;
+  --secondaire:#5F6B76;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px}
+body{
+  font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  background:var(--papier);
+  color:var(--encre);
+  line-height:1.55;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+.conteneur{width:100%;max-width:680px;margin:0 auto;padding:0 20px}
+a{color:var(--vert);text-decoration:underline;text-underline-offset:2px}
+a:hover{color:var(--vert-fonce)}
+:focus-visible{outline:3px solid var(--vert);outline-offset:2px;border-radius:4px}
+h1{font-size:1.75rem;font-weight:800;line-height:1.25}
+h2{font-size:1.25rem;font-weight:800;line-height:1.3}
+.vue[hidden]{display:none}
+
+/* En-tête du site */
+.entete-site{border-bottom:1px solid var(--lignes);background:var(--blanc)}
+.entete-site .conteneur{display:flex;align-items:baseline;gap:10px;padding-top:14px;padding-bottom:14px}
+.marque{font-weight:800;font-size:1.1rem;letter-spacing:.14em;color:var(--encre);text-decoration:none}
+.marque-sous{font-size:.8rem;color:var(--secondaire)}
+
+main{flex:1;padding:28px 0 40px}
+
+/* Pied de page du site */
+.pied-site{border-top:1px solid var(--lignes);background:var(--blanc);margin-top:auto}
+.pied-site .conteneur{display:flex;flex-wrap:wrap;gap:8px 20px;padding-top:16px;padding-bottom:16px;font-size:.85rem;color:var(--secondaire)}
+.pied-site a{color:var(--secondaire)}
+
+/* Boutons */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:48px;padding:12px 22px;border-radius:8px;
+  background:var(--vert);color:#fff;border:1px solid var(--vert);
+  font-family:inherit;font-size:1rem;font-weight:600;cursor:pointer;
+  transition:background-color .15s ease,border-color .15s ease;
+  text-decoration:none;
+}
+.btn:hover{background:var(--vert-fonce);border-color:var(--vert-fonce)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-secondaire{background:var(--blanc);color:var(--encre);border:1px solid var(--lignes)}
+.btn-secondaire:hover{background:var(--papier);border-color:var(--secondaire)}
+.btn-lien{background:none;border:none;color:var(--secondaire);font-family:inherit;font-size:.85rem;text-decoration:underline;text-underline-offset:2px;cursor:pointer;padding:6px}
+.btn-lien:hover{color:var(--encre)}
+
+/* Cartes */
+.carte{
+  background:var(--blanc);border:1px solid var(--lignes);border-radius:12px;
+  padding:20px;box-shadow:0 1px 2px rgba(28,43,58,.04);margin-bottom:16px;
+}
+
+/* ----- Accueil ----- */
+#vue-accueil h1{margin-bottom:12px}
+.sous-titre{color:var(--secondaire);font-size:1.05rem;margin-bottom:20px}
+.bloc-cta{margin-bottom:8px}
+.note-reprise{font-size:.85rem;color:var(--secondaire);margin-top:8px}
+.reassurances{list-style:none;display:flex;flex-direction:column;gap:8px;margin:24px 0;padding:0}
+.reassurances li{display:flex;align-items:center;gap:10px;font-size:.95rem}
+.coche{flex:none;width:22px;height:22px;border-radius:50%;background:var(--vert-clair);color:var(--vert);display:inline-flex;align-items:center;justify-content:center}
+.coche svg{width:12px;height:12px}
+.liste-axes-accueil{list-style:none;padding:0;display:flex;flex-direction:column;gap:10px}
+.liste-axes-accueil li{display:flex;align-items:center;gap:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.axe-lettre{flex:none;width:30px;height:30px;border:1.5px solid var(--vert);color:var(--vert);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem}
+.signature{font-size:.9rem;color:var(--secondaire);margin-top:24px}
+
+/* ----- Diagnostic ----- */
+.diag-tete{margin-bottom:16px}
+.progression-texte{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:.85rem;color:var(--secondaire);margin-bottom:8px}
+.progression-texte strong{color:var(--encre);font-weight:600}
+.progression-piste{height:6px;background:var(--lignes);border-radius:3px;overflow:hidden}
+#progression-remplie{height:100%;width:0;background:var(--vert);border-radius:3px;transition:width .2s ease}
+.carte-question h2{margin-bottom:18px;font-size:1.15rem}
+.options{display:flex;flex-direction:column;gap:10px}
+.option{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  width:100%;min-height:56px;padding:14px 16px;text-align:left;
+  background:var(--blanc);border:1px solid var(--lignes);border-radius:12px;
+  font-family:inherit;font-size:1rem;color:var(--encre);cursor:pointer;
+  transition:border-color .15s ease,background-color .15s ease;
+}
+.option:hover{border-color:var(--vert)}
+.option[aria-pressed="true"]{border-color:var(--vert);background:var(--vert-clair);font-weight:600}
+.option .option-coche{flex:none;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--lignes);display:inline-flex;align-items:center;justify-content:center;color:#fff}
+.option[aria-pressed="true"] .option-coche{background:var(--vert);border-color:var(--vert)}
+.option .option-coche svg{width:11px;height:11px}
+.diag-nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+
+/* ----- Résultats ----- */
+.resultat-tete{display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;margin-bottom:20px}
+.sur-titre{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--secondaire);margin-bottom:4px}
+.tampon{
+  flex:none;width:176px;height:176px;border-radius:50%;
+  border:3px solid currentColor;display:flex;align-items:center;justify-content:center;
+  transform:rotate(-3deg);
+}
+.tampon-int{
+  width:150px;height:150px;border-radius:50%;border:1.5px solid currentColor;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-align:center;
+}
+.tampon-marque{font-size:.7rem;letter-spacing:.2em;font-weight:600;color:var(--encre)}
+.tampon-score{font-size:2.5rem;font-weight:800;line-height:1.1}
+.tampon-score .sur-cent{font-size:1rem;font-weight:600}
+.tampon-date{font-size:.75rem;color:var(--encre)}
+.seuil-vert{color:var(--vert);background:var(--vert-clair)}
+.seuil-ambre{color:var(--ambre);background:var(--ambre-clair)}
+.seuil-rouge{color:var(--rouge);background:var(--rouge-clair)}
+.mention-legale{
+  background:var(--blanc);border:1px solid var(--lignes);border-left:4px solid var(--encre);
+  border-radius:8px;padding:12px 16px;font-size:.9rem;color:var(--encre);margin-bottom:16px;
+}
+.axe-ligne{padding:12px 0;border-bottom:1px solid var(--lignes)}
+.axe-ligne:last-child{border-bottom:none;padding-bottom:0}
+.axe-ligne-tete{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:6px}
+.axe-nom{font-weight:600;font-size:.95rem}
+.axe-score{font-weight:800;white-space:nowrap}
+.axe-score .sur-cent{font-weight:400;font-size:.8rem;color:var(--secondaire)}
+.axe-piste{height:10px;background:var(--papier);border:1px solid var(--lignes);border-radius:5px;overflow:hidden;margin-bottom:6px}
+.axe-remplissage{height:100%;width:0;border-radius:5px;transition:width .2s ease}
+.axe-remplissage.sans-anim{transition:none}
+.fond-vert{background:var(--vert)}
+.fond-ambre{background:var(--ambre)}
+.fond-rouge{background:var(--rouge)}
+.puce{display:inline-block;font-size:.75rem;font-weight:600;color:var(--encre);border:1px solid;border-radius:99px;padding:2px 10px}
+.puce-vert{background:var(--vert-clair);border-color:var(--vert)}
+.puce-ambre{background:var(--ambre-clair);border-color:var(--ambre)}
+.puce-rouge{background:var(--rouge-clair);border-color:var(--rouge)}
+#liste-priorites{list-style:none;padding:0;counter-reset:prio}
+#liste-priorites li{padding:14px 0;border-bottom:1px solid var(--lignes);display:flex;gap:14px}
+#liste-priorites li:last-child{border-bottom:none;padding-bottom:0}
+.prio-num{flex:none;width:28px;height:28px;border-radius:50%;background:var(--encre);color:#fff;font-weight:800;font-size:.85rem;display:inline-flex;align-items:center;justify-content:center;margin-top:2px}
+.prio-axe{font-weight:800;margin-bottom:4px}
+.prio-texte{font-size:.95rem}
+.lien-formateur{display:inline-block;margin-top:8px;font-weight:600}
+.actions{display:flex;flex-direction:column;gap:10px;margin:20px 0}
+@media (min-width:480px){.actions{flex-direction:row}}
+
+/* Bloc email */
+#bloc-email label{display:block;font-weight:600;font-size:.95rem;margin-bottom:6px}
+#bloc-email .intro-email{color:var(--secondaire);font-size:.95rem;margin:8px 0 16px}
+#champ-email{
+  width:100%;min-height:48px;padding:10px 14px;border:1px solid var(--lignes);
+  border-radius:8px;font-family:inherit;font-size:1rem;color:var(--encre);background:var(--blanc);
+  margin-bottom:14px;
+}
+#champ-email:focus-visible{outline:3px solid var(--vert);outline-offset:1px}
+.case{display:flex;gap:10px;align-items:flex-start;font-weight:400 !important;font-size:.9rem !important;margin-bottom:16px;cursor:pointer}
+.case input{flex:none;width:20px;height:20px;margin-top:2px;accent-color:var(--vert);cursor:pointer}
+#email-message{font-size:.95rem;margin-top:12px}
+#email-message.succes{color:var(--vert);font-weight:600}
+#email-message.erreur{color:var(--rouge);font-weight:600}
+
+/* ----- Pages simples ----- */
+.page-simple h1{margin-bottom:16px}
+.page-simple h2{font-size:1.05rem;margin:18px 0 6px}
+.page-simple p{margin-bottom:10px}
+.page-simple .retour{display:inline-block;margin-top:20px}
+
+/* Impression */
+.print-seulement{display:none}
+
+@media print{
+  @page{size:A4;margin:14mm}
+  body{background:#fff;display:block}
+  .entete-site,.pied-site,.pas-impression{display:none !important}
+  main{padding:0}
+  .conteneur{max-width:none;padding:0}
+  .print-seulement{display:block}
+  .carte{box-shadow:none;break-inside:avoid}
+  .resultat-tete{flex-direction:row;text-align:left;justify-content:flex-start}
+  .tampon,.axe-remplissage,.puce,.seuil-vert,.seuil-ambre,.seuil-rouge{
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;
+  }
+  .axe-remplissage{transition:none}
+  .entete-impression{margin-bottom:18px;border-bottom:1px solid var(--lignes);padding-bottom:10px}
+  .entete-impression .marque{font-size:1.2rem}
+  .pied-impression{margin-top:18px;border-top:1px solid var(--lignes);padding-top:10px;font-size:.8rem;color:var(--secondaire)}
+}
+
+/* Mouvement réduit */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none !important;animation:none !important}
+}
+</style>
+</head>
+<body>
+
+<header class="entete-site pas-impression">
+  <div class="conteneur">
+    <a class="marque" href="#">CADRE</a>
+    <span class="marque-sous">Autodiagnostic de gouvernance IA</span>
+  </div>
+</header>
+
+<main>
+  <div class="conteneur">
+    <noscript><p class="carte">Ce diagnostic a besoin de JavaScript pour fonctionner. Merci de l'activer dans votre navigateur.</p></noscript>
+
+    <!-- ===== Accueil ===== -->
+    <section id="vue-accueil" class="vue">
+      <h1 id="titre-accueil" tabindex="-1">Où en est votre entreprise avec l'IA ?</h1>
+      <p class="sous-titre">15 questions, 10 minutes, sans création de compte. Un score, un plan d'action, et une vision claire de ce qui vous reste à cadrer.</p>
+      <div class="bloc-cta">
+        <button id="btn-commencer" class="btn">Faire le diagnostic</button>
+        <p id="note-reprise" class="note-reprise" hidden></p>
+        <button id="btn-recommencer" class="btn-lien" hidden>Recommencer à zéro</button>
+      </div>
+      <ul class="reassurances">
+        <li><span class="coche" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5 4.7 9 10 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Gratuit, sans inscription</li>
+        <li><span class="coche" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5 4.7 9 10 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Vos réponses restent sur votre appareil</li>
+        <li><span class="coche" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5 4.7 9 10 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Conçu pour les PME, sans jargon</li>
+      </ul>
+      <div class="carte">
+        <h2>Les 5 axes du diagnostic</h2>
+        <ul class="liste-axes-accueil" style="margin-top:14px">
+          <li><span class="axe-lettre" aria-hidden="true">C</span>Cartographie des usages IA</li>
+          <li><span class="axe-lettre" aria-hidden="true">A</span>Acculturation des équipes</li>
+          <li><span class="axe-lettre" aria-hidden="true">D</span>Données &amp; confidentialité</li>
+          <li><span class="axe-lettre" aria-hidden="true">R</span>Règles &amp; documentation</li>
+          <li><span class="axe-lettre" aria-hidden="true">E</span>Évaluation continue</li>
+        </ul>
+      </div>
+      <p class="signature">Un outil d'<a href="https://eds-formation.fr">Escale Digitale Solutions</a> — formation et accompagnement IA des PME</p>
+    </section>
+
+    <!-- ===== Diagnostic ===== -->
+    <section id="vue-diagnostic" class="vue" hidden>
+      <div class="diag-tete">
+        <p class="progression-texte"><strong id="diag-compteur">Question 1 / 15</strong><span id="diag-axe"></span></p>
+        <div class="progression-piste" aria-hidden="true"><div id="progression-remplie"></div></div>
+      </div>
+      <div class="carte carte-question">
+        <h2 id="diag-question" tabindex="-1"></h2>
+        <div id="diag-options" class="options" role="group" aria-labelledby="diag-question"></div>
+      </div>
+      <div class="diag-nav">
+        <button id="btn-precedent" class="btn btn-secondaire">Précédent</button>
+        <button id="btn-suivant" class="btn btn-secondaire" hidden>Suivant</button>
+      </div>
+    </section>
+
+    <!-- ===== Résultats ===== -->
+    <section id="vue-resultats" class="vue" hidden>
+      <div class="print-seulement entete-impression">
+        <span class="marque">CADRE</span> — Rapport d'autodiagnostic de gouvernance IA<br>
+        <span style="font-size:.85rem;color:var(--secondaire)">Un outil d'Escale Digitale Solutions — formation et accompagnement IA des PME</span>
+      </div>
+      <div class="resultat-tete">
+        <div id="tampon" class="tampon">
+          <div class="tampon-int">
+            <span class="tampon-marque">CADRE</span>
+            <span class="tampon-score" id="tampon-score"></span>
+            <span class="tampon-date" id="tampon-date"></span>
+          </div>
+        </div>
+        <div>
+          <p class="sur-titre">Votre score global</p>
+          <h1 id="resultat-libelle" tabindex="-1"></h1>
+        </div>
+      </div>
+      <p class="mention-legale">Cet autodiagnostic est un outil de sensibilisation. Il ne constitue ni un conseil juridique ni un audit de conformité.</p>
+      <div class="carte">
+        <h2>Vos 5 axes</h2>
+        <div id="liste-axes"></div>
+      </div>
+      <div class="carte">
+        <h2>Vos 3 priorités</h2>
+        <ol id="liste-priorites"></ol>
+      </div>
+      <div class="carte pas-impression" id="bloc-email" hidden>
+        <h2>Recevez votre rapport complet par email</h2>
+        <p class="intro-email">Le détail de vos 5 axes, vos 3 priorités et les premières actions concrètes, dans un document que vous pouvez partager en interne.</p>
+        <form id="form-email" novalidate>
+          <label for="champ-email">Votre adresse email</label>
+          <input id="champ-email" name="email" type="email" autocomplete="email" required>
+          <label class="case" for="case-consentement">
+            <input type="checkbox" id="case-consentement">
+            <span>J'accepte de recevoir mon rapport et des conseils occasionnels d'Escale Digitale Solutions sur la gouvernance IA. Désinscription en un clic.</span>
+          </label>
+          <button type="submit" id="btn-envoyer" class="btn" disabled>Recevoir mon rapport</button>
+        </form>
+        <p id="email-message" role="status" aria-live="polite"></p>
+      </div>
+      <div class="actions pas-impression">
+        <button id="btn-imprimer" class="btn">Imprimer mon rapport</button>
+        <button id="btn-revoir" class="btn btn-secondaire">Revoir mes réponses</button>
+      </div>
+      <p class="print-seulement pied-impression">Généré avec CADRE — cadre.eds-formation.fr — <span id="date-impression"></span></p>
+    </section>
+
+    <!-- ===== Mentions légales ===== -->
+    <section id="vue-mentions" class="vue page-simple" hidden>
+      <h1 tabindex="-1">Mentions légales</h1>
+      <div class="carte">
+        <h2>Éditeur</h2>
+        <p>Escale Digitale Solutions, Issoudun<br>SIRET : 949 409 015 00011</p>
+        <h2>Contact</h2>
+        <p><a href="mailto:escale.digitale.solutions@gmail.com">escale.digitale.solutions@gmail.com</a></p>
+        <h2>Hébergeur</h2>
+        <p>Cloudflare</p>
+      </div>
+      <a class="retour" href="#">Retour à l'accueil</a>
+    </section>
+
+    <!-- ===== Confidentialité ===== -->
+    <section id="vue-confidentialite" class="vue page-simple" hidden>
+      <h1 tabindex="-1">Confidentialité</h1>
+      <div class="carte">
+        <h2>Vos réponses</h2>
+        <p>Vos réponses au diagnostic restent dans votre navigateur. Elles ne sont envoyées à aucun serveur.</p>
+        <h2>Votre email</h2>
+        <p>Seul votre email part, avec votre consentement, vers le CRM d'Escale Digitale Solutions, pour l'envoi du rapport et de conseils.</p>
+        <h2>Conservation</h2>
+        <p>Votre email est conservé 3 ans.</p>
+        <h2>Vos droits</h2>
+        <p>Vous pouvez exercer vos droits en écrivant à <a href="mailto:escale.digitale.solutions@gmail.com">escale.digitale.solutions@gmail.com</a>.</p>
+        <h2>Cookies</h2>
+        <p>Ce site n'utilise aucun cookie.</p>
+      </div>
+      <a class="retour" href="#">Retour à l'accueil</a>
+    </section>
+
+  </div>
+</main>
+
+<footer class="pied-site pas-impression">
+  <div class="conteneur">
+    <a href="#mentions">Mentions légales</a>
+    <a href="#confidentialite">Confidentialité</a>
+  </div>
+</footer>
+
+<script>
+"use strict";
+
+/* À REMPLACER AU DÉPLOIEMENT : URL du Google Apps Script qui reçoit l'email.
+   Tant que cette constante est vide, le bloc email est masqué. */
+const URL_APPS_SCRIPT = "";
+
+/* ===== Données du diagnostic (textes exacts, ne pas reformuler) ===== */
+const AXES = {
+  C: "Cartographie des usages IA",
+  A: "Acculturation des équipes",
+  D: "Données & confidentialité",
+  R: "Règles & documentation",
+  E: "Évaluation continue"
+};
+const ORDRE_AXES = ["C", "A", "D", "R", "E"];
+/* Ordre de départage des priorités en cas d'égalité : D > R > A > C > E */
+const RANG_PRIORITE = { D: 0, R: 1, A: 2, C: 3, E: 4 };
+
+const QUESTIONS = [
+  { id: "C1", axe: "C", texte: "Savez-vous quels outils d'IA sont utilisés dans votre entreprise aujourd'hui (ChatGPT, Gemini, Copilot, traducteurs en ligne…) ?",
+    options: [
+      { texte: "Oui, j'ai une liste à jour", points: 20 },
+      { texte: "J'en connais une partie", points: 10 },
+      { texte: "Honnêtement, non", points: 0 }
+    ] },
+  { id: "C2", axe: "C", texte: "Vos collaborateurs utilisent-ils des outils d'IA gratuits avec un compte personnel pour des tâches professionnelles ?",
+    options: [
+      { texte: "Non, uniquement des comptes professionnels encadrés", points: 20 },
+      { texte: "Probablement, sans que ce soit suivi", points: 5 },
+      { texte: "Oui, c'est courant", points: 0 },
+      { texte: "Je ne sais pas", points: 0 }
+    ] },
+  { id: "C3", axe: "C", texte: "Avez-vous identifié les tâches de l'entreprise où l'IA intervient (devis, mails clients, traduction, tri de candidatures…) ?",
+    options: [
+      { texte: "Oui, c'est écrit quelque part", points: 20 },
+      { texte: "En partie, de tête", points: 10 },
+      { texte: "Non", points: 0 }
+    ] },
+  { id: "A1", axe: "A", texte: "Vos collaborateurs ont-ils été formés ou sensibilisés à l'usage de l'IA, même lors d'une session courte ?",
+    options: [
+      { texte: "Oui, toute l'équipe", points: 20 },
+      { texte: "Une partie de l'équipe", points: 10 },
+      { texte: "Personne pour l'instant", points: 0 }
+    ] },
+  { id: "A2", axe: "A", texte: "Gardez-vous une trace écrite de ces sensibilisations (dates, participants, contenu) ?",
+    options: [
+      { texte: "Oui", points: 20 },
+      { texte: "Partiellement", points: 10 },
+      { texte: "Non, ou pas de formation à tracer", points: 0 }
+    ] },
+  { id: "A3", axe: "A", texte: "Vos équipes savent-elles que l'IA peut se tromper avec assurance (informations inventées, chiffres faux) et ont-elles le réflexe de vérifier ?",
+    options: [
+      { texte: "Oui, le réflexe est installé", points: 20 },
+      { texte: "C'est variable selon les personnes", points: 10 },
+      { texte: "Non, ou je ne sais pas", points: 0 }
+    ] },
+  { id: "D1", axe: "D", texte: "Existe-t-il une règle claire sur ce qui ne doit jamais être saisi dans une IA (données clients, salaires, secrets de fabrication…) ?",
+    options: [
+      { texte: "Oui, écrite et connue de tous", points: 20 },
+      { texte: "C'est du bon sens, mais rien d'écrit", points: 5 },
+      { texte: "Non", points: 0 }
+    ] },
+  { id: "D2", axe: "D", texte: "Des documents internes (contrats, fichiers clients, données RH) ont-ils pu être copiés dans un outil d'IA grand public ?",
+    options: [
+      { texte: "Non, c'est verrouillé", points: 20 },
+      { texte: "C'est possible", points: 5 },
+      { texte: "Oui, sûrement", points: 0 },
+      { texte: "Je ne sais pas", points: 0 }
+    ] },
+  { id: "D3", axe: "D", texte: "Savez-vous si les outils d'IA que vous utilisez conservent ou réutilisent ce que vous y saisissez pour s'entraîner ?",
+    options: [
+      { texte: "Oui, c'est vérifié outil par outil", points: 20 },
+      { texte: "Pour certains outils seulement", points: 10 },
+      { texte: "Non, jamais regardé", points: 0 }
+    ] },
+  { id: "R1", axe: "R", texte: "Votre entreprise dispose-t-elle d'une politique ou charte IA écrite ?",
+    options: [
+      { texte: "Oui, diffusée et signée par les équipes", points: 20 },
+      { texte: "Un document existe, mais il est peu connu", points: 10 },
+      { texte: "Non", points: 0 }
+    ] },
+  { id: "R2", axe: "R", texte: "Tenez-vous un registre des outils d'IA autorisés, tolérés ou interdits ?",
+    options: [
+      { texte: "Oui, à jour", points: 20 },
+      { texte: "Une liste informelle existe", points: 10 },
+      { texte: "Non", points: 0 }
+    ] },
+  { id: "R3", axe: "R", texte: "En cas d'incident lié à l'IA (erreur dans un devis envoyé, fuite d'information), qui fait quoi est-il défini ?",
+    options: [
+      { texte: "Oui, c'est écrit", points: 20 },
+      { texte: "Pas vraiment, on improviserait", points: 5 },
+      { texte: "Non", points: 0 }
+    ] },
+  { id: "E1", axe: "E", texte: "Quelqu'un suit-il les évolutions des règles sur l'IA (AI Act, recommandations CNIL) pour votre entreprise ?",
+    options: [
+      { texte: "Oui, en interne ou via un prestataire", points: 20 },
+      { texte: "De loin, par la presse", points: 10 },
+      { texte: "Non", points: 0 }
+    ] },
+  { id: "E2", axe: "E", texte: "Faites-vous un point régulier, au moins annuel, sur les usages de l'IA dans l'entreprise ?",
+    options: [
+      { texte: "Oui, c'est planifié", points: 20 },
+      { texte: "C'est prévu, mais pas encore fait", points: 10 },
+      { texte: "Non", points: 0 }
+    ] },
+  { id: "E3", axe: "E", texte: "Si un client, un donneur d'ordre ou un assureur vous demandait demain ce que votre entreprise fait avec l'IA, pourriez-vous le prouver documents à l'appui ?",
+    options: [
+      { texte: "Oui", points: 20 },
+      { texte: "En partie", points: 10 },
+      { texte: "Non", points: 0 }
+    ] }
+];
+
+const RECOMMANDATIONS = {
+  C: "Recensez les outils réellement utilisés : 30 minutes avec chaque équipe suffisent pour une première liste.",
+  A: "Planifiez une sensibilisation de vos équipes : l'obligation de maîtrise de l'IA (AI Act, article 4) s'applique déjà, et la trace écrite compte autant que la session elle-même.",
+  D: "Écrivez la liste des informations interdites de saisie dans une IA : une page suffit pour commencer, et c'est la protection la plus rentable qui existe.",
+  R: "Formalisez votre politique IA et votre charte collaborateur : c'est le socle de tout le reste.",
+  E: "Mettez une date de revue annuelle au calendrier et organisez une veille : le calendrier réglementaire bouge, autant être prévenu plutôt que surpris."
+};
+const MAILTO_FORMATEUR = "mailto:escale.digitale.solutions@gmail.com?subject=" +
+  encodeURIComponent("Diagnostic CADRE — sensibilisation équipe");
+
+/* ===== État et stockage (jamais l'email) ===== */
+const CLE_STOCKAGE = "cadre.diagnostic.v1";
+
+function etatNeuf() {
+  const maintenant = new Date().toISOString();
+  return { version: 1, reponses: {}, courante: 0, creeLe: maintenant, modifieLe: maintenant };
+}
+function chargerEtat() {
+  try {
+    const brut = localStorage.getItem(CLE_STOCKAGE);
+    if (!brut) return null;
+    const e = JSON.parse(brut);
+    if (!e || typeof e !== "object" || typeof e.reponses !== "object" || e.reponses === null) return null;
+    if (typeof e.courante !== "number" || e.courante < 0 || e.courante > 14) e.courante = 0;
+    return e;
+  } catch (err) { return null; }
+}
+function sauverEtat() {
+  etat.modifieLe = new Date().toISOString();
+  try { localStorage.setItem(CLE_STOCKAGE, JSON.stringify(etat)); } catch (err) { /* stockage indisponible : on continue sans sauvegarde */ }
+}
+let etat = chargerEtat() || etatNeuf();
+
+function nbReponses() {
+  return QUESTIONS.filter(function (q) { return etat.reponses[q.id] !== undefined; }).length;
+}
+function diagnosticComplet() { return nbReponses() === QUESTIONS.length; }
+
+/* ===== Barème ===== */
+function calculerScores(reponses) {
+  const scores = {};
+  ORDRE_AXES.forEach(function (axe) {
+    let total = 0;
+    QUESTIONS.forEach(function (q) {
+      if (q.axe !== axe) return;
+      const idx = reponses[q.id];
+      if (idx !== undefined && q.options[idx]) total += q.options[idx].points;
+    });
+    scores[axe] = Math.round(total / 60 * 100);
+  });
+  const global = Math.round(ORDRE_AXES.reduce(function (s, a) { return s + scores[a]; }, 0) / ORDRE_AXES.length);
+  return { axes: scores, global: global };
+}
+function seuilAxe(score) {
+  if (score >= 65) return { classe: "vert", libelle: "maîtrisé" };
+  if (score >= 45) return { classe: "ambre", libelle: "à consolider" };
+  return { classe: "rouge", libelle: "prioritaire" };
+}
+function libelleGlobal(score) {
+  if (score >= 65) return "Maturité IA : bien engagée";
+  if (score >= 45) return "Maturité IA : en construction";
+  return "Maturité IA : à structurer";
+}
+function axesPrioritaires(scores) {
+  return ORDRE_AXES.slice().sort(function (a, b) {
+    if (scores[a] !== scores[b]) return scores[a] - scores[b];
+    return RANG_PRIORITE[a] - RANG_PRIORITE[b];
+  }).slice(0, 3);
+}
+
+/* ===== Utilitaires ===== */
+function $(id) { return document.getElementById(id); }
+function formaterDate(iso) {
+  const d = iso ? new Date(iso) : new Date();
+  return d.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+}
+function svgCoche() {
+  const ns = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(ns, "svg");
+  svg.setAttribute("viewBox", "0 0 12 12");
+  svg.setAttribute("fill", "none");
+  svg.setAttribute("aria-hidden", "true");
+  const path = document.createElementNS(ns, "path");
+  path.setAttribute("d", "M2 6.5 4.7 9 10 3.5");
+  path.setAttribute("stroke", "currentColor");
+  path.setAttribute("stroke-width", "2");
+  path.setAttribute("stroke-linecap", "round");
+  path.setAttribute("stroke-linejoin", "round");
+  svg.appendChild(path);
+  return svg;
+}
+
+/* ===== Navigation par hash ===== */
+let minuteurAvance = null;
+let barresDejaAnimees = false;
+
+function afficherVue(nom) {
+  document.querySelectorAll(".vue").forEach(function (v) { v.hidden = (v.id !== "vue-" + nom); });
+  window.scrollTo(0, 0);
+}
+function focaliser(el) { if (el) el.focus({ preventScroll: true }); }
+
+function router() {
+  if (minuteurAvance) { clearTimeout(minuteurAvance); minuteurAvance = null; }
+  const h = location.hash.replace(/^#\/?/, "");
+  if (h === "diagnostic") {
+    afficherVue("diagnostic");
+    rendreQuestion(true);
+  } else if (h === "resultats") {
+    if (diagnosticComplet()) {
+      afficherVue("resultats");
+      rendreResultats();
+    } else {
+      location.hash = nbReponses() > 0 ? "#diagnostic" : "";
+      if (nbReponses() === 0) rendreAccueil();
+    }
+  } else if (h === "mentions") {
+    afficherVue("mentions");
+    focaliser(document.querySelector("#vue-mentions h1"));
+  } else if (h === "confidentialite") {
+    afficherVue("confidentialite");
+    focaliser(document.querySelector("#vue-confidentialite h1"));
+  } else {
+    rendreAccueil();
+    afficherVue("accueil");
+  }
+}
+
+/* ===== Accueil ===== */
+function rendreAccueil() {
+  const btn = $("btn-commencer");
+  const note = $("note-reprise");
+  const recommencer = $("btn-recommencer");
+  const n = nbReponses();
+  if (n > 0 && !diagnosticComplet()) {
+    btn.textContent = "Reprendre mon diagnostic";
+    note.textContent = "Vous avez répondu à " + n + " question" + (n > 1 ? "s" : "") + " sur 15. Vos réponses sont sauvegardées sur cet appareil.";
+    note.hidden = false;
+    recommencer.hidden = false;
+  } else if (diagnosticComplet()) {
+    btn.textContent = "Reprendre mon diagnostic";
+    note.textContent = "Votre diagnostic est terminé. Vos réponses sont sauvegardées sur cet appareil.";
+    note.hidden = false;
+    recommencer.hidden = false;
+  } else {
+    btn.textContent = "Faire le diagnostic";
+    note.hidden = true;
+    recommencer.hidden = true;
+  }
+}
+
+/* ===== Diagnostic ===== */
+function rendreQuestion(avecFocus) {
+  const i = etat.courante;
+  const q = QUESTIONS[i];
+  $("diag-compteur").textContent = "Question " + (i + 1) + " / 15";
+  $("diag-axe").textContent = "Axe " + q.axe + " — " + AXES[q.axe];
+  $("progression-remplie").style.width = ((i + 1) / QUESTIONS.length * 100) + "%";
+  $("diag-question").textContent = q.texte;
+
+  const conteneur = $("diag-options");
+  conteneur.innerHTML = "";
+  const choisi = etat.reponses[q.id];
+  q.options.forEach(function (opt, idx) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "option";
+    b.setAttribute("aria-pressed", String(choisi === idx));
+    const texte = document.createElement("span");
+    texte.textContent = opt.texte;
+    const coche = document.createElement("span");
+    coche.className = "option-coche";
+    coche.setAttribute("aria-hidden", "true");
+    coche.appendChild(svgCoche());
+    b.appendChild(texte);
+    b.appendChild(coche);
+    b.addEventListener("click", function () { choisirOption(q, idx); });
+    conteneur.appendChild(b);
+  });
+
+  $("btn-precedent").disabled = (i === 0);
+  const suivant = $("btn-suivant");
+  if (etat.reponses[q.id] !== undefined) {
+    suivant.hidden = false;
+    suivant.textContent = (i === QUESTIONS.length - 1) ? "Voir mes résultats" : "Suivant";
+  } else {
+    suivant.hidden = true;
+  }
+  if (avecFocus !== false) focaliser($("diag-question"));
+}
+
+function choisirOption(q, idx) {
+  if (minuteurAvance) clearTimeout(minuteurAvance);
+  etat.reponses[q.id] = idx;
+  sauverEtat();
+  /* met à jour la sélection sans re-rendre, pour laisser voir le choix */
+  const boutons = $("diag-options").querySelectorAll(".option");
+  boutons.forEach(function (b, bIdx) { b.setAttribute("aria-pressed", String(bIdx === idx)); });
+  const suivant = $("btn-suivant");
+  suivant.hidden = false;
+  suivant.textContent = (etat.courante === QUESTIONS.length - 1) ? "Voir mes résultats" : "Suivant";
+  /* passage automatique après 300 ms */
+  minuteurAvance = setTimeout(function () { minuteurAvance = null; avancer(); }, 300);
+}
+
+function avancer() {
+  if (etat.courante < QUESTIONS.length - 1) {
+    etat.courante += 1;
+    sauverEtat();
+    rendreQuestion(true);
+  } else if (diagnosticComplet()) {
+    location.hash = "#resultats";
+  }
+}
+function reculer() {
+  if (minuteurAvance) { clearTimeout(minuteurAvance); minuteurAvance = null; }
+  if (etat.courante > 0) {
+    etat.courante -= 1;
+    sauverEtat();
+    rendreQuestion(true);
+  }
+}
+
+/* ===== Résultats ===== */
+function rendreResultats() {
+  const resultat = calculerScores(etat.reponses);
+
+  /* Tampon */
+  const tampon = $("tampon");
+  const seuilGlobal = seuilAxe(resultat.global);
+  tampon.className = "tampon seuil-" + seuilGlobal.classe;
+  const score = $("tampon-score");
+  score.innerHTML = "";
+  score.appendChild(document.createTextNode(String(resultat.global)));
+  const surCent = document.createElement("span");
+  surCent.className = "sur-cent";
+  surCent.textContent = "/100";
+  score.appendChild(surCent);
+  tampon.setAttribute("role", "img");
+  tampon.setAttribute("aria-label", "Score global : " + resultat.global + " sur 100, le " + formaterDate(etat.modifieLe));
+  $("tampon-date").textContent = formaterDate(etat.modifieLe);
+  $("resultat-libelle").textContent = libelleGlobal(resultat.global);
+
+  /* Barres d'axe */
+  const liste = $("liste-axes");
+  liste.innerHTML = "";
+  ORDRE_AXES.forEach(function (axe) {
+    const valeur = resultat.axes[axe];
+    const seuil = seuilAxe(valeur);
+    const ligne = document.createElement("div");
+    ligne.className = "axe-ligne";
+    const tete = document.createElement("div");
+    tete.className = "axe-ligne-tete";
+    const nom = document.createElement("span");
+    nom.className = "axe-nom";
+    nom.textContent = axe + " — " + AXES[axe];
+    const scoreAxe = document.createElement("span");
+    scoreAxe.className = "axe-score";
+    scoreAxe.textContent = valeur;
+    const sc = document.createElement("span");
+    sc.className = "sur-cent";
+    sc.textContent = "/100";
+    scoreAxe.appendChild(sc);
+    tete.appendChild(nom);
+    tete.appendChild(scoreAxe);
+    const piste = document.createElement("div");
+    piste.className = "axe-piste";
+    piste.setAttribute("role", "img");
+    piste.setAttribute("aria-label", AXES[axe] + " : " + valeur + " sur 100, " + seuil.libelle);
+    const remplissage = document.createElement("div");
+    remplissage.className = "axe-remplissage fond-" + seuil.classe + (barresDejaAnimees ? " sans-anim" : "");
+    piste.appendChild(remplissage);
+    const puce = document.createElement("span");
+    puce.className = "puce puce-" + seuil.classe;
+    puce.textContent = seuil.libelle;
+    ligne.appendChild(tete);
+    ligne.appendChild(piste);
+    ligne.appendChild(puce);
+    liste.appendChild(ligne);
+    if (barresDejaAnimees) {
+      remplissage.style.width = valeur + "%";
+    } else {
+      /* animation une seule fois : départ à 0, puis largeur cible */
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { remplissage.style.width = valeur + "%"; });
+      });
+    }
+  });
+  barresDejaAnimees = true;
+
+  /* Priorités */
+  const prios = axesPrioritaires(resultat.axes);
+  const ol = $("liste-priorites");
+  ol.innerHTML = "";
+  prios.forEach(function (axe, i) {
+    const li = document.createElement("li");
+    const num = document.createElement("span");
+    num.className = "prio-num";
+    num.setAttribute("aria-hidden", "true");
+    num.textContent = String(i + 1);
+    const bloc = document.createElement("div");
+    const titre = document.createElement("p");
+    titre.className = "prio-axe";
+    titre.textContent = axe + " — " + AXES[axe] + " (" + resultat.axes[axe] + "/100)";
+    const texte = document.createElement("p");
+    texte.className = "prio-texte";
+    texte.textContent = RECOMMANDATIONS[axe];
+    bloc.appendChild(titre);
+    bloc.appendChild(texte);
+    if (axe === "A") {
+      const lien = document.createElement("a");
+      lien.className = "lien-formateur";
+      lien.href = MAILTO_FORMATEUR;
+      lien.textContent = "Parler à un formateur";
+      bloc.appendChild(lien);
+    }
+    li.appendChild(num);
+    li.appendChild(bloc);
+    ol.appendChild(li);
+  });
+
+  /* Pied d'impression */
+  $("date-impression").textContent = formaterDate();
+
+  /* Bloc email : visible seulement si une URL est configurée */
+  $("bloc-email").hidden = (URL_APPS_SCRIPT === "");
+
+  focaliser($("resultat-libelle"));
+}
+
+/* ===== Bloc email ===== */
+function emailValide(valeur) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valeur.trim());
+}
+function majBoutonEnvoyer() {
+  $("btn-envoyer").disabled = !(emailValide($("champ-email").value) && $("case-consentement").checked);
+}
+function envoyerEmail(evt) {
+  evt.preventDefault();
+  if ($("btn-envoyer").disabled || URL_APPS_SCRIPT === "") return;
+  const resultat = calculerScores(etat.reponses);
+  const charge = {
+    email: $("champ-email").value.trim(),
+    consentement: true,
+    scoreGlobal: resultat.global,
+    scores: { C: resultat.axes.C, A: resultat.axes.A, D: resultat.axes.D, R: resultat.axes.R, E: resultat.axes.E },
+    date: new Date().toISOString()
+  };
+  const message = $("email-message");
+  const bouton = $("btn-envoyer");
+  bouton.disabled = true;
+  message.className = "";
+  message.textContent = "Envoi en cours…";
+  fetch(URL_APPS_SCRIPT, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(charge)
+  }).then(function () {
+    $("form-email").hidden = true;
+    message.className = "succes";
+    message.textContent = "C'est noté. Votre rapport arrive dans votre boîte mail.";
+  }).catch(function () {
+    message.className = "erreur";
+    message.textContent = "L'envoi a échoué. Vérifiez votre connexion internet, puis réessayez.";
+    majBoutonEnvoyer();
+  });
+}
+
+/* ===== Initialisation ===== */
+$("btn-commencer").addEventListener("click", function () {
+  if (diagnosticComplet()) { location.hash = "#resultats"; return; }
+  if (location.hash === "#diagnostic") { rendreQuestion(true); } else { location.hash = "#diagnostic"; }
+});
+$("btn-recommencer").addEventListener("click", function () {
+  if (!window.confirm("Effacer vos réponses et recommencer le diagnostic ?")) return;
+  try { localStorage.removeItem(CLE_STOCKAGE); } catch (err) { /* rien à faire */ }
+  etat = etatNeuf();
+  sauverEtat();
+  location.hash = "#diagnostic";
+  if (location.hash === "#diagnostic") rendreQuestion(true);
+});
+$("btn-precedent").addEventListener("click", reculer);
+$("btn-suivant").addEventListener("click", function () {
+  if (minuteurAvance) { clearTimeout(minuteurAvance); minuteurAvance = null; }
+  avancer();
+});
+$("btn-imprimer").addEventListener("click", function () { window.print(); });
+$("btn-revoir").addEventListener("click", function () {
+  etat.courante = 0;
+  sauverEtat();
+  location.hash = "#diagnostic";
+});
+$("champ-email").addEventListener("input", majBoutonEnvoyer);
+$("case-consentement").addEventListener("change", majBoutonEnvoyer);
+$("form-email").addEventListener("submit", envoyerEmail);
+
+window.addEventListener("hashchange", router);
+router();
+</script>
+</body>
+</html>
