@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CADRE — Où en est votre entreprise avec l'IA ?</title>
 <meta name="description" content="Autodiagnostic de gouvernance IA pour les PME : 15 questions, 10 minutes, un score et un plan d'action. Un outil d'Escale Digitale Solutions.">
-<meta name="theme-color" content="#FBFAF7">
+<meta name="theme-color" content="#0F6E56">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
@@ -17,183 +17,227 @@
   --vert:#0F6E56;
   --vert-fonce:#0B5A46;
   --vert-clair:#E1F5EE;
+  --vert-panneau:#EAF6F1;
   --ambre:#B97514;
   --ambre-clair:#FAEEDA;
   --rouge:#A32D2D;
   --rouge-clair:#FCEBEB;
   --lignes:#E4E1D8;
   --secondaire:#5F6B76;
+  --ombre-carte:0 1px 2px rgba(28,43,58,.04);
+  --ombre-relief:0 10px 30px -12px rgba(28,43,58,.22);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{font-size:16px}
+/* l'attribut hidden doit toujours l'emporter sur un display défini par une classe */
+[hidden]{display:none !important}
+html{font-size:16px;-webkit-text-size-adjust:100%}
 body{
   font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  background:var(--papier);
+  background-color:var(--papier);
+  /* grain de papier très discret : visible seulement dans les marges, jamais sur les cartes blanches */
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.022'/%3E%3C/svg%3E");
   color:var(--encre);
   line-height:1.55;
   min-height:100vh;
   display:flex;
   flex-direction:column;
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
 }
 .conteneur{width:100%;max-width:680px;margin:0 auto;padding:0 20px}
-a{color:var(--vert);text-decoration:underline;text-underline-offset:2px}
+a{color:var(--vert);text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1.5px}
 a:hover{color:var(--vert-fonce)}
-:focus-visible{outline:3px solid var(--vert);outline-offset:2px;border-radius:4px}
-h1{font-size:1.75rem;font-weight:800;line-height:1.25}
+h1{font-size:1.8rem;font-weight:800;line-height:1.22;letter-spacing:-.01em}
 h2{font-size:1.25rem;font-weight:800;line-height:1.3}
 .vue[hidden]{display:none}
 
+/* Lien d'évitement (accessibilité clavier) */
+.evitement{position:absolute;left:-9999px;top:0;background:var(--encre);color:#fff;padding:10px 16px;border-radius:0 0 8px 0;z-index:50}
+.evitement:focus{left:0}
+
+/* Focus visible homogène */
+:focus-visible{outline:3px solid var(--vert);outline-offset:2px;border-radius:6px}
+
 /* En-tête du site */
 .entete-site{border-bottom:1px solid var(--lignes);background:var(--blanc);position:sticky;top:0;z-index:20}
-.entete-site .conteneur{display:flex;align-items:baseline;gap:10px;padding-top:14px;padding-bottom:14px}
-.marque{font-weight:800;font-size:1.1rem;letter-spacing:.14em;color:var(--encre);text-decoration:none}
-.marque-sous{font-size:.8rem;color:var(--secondaire)}
+.entete-site .conteneur{display:flex;align-items:center;gap:11px;padding-top:13px;padding-bottom:13px}
+.sceau-mini{flex:none;width:26px;height:26px;border-radius:50%;border:2px solid var(--vert);position:relative}
+.sceau-mini::after{content:"";position:absolute;inset:3px;border-radius:50%;border:1px dashed var(--vert)}
+.marque{font-weight:800;font-size:1.1rem;letter-spacing:.16em;color:var(--encre);text-decoration:none}
+.marque-sous{font-size:.8rem;color:var(--secondaire);margin-left:auto}
+@media (max-width:430px){.marque-sous{display:none}}
 
-main{flex:1;padding:28px 0 40px}
+main{flex:1;padding:26px 0 44px}
 
 /* Pied de page du site */
 .pied-site{border-top:1px solid var(--lignes);background:var(--blanc);margin-top:auto}
-.pied-site .conteneur{display:flex;flex-wrap:wrap;gap:8px 20px;padding-top:16px;padding-bottom:16px;font-size:.85rem;color:var(--secondaire)}
+.pied-site .conteneur{display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;padding-top:16px;padding-bottom:16px;font-size:.85rem;color:var(--secondaire)}
 .pied-site a{color:var(--secondaire)}
+.pied-site .pied-marque{font-weight:800;letter-spacing:.12em;color:var(--encre)}
 
 /* Boutons */
 .btn{
-  display:inline-flex;align-items:center;justify-content:center;
-  min-height:48px;padding:12px 22px;border-radius:8px;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:52px;padding:13px 24px;border-radius:8px;
   background:var(--vert);color:#fff;border:1px solid var(--vert);
   font-family:inherit;font-size:1rem;font-weight:600;cursor:pointer;
   transition:background-color .15s ease,border-color .15s ease,transform .15s ease,box-shadow .2s ease;
-  text-decoration:none;
-  box-shadow:0 1px 2px rgba(15,110,86,.18);
+  text-decoration:none;box-shadow:0 1px 2px rgba(15,110,86,.2);
 }
-.btn:hover{background:var(--vert-fonce);border-color:var(--vert-fonce);transform:translateY(-1px);box-shadow:0 6px 16px -6px rgba(15,110,86,.45)}
-.btn:active{transform:translateY(0) scale(.98);box-shadow:0 1px 2px rgba(15,110,86,.18)}
+.btn:hover{background:var(--vert-fonce);border-color:var(--vert-fonce);transform:translateY(-1px);box-shadow:0 8px 18px -8px rgba(15,110,86,.5)}
+.btn:active{transform:translateY(0) scale(.985);box-shadow:0 1px 2px rgba(15,110,86,.2)}
 .btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
-.btn .fleche{display:inline-block;margin-left:8px;transition:transform .2s ease}
+.btn .fleche{display:inline-block;transition:transform .2s ease;font-weight:800}
 .btn:hover .fleche{transform:translateX(4px)}
-.btn-secondaire{background:var(--blanc);color:var(--encre);border:1px solid var(--lignes)}
-.btn-secondaire:hover{background:var(--papier);border-color:var(--secondaire)}
-.btn-lien{background:none;border:none;color:var(--secondaire);font-family:inherit;font-size:.85rem;text-decoration:underline;text-underline-offset:2px;cursor:pointer;padding:6px}
+.btn-bloc{width:100%}
+.btn-secondaire{background:var(--blanc);color:var(--encre);border:1px solid var(--lignes);box-shadow:none}
+.btn-secondaire:hover{background:var(--papier);border-color:var(--secondaire);box-shadow:var(--ombre-relief)}
+.btn-lien{background:none;border:none;color:var(--secondaire);font-family:inherit;font-size:.88rem;text-decoration:underline;text-underline-offset:2px;cursor:pointer;padding:6px 2px}
 .btn-lien:hover{color:var(--encre)}
+.btn-lien-fort{color:var(--rouge);font-weight:600}
+.btn-lien-fort:hover{color:#7f2121}
 
 /* Cartes */
 .carte{
   background:var(--blanc);border:1px solid var(--lignes);border-radius:12px;
-  padding:20px;box-shadow:0 1px 2px rgba(28,43,58,.04);margin-bottom:16px;
+  padding:22px;box-shadow:var(--ombre-carte);margin-bottom:16px;
 }
+.kicker{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--vert);font-weight:600;margin-bottom:6px}
 
 /* ----- Accueil ----- */
 .heros{
-  background:linear-gradient(165deg,var(--vert-clair),#F2FAF6 62%,var(--papier));
-  border:1px solid #D5EBE2;border-radius:16px;
-  padding:28px 22px;margin-bottom:24px;
+  position:relative;overflow:hidden;
+  background:var(--vert-panneau);border:1px solid #D5EBE2;border-radius:16px;
+  padding:30px 24px;margin-bottom:24px;
 }
-@media (min-width:720px){.heros{padding:42px 36px}.heros h1{font-size:2.15rem}}
-#vue-accueil h1{margin-bottom:12px}
-.sous-titre{color:var(--secondaire);font-size:1.05rem;margin-bottom:20px}
-.heros .sous-titre,.heros .note-reprise,.heros .btn-lien{color:#51606C}
-.bloc-cta{margin-bottom:0}
-.note-reprise{font-size:.85rem;color:var(--secondaire);margin-top:8px}
-.reassurances{list-style:none;display:flex;flex-direction:column;gap:8px;margin:24px 0;padding:0}
-.reassurances li{display:flex;align-items:center;gap:10px;font-size:.95rem}
-.coche{flex:none;width:22px;height:22px;border-radius:50%;background:var(--vert-clair);color:var(--vert);display:inline-flex;align-items:center;justify-content:center}
-.coche svg{width:12px;height:12px}
-.liste-axes-accueil{list-style:none;padding:0;display:flex;flex-direction:column;gap:10px}
-.liste-axes-accueil li{display:flex;align-items:center;gap:12px;font-weight:600}
-.axe-lettre{flex:none;width:30px;height:30px;border:1.5px solid var(--vert);color:var(--vert);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem}
-.signature{font-size:.9rem;color:var(--secondaire);margin-top:24px}
+@media (min-width:720px){.heros{padding:44px 40px}.heros h1{font-size:2.3rem}}
+.heros .kicker{color:var(--vert)}
+.heros h1{margin-bottom:12px;max-width:18ch}
+.sous-titre{color:#465562;font-size:1.05rem;margin-bottom:22px;max-width:48ch}
+/* sceau filigrane décoratif dans le coin du héros */
+.heros-sceau{position:absolute;right:-46px;top:-46px;width:190px;height:190px;color:#0F6E56;opacity:.06;pointer-events:none}
+.bloc-cta{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.note-reprise{font-size:.9rem;color:#465562;margin:0}
+.confirme{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px 12px;font-size:.9rem;color:#465562}
+.reassurances{list-style:none;display:flex;flex-direction:column;gap:10px;margin:26px 0;padding:0}
+.reassurances li{display:flex;align-items:center;gap:11px;font-size:.97rem}
+.coche{flex:none;width:24px;height:24px;border-radius:50%;background:var(--vert-clair);color:var(--vert);display:inline-flex;align-items:center;justify-content:center}
+.coche svg{width:13px;height:13px}
+.liste-axes-accueil{list-style:none;padding:0;display:flex;flex-direction:column;gap:12px}
+.liste-axes-accueil li{display:flex;align-items:center;gap:13px;font-weight:600}
+.axe-lettre{flex:none;width:34px;height:34px;border:1.5px solid var(--vert);color:var(--vert);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:.9rem;position:relative}
+.axe-lettre::after{content:"";position:absolute;inset:3px;border-radius:50%;border:1px dashed rgba(15,110,86,.4)}
+.signature{font-size:.92rem;color:var(--secondaire);margin-top:24px;line-height:1.5}
 
 /* ----- Diagnostic ----- */
-.diag-tete{margin-bottom:16px}
-.progression-texte{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:.85rem;color:var(--secondaire);margin-bottom:8px}
-.progression-texte strong{color:var(--encre);font-weight:600}
+.diag-tete{margin-bottom:18px}
+.progression-texte{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline;font-size:.85rem;color:var(--secondaire);margin-bottom:10px}
+.progression-texte strong{color:var(--encre);font-weight:800}
 .progression-segments{display:flex;gap:6px}
 .segment{flex:1;display:flex;flex-direction:column;gap:5px}
 .segment-barre{height:6px;background:var(--lignes);border-radius:3px;overflow:hidden}
-.segment-remplissage{height:100%;width:0;background:var(--vert);border-radius:3px;transition:width .35s cubic-bezier(.22,1,.36,1)}
-.segment-lettre{font-size:.7rem;font-weight:600;color:var(--secondaire);text-align:center;letter-spacing:.08em;transition:color .2s ease}
+.segment-remplissage{height:100%;width:0;background:var(--vert);border-radius:3px;transition:width .4s cubic-bezier(.22,1,.36,1)}
+.segment-lettre{font-size:.7rem;font-weight:600;color:var(--secondaire);text-align:center;letter-spacing:.06em;transition:color .2s ease}
 .segment.actif .segment-lettre{color:var(--vert);font-weight:800}
 .segment.fini .segment-lettre{color:var(--vert)}
-.carte-question h2{margin-bottom:18px;font-size:1.15rem}
+.carte-question{position:relative;overflow:hidden}
+.carte-question::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--vert)}
+.carte-question h2{margin-bottom:18px;font-size:1.18rem;line-height:1.35;padding-left:4px}
 .options{display:flex;flex-direction:column;gap:10px}
 .option{
   display:flex;align-items:center;justify-content:space-between;gap:12px;
   width:100%;min-height:56px;padding:14px 16px;text-align:left;
   background:var(--blanc);border:1px solid var(--lignes);border-radius:12px;
-  font-family:inherit;font-size:1rem;color:var(--encre);cursor:pointer;
+  font-family:inherit;font-size:1rem;color:var(--encre);cursor:pointer;line-height:1.4;
   transition:border-color .15s ease,background-color .15s ease,transform .15s ease,box-shadow .2s ease;
 }
-.option:hover{border-color:var(--vert);transform:translateY(-1px);box-shadow:0 4px 12px -4px rgba(28,43,58,.12)}
-.option:active{transform:translateY(0) scale(.99);box-shadow:none}
-.option[aria-pressed="true"]{border-color:var(--vert);background:var(--vert-clair);font-weight:600}
-.option .option-coche{flex:none;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--lignes);display:inline-flex;align-items:center;justify-content:center;color:#fff}
+.option:hover{border-color:var(--vert);transform:translateY(-1px);box-shadow:0 6px 14px -6px rgba(28,43,58,.14)}
+.option:active{transform:translateY(0) scale(.992);box-shadow:none}
+.option[aria-pressed="true"]{border-color:var(--vert);background:var(--vert-clair);font-weight:600;box-shadow:inset 0 0 0 1px var(--vert)}
+.option-texte{display:flex;align-items:center;gap:11px}
+.option-raccourci{flex:none;width:24px;height:24px;border-radius:6px;border:1px solid var(--lignes);display:inline-flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;color:var(--secondaire);background:var(--papier)}
+.option[aria-pressed="true"] .option-raccourci{border-color:var(--vert);color:var(--vert);background:#fff}
+.option-coche{flex:none;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--lignes);display:inline-flex;align-items:center;justify-content:center;color:#fff;transition:background-color .15s ease,border-color .15s ease}
 .option[aria-pressed="true"] .option-coche{background:var(--vert);border-color:var(--vert)}
-.option .option-coche svg{width:11px;height:11px}
-.option[aria-pressed="true"] .option-coche svg path{stroke-dasharray:14;animation:tracerCoche .25s ease-out both}
+.option-coche svg{width:12px;height:12px}
+.option[aria-pressed="true"] .option-coche svg path{stroke-dasharray:16;animation:tracerCoche .28s ease-out both}
 .diag-nav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;margin-top:18px}
+.indice-clavier{font-size:.78rem;color:var(--secondaire);text-align:center;margin-top:14px}
+.indice-clavier kbd{font-family:inherit;font-size:.74rem;background:var(--blanc);border:1px solid var(--lignes);border-bottom-width:2px;border-radius:5px;padding:1px 6px}
 
 /* ----- Résultats ----- */
-.resultat-tete{display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;margin-bottom:20px}
-.sur-titre{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--secondaire);margin-bottom:4px}
+.resultat-tete{display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;margin-bottom:18px}
+.sur-titre{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--secondaire);margin-bottom:4px}
 .tampon{
-  flex:none;width:176px;height:176px;border-radius:50%;
-  border:3px solid currentColor;display:flex;align-items:center;justify-content:center;
+  flex:none;width:184px;height:184px;
   transform:rotate(-3deg);
-  box-shadow:0 14px 30px -18px rgba(28,43,58,.45);
+  filter:drop-shadow(0 12px 20px rgba(28,43,58,.16));
+  color:var(--vert);
 }
 .tampon.tamponne{animation:tamponner .55s cubic-bezier(.2,.85,.35,1) both}
-.tampon-int{
-  width:150px;height:150px;border-radius:50%;border:1.5px dashed currentColor;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-align:center;
-}
-.tampon-marque{font-size:.7rem;letter-spacing:.2em;font-weight:600;color:var(--encre)}
-.tampon-score{font-size:2.5rem;font-weight:800;line-height:1.1}
-.tampon-score .sur-cent{font-size:1rem;font-weight:600}
-.tampon-date{font-size:.75rem;color:var(--encre)}
-.seuil-vert{color:var(--vert);background:var(--vert-clair)}
-.seuil-ambre{color:var(--ambre);background:var(--ambre-clair)}
-.seuil-rouge{color:var(--rouge);background:var(--rouge-clair)}
+.tampon-bord{fill:none;stroke:currentColor;stroke-width:3}
+.tampon-bord-int{fill:none;stroke:currentColor;stroke-width:1.4;stroke-dasharray:2.6 4}
+.tampon-arc{font-size:8.6px;font-weight:700;letter-spacing:1.3px;fill:currentColor}
+.tampon-marque{font-size:11px;font-weight:800;letter-spacing:2.6px;fill:var(--encre)}
+.tampon-score{font-size:44px;font-weight:800;fill:currentColor}
+.tampon-cent{font-size:15px;font-weight:600;fill:var(--secondaire)}
+.tampon-date{font-size:9px;font-weight:600;letter-spacing:.6px;fill:var(--encre)}
+.seuil-vert{color:var(--vert)}
+.seuil-ambre{color:var(--ambre)}
+.seuil-rouge{color:var(--rouge)}
+.libelle-global{font-size:1.5rem;font-weight:800;line-height:1.25}
 .mention-legale{
-  background:var(--blanc);border:1px solid var(--lignes);border-left:4px solid var(--ambre);
-  border-radius:8px;padding:12px 16px;font-size:.9rem;color:var(--encre);margin-bottom:16px;
+  background:var(--ambre-clair);border:1px solid #EAD3A6;border-left:4px solid var(--ambre);
+  border-radius:8px;padding:13px 16px;font-size:.9rem;color:var(--encre);margin-bottom:16px;
 }
-.axe-ligne{padding:12px 0;border-bottom:1px solid var(--lignes)}
+.axe-ligne{padding:14px 0;border-bottom:1px solid var(--lignes)}
+.axe-ligne:first-of-type{padding-top:4px}
 .axe-ligne:last-child{border-bottom:none;padding-bottom:0}
-.axe-ligne-tete{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:6px}
-.axe-nom{font-weight:600;font-size:.95rem}
-.axe-score{font-weight:800;white-space:nowrap}
+.axe-ligne-tete{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:7px}
+.axe-nom{font-weight:600;font-size:.96rem}
+.axe-nom .axe-code{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:5px;background:var(--papier);border:1px solid var(--lignes);font-weight:800;font-size:.74rem;margin-right:7px;vertical-align:-3px}
+.axe-score{font-weight:800;white-space:nowrap;font-variant-numeric:tabular-nums}
 .axe-score .sur-cent{font-weight:400;font-size:.8rem;color:var(--secondaire)}
-.axe-piste{height:10px;background:var(--papier);border:1px solid var(--lignes);border-radius:5px;overflow:hidden;margin-bottom:6px}
-.axe-remplissage{height:100%;width:0;border-radius:5px;transition:width .55s cubic-bezier(.22,1,.36,1)}
+.axe-piste{height:10px;background:var(--papier);border:1px solid var(--lignes);border-radius:5px;overflow:hidden;margin-bottom:8px}
+.axe-remplissage{height:100%;width:0;border-radius:5px;transition:width .6s cubic-bezier(.22,1,.36,1)}
 .axe-remplissage.sans-anim{transition:none}
 .fond-vert{background:var(--vert)}
 .fond-ambre{background:var(--ambre)}
 .fond-rouge{background:var(--rouge)}
-.puce{display:inline-block;font-size:.75rem;font-weight:600;color:var(--encre);border:1px solid;border-radius:99px;padding:2px 10px}
+.puce{display:inline-flex;align-items:center;gap:5px;font-size:.76rem;font-weight:600;color:var(--encre);border:1px solid;border-radius:99px;padding:3px 11px}
+.puce::before{content:"";width:7px;height:7px;border-radius:50%}
 .puce-vert{background:var(--vert-clair);border-color:var(--vert)}
+.puce-vert::before{background:var(--vert)}
 .puce-ambre{background:var(--ambre-clair);border-color:var(--ambre)}
+.puce-ambre::before{background:var(--ambre)}
 .puce-rouge{background:var(--rouge-clair);border-color:var(--rouge)}
+.puce-rouge::before{background:var(--rouge)}
 #liste-priorites{list-style:none;padding:0}
-#liste-priorites li{padding:14px 0;border-bottom:1px solid var(--lignes);display:flex;gap:14px}
+#liste-priorites li{padding:16px 0;border-bottom:1px solid var(--lignes);display:flex;gap:14px}
+#liste-priorites li:first-child{padding-top:4px}
 #liste-priorites li:last-child{border-bottom:none;padding-bottom:0}
-.prio-num{flex:none;width:28px;height:28px;border-radius:50%;background:var(--encre);color:#fff;font-weight:800;font-size:.85rem;display:inline-flex;align-items:center;justify-content:center;margin-top:2px}
+.prio-num{flex:none;width:30px;height:30px;border-radius:50%;background:var(--encre);color:#fff;font-weight:800;font-size:.9rem;display:inline-flex;align-items:center;justify-content:center;margin-top:1px}
 .prio-axe{font-weight:800;margin-bottom:4px}
-.prio-texte{font-size:.95rem}
-.lien-formateur{display:inline-block;margin-top:8px;font-weight:600}
-.actions{display:flex;flex-direction:column;gap:10px;margin:20px 0}
-@media (min-width:480px){.actions{flex-direction:row}}
+.prio-axe .prio-pts{font-weight:600;color:var(--secondaire);font-size:.9rem}
+.prio-texte{font-size:.96rem;color:#33414D}
+.lien-formateur{display:inline-flex;align-items:center;gap:7px;margin-top:10px;font-weight:600;text-decoration:none;border:1px solid var(--vert);border-radius:8px;padding:8px 14px;color:var(--vert);transition:background-color .15s ease,color .15s ease}
+.lien-formateur:hover{background:var(--vert);color:#fff}
+.actions{display:flex;flex-direction:column;gap:10px;margin:20px 0 6px}
+@media (min-width:480px){.actions{flex-direction:row}.actions .btn{flex:1}}
 
 /* Bloc email */
-#bloc-email label{display:block;font-weight:600;font-size:.95rem;margin-bottom:6px}
-#bloc-email .intro-email{color:var(--secondaire);font-size:.95rem;margin:8px 0 16px}
+#bloc-email{border-color:#D5EBE2;background:linear-gradient(0deg,var(--vert-panneau),var(--vert-panneau))}
+#bloc-email .kicker{color:var(--vert)}
+#bloc-email label.champ-label{display:block;font-weight:600;font-size:.95rem;margin-bottom:6px}
+#bloc-email .intro-email{color:#465562;font-size:.95rem;margin:6px 0 16px}
 #champ-email{
-  width:100%;min-height:48px;padding:10px 14px;border:1px solid var(--lignes);
+  width:100%;min-height:50px;padding:12px 14px;border:1px solid var(--lignes);
   border-radius:8px;font-family:inherit;font-size:1rem;color:var(--encre);background:var(--blanc);
   margin-bottom:14px;
 }
-#champ-email:focus-visible{outline:3px solid var(--vert);outline-offset:1px}
-.case{display:flex;gap:10px;align-items:flex-start;font-weight:400 !important;font-size:.9rem !important;margin-bottom:16px;cursor:pointer}
-.case input{flex:none;width:20px;height:20px;margin-top:2px;accent-color:var(--vert);cursor:pointer}
+#champ-email::placeholder{color:#90999F}
+.case{display:flex;gap:11px;align-items:flex-start;font-weight:400;font-size:.9rem;margin-bottom:16px;cursor:pointer;color:#33414D}
+.case input{flex:none;width:21px;height:21px;margin-top:1px;accent-color:var(--vert);cursor:pointer}
 #email-message{font-size:.95rem;margin-top:12px}
 #email-message.succes{color:var(--vert);font-weight:600}
 #email-message.erreur{color:var(--rouge);font-weight:600}
@@ -201,83 +245,95 @@ main{flex:1;padding:28px 0 40px}
 /* ----- Pages simples ----- */
 .page-simple h1{margin-bottom:16px}
 .page-simple h2{font-size:1.05rem;margin:18px 0 6px}
-.page-simple p{margin-bottom:10px}
-.page-simple .retour{display:inline-block;margin-top:20px}
+.page-simple p{margin-bottom:10px;color:#33414D}
+.page-simple .retour{display:inline-flex;align-items:center;gap:7px;margin-top:20px;font-weight:600;text-decoration:none}
+.page-simple .retour:hover{text-decoration:underline}
 
-/* ----- Effets & animations (coupés par prefers-reduced-motion) ----- */
+/* Impression */
+.print-seulement{display:none}
+
+/* ===== Effets & animations (tout est coupé par prefers-reduced-motion) ===== */
 @keyframes apparaitre{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-@keyframes entreeSuivant{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:none}}
-@keyframes entreePrecedent{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:none}}
-@keyframes tracerCoche{from{stroke-dashoffset:14}to{stroke-dashoffset:0}}
+@keyframes entreeSuivant{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
+@keyframes entreePrecedent{from{opacity:0;transform:translateX(-26px)}to{opacity:1;transform:none}}
+@keyframes tracerCoche{from{stroke-dashoffset:16}to{stroke-dashoffset:0}}
 @keyframes tamponner{
-  0%{opacity:0;transform:rotate(-14deg) scale(1.45)}
-  55%{opacity:1;transform:rotate(-3deg) scale(.96)}
-  78%{transform:rotate(-3deg) scale(1.02)}
+  0%{opacity:0;transform:rotate(-13deg) scale(1.5)}
+  55%{opacity:1;transform:rotate(-3deg) scale(.95)}
+  78%{transform:rotate(-3deg) scale(1.03)}
   100%{opacity:1;transform:rotate(-3deg) scale(1)}
 }
 .vue:not([hidden]){animation:apparaitre .3s ease-out both}
 #vue-accueil .reassurances li{animation:apparaitre .4s ease-out both}
-#vue-accueil .reassurances li:nth-child(1){animation-delay:.08s}
-#vue-accueil .reassurances li:nth-child(2){animation-delay:.15s}
-#vue-accueil .reassurances li:nth-child(3){animation-delay:.22s}
-#vue-accueil .carte{animation:apparaitre .45s ease-out both;animation-delay:.28s}
-#vue-accueil .signature{animation:apparaitre .45s ease-out both;animation-delay:.36s}
+#vue-accueil .reassurances li:nth-child(1){animation-delay:.06s}
+#vue-accueil .reassurances li:nth-child(2){animation-delay:.13s}
+#vue-accueil .reassurances li:nth-child(3){animation-delay:.2s}
+#vue-accueil .carte{animation:apparaitre .45s ease-out both;animation-delay:.26s}
+#vue-accueil .signature{animation:apparaitre .45s ease-out both;animation-delay:.34s}
 .carte-question.entree-suivant{animation:entreeSuivant .22s ease-out both}
 .carte-question.entree-precedent{animation:entreePrecedent .22s ease-out both}
 #liste-priorites li{animation:apparaitre .45s ease-out both}
 #liste-priorites.sans-entree li{animation:none}
 #email-message.succes{animation:apparaitre .3s ease-out both}
 
-/* Impression */
-.print-seulement{display:none}
-
 @media print{
   @page{size:A4;margin:14mm}
-  *,*::before,*::after{animation:none !important;transition:none !important}
-  body{background:#fff;display:block}
+  *,*::before,*::after{animation:none !important;transition:none !important;filter:none !important}
+  body{background:#fff !important;display:block}
   .entete-site,.pied-site,.pas-impression{display:none !important}
   main{padding:0}
   .conteneur{max-width:none;padding:0}
-  .print-seulement{display:block}
-  .carte{box-shadow:none;break-inside:avoid}
-  .resultat-tete{flex-direction:row;text-align:left;justify-content:flex-start}
-  .tampon,.axe-remplissage,.puce,.seuil-vert,.seuil-ambre,.seuil-rouge,.prio-num{
+  .carte{box-shadow:none;break-inside:avoid;border-color:#ccc}
+  .heros-sceau{display:none}
+  .resultat-tete{flex-direction:row;text-align:left;justify-content:flex-start;gap:22px}
+  .tampon{transform:rotate(-3deg)}
+  .tampon,.axe-remplissage,.puce,.mention-legale,.prio-num,.axe-nom .axe-code{
     -webkit-print-color-adjust:exact;print-color-adjust:exact;
   }
-  .axe-remplissage{transition:none}
-  .entete-impression{margin-bottom:18px;border-bottom:1px solid var(--lignes);padding-bottom:10px}
+  .carte-question::before{display:none}
+  .entete-impression{margin-bottom:18px;border-bottom:1px solid #ccc;padding-bottom:10px}
   .entete-impression .marque{font-size:1.2rem}
-  .pied-impression{margin-top:18px;border-top:1px solid var(--lignes);padding-top:10px;font-size:.8rem;color:var(--secondaire)}
+  .pied-impression{margin-top:18px;border-top:1px solid #ccc;padding-top:10px;font-size:.8rem;color:var(--secondaire)}
 }
 
-/* Mouvement réduit */
+/* Mouvement réduit : on neutralise toute animation/transition */
 @media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{transition:none !important;animation:none !important}
+  *,*::before,*::after{transition:none !important;animation:none !important;scroll-behavior:auto !important}
 }
 </style>
 </head>
 <body>
 
+<a class="evitement" href="#contenu">Aller au contenu</a>
+
 <header class="entete-site pas-impression">
   <div class="conteneur">
+    <span class="sceau-mini" aria-hidden="true"></span>
     <a class="marque" href="#">CADRE</a>
     <span class="marque-sous">Autodiagnostic de gouvernance IA</span>
   </div>
 </header>
 
-<main>
+<main id="contenu">
   <div class="conteneur">
     <noscript><p class="carte">Ce diagnostic a besoin de JavaScript pour fonctionner. Merci de l'activer dans votre navigateur.</p></noscript>
 
     <!-- ===== Accueil ===== -->
-    <section id="vue-accueil" class="vue">
+    <section id="vue-accueil" class="vue" aria-labelledby="titre-accueil">
       <div class="heros">
+        <svg class="heros-sceau" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="50" cy="50" r="36" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 3"/><text x="50" y="58" text-anchor="middle" font-size="26" font-weight="800" letter-spacing="2" fill="currentColor">C</text></svg>
+        <span class="kicker">Autodiagnostic de gouvernance IA · 5 axes</span>
         <h1 id="titre-accueil" tabindex="-1">Où en est votre entreprise avec l'IA ?</h1>
         <p class="sous-titre">15 questions, 10 minutes, sans création de compte. Un score, un plan d'action, et une vision claire de ce qui vous reste à cadrer.</p>
         <div class="bloc-cta">
           <button id="btn-commencer" class="btn"><span id="btn-commencer-texte">Faire le diagnostic</span><span class="fleche" aria-hidden="true">→</span></button>
           <p id="note-reprise" class="note-reprise" hidden></p>
           <button id="btn-recommencer" class="btn-lien" hidden>Recommencer à zéro</button>
+          <span id="confirme-recommencer" class="confirme" hidden>
+            <span>Effacer vos réponses et recommencer ?</span>
+            <button id="btn-recommencer-oui" class="btn-lien btn-lien-fort">Oui, recommencer</button>
+            <button id="btn-recommencer-non" class="btn-lien">Annuler</button>
+          </span>
         </div>
       </div>
       <ul class="reassurances">
@@ -286,8 +342,9 @@ main{flex:1;padding:28px 0 40px}
         <li><span class="coche" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5 4.7 9 10 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Conçu pour les PME, sans jargon</li>
       </ul>
       <div class="carte">
+        <span class="kicker">Ce que vous allez passer en revue</span>
         <h2>Les 5 axes du diagnostic</h2>
-        <ul class="liste-axes-accueil" style="margin-top:14px">
+        <ul class="liste-axes-accueil" style="margin-top:16px">
           <li><span class="axe-lettre" aria-hidden="true">C</span>Cartographie des usages IA</li>
           <li><span class="axe-lettre" aria-hidden="true">A</span>Acculturation des équipes</li>
           <li><span class="axe-lettre" aria-hidden="true">D</span>Données &amp; confidentialité</li>
@@ -299,7 +356,7 @@ main{flex:1;padding:28px 0 40px}
     </section>
 
     <!-- ===== Diagnostic ===== -->
-    <section id="vue-diagnostic" class="vue" hidden>
+    <section id="vue-diagnostic" class="vue" hidden aria-labelledby="diag-question">
       <div class="diag-tete">
         <p class="progression-texte"><strong id="diag-compteur">Question 1 / 15</strong><span id="diag-axe"></span></p>
         <div id="progression-segments" class="progression-segments" aria-hidden="true"></div>
@@ -312,47 +369,57 @@ main{flex:1;padding:28px 0 40px}
         <button id="btn-precedent" class="btn btn-secondaire">Précédent</button>
         <button id="btn-suivant" class="btn btn-secondaire" hidden>Suivant</button>
       </div>
+      <p class="indice-clavier pas-impression">Astuce : utilisez les touches <kbd>1</kbd> à <kbd>4</kbd> pour répondre plus vite.</p>
     </section>
 
     <!-- ===== Résultats ===== -->
-    <section id="vue-resultats" class="vue" hidden>
+    <section id="vue-resultats" class="vue" hidden aria-labelledby="resultat-libelle">
       <div class="print-seulement entete-impression">
         <span class="marque">CADRE</span> — Rapport d'autodiagnostic de gouvernance IA<br>
-        <span style="font-size:.85rem;color:var(--secondaire)">Un outil d'Escale Digitale Solutions — formation et accompagnement IA des PME</span>
+        <span style="font-size:.85rem;color:#5F6B76">Un outil d'Escale Digitale Solutions — formation et accompagnement IA des PME</span>
       </div>
       <div class="resultat-tete">
-        <div id="tampon" class="tampon">
-          <div class="tampon-int">
-            <span class="tampon-marque">CADRE</span>
-            <span class="tampon-score" id="tampon-score"></span>
-            <span class="tampon-date" id="tampon-date"></span>
-          </div>
-        </div>
+        <svg id="tampon" class="tampon" viewBox="0 0 200 200" role="img" aria-label="Score global">
+          <defs>
+            <path id="arc-haut" d="M 24 100 A 76 76 0 0 1 176 100"/>
+            <path id="arc-bas" d="M 26 100 A 74 74 0 0 0 174 100"/>
+          </defs>
+          <circle class="tampon-bord" cx="100" cy="100" r="93"/>
+          <circle class="tampon-bord-int" cx="100" cy="100" r="66"/>
+          <text class="tampon-arc" text-anchor="middle"><textPath href="#arc-haut" startOffset="50%">ESCALE DIGITALE SOLUTIONS</textPath></text>
+          <text class="tampon-arc" text-anchor="middle"><textPath href="#arc-bas" startOffset="50%">AUTODIAGNOSTIC IA</textPath></text>
+          <text class="tampon-marque" x="100" y="78" text-anchor="middle">CADRE</text>
+          <text id="tampon-score" class="tampon-score" x="100" y="120" text-anchor="middle"><tspan id="tampon-chiffre">0</tspan><tspan class="tampon-cent">/100</tspan></text>
+          <text id="tampon-date" class="tampon-date" x="100" y="146" text-anchor="middle"></text>
+        </svg>
         <div>
           <p class="sur-titre">Votre score global</p>
-          <h1 id="resultat-libelle" tabindex="-1"></h1>
+          <h1 id="resultat-libelle" class="libelle-global" tabindex="-1"></h1>
         </div>
       </div>
       <p class="mention-legale">Cet autodiagnostic est un outil de sensibilisation. Il ne constitue ni un conseil juridique ni un audit de conformité.</p>
       <div class="carte">
+        <span class="kicker">Détail par axe</span>
         <h2>Vos 5 axes</h2>
-        <div id="liste-axes"></div>
+        <div id="liste-axes" style="margin-top:14px"></div>
       </div>
       <div class="carte">
+        <span class="kicker">Plan d'action</span>
         <h2>Vos 3 priorités</h2>
-        <ol id="liste-priorites"></ol>
+        <ol id="liste-priorites" style="margin-top:14px"></ol>
       </div>
       <div class="carte pas-impression" id="bloc-email" hidden>
+        <span class="kicker">Pour aller plus loin</span>
         <h2>Recevez votre rapport complet par email</h2>
         <p class="intro-email">Le détail de vos 5 axes, vos 3 priorités et les premières actions concrètes, dans un document que vous pouvez partager en interne.</p>
         <form id="form-email" novalidate>
-          <label for="champ-email">Votre adresse email</label>
-          <input id="champ-email" name="email" type="email" autocomplete="email" required>
+          <label class="champ-label" for="champ-email">Votre adresse email</label>
+          <input id="champ-email" name="email" type="email" autocomplete="email" placeholder="prenom@votre-entreprise.fr" required>
           <label class="case" for="case-consentement">
             <input type="checkbox" id="case-consentement">
             <span>J'accepte de recevoir mon rapport et des conseils occasionnels d'Escale Digitale Solutions sur la gouvernance IA. Désinscription en un clic.</span>
           </label>
-          <button type="submit" id="btn-envoyer" class="btn" disabled>Recevoir mon rapport</button>
+          <button type="submit" id="btn-envoyer" class="btn btn-bloc" disabled>Recevoir mon rapport</button>
         </form>
         <p id="email-message" role="status" aria-live="polite"></p>
       </div>
@@ -364,8 +431,8 @@ main{flex:1;padding:28px 0 40px}
     </section>
 
     <!-- ===== Mentions légales ===== -->
-    <section id="vue-mentions" class="vue page-simple" hidden>
-      <h1 tabindex="-1">Mentions légales</h1>
+    <section id="vue-mentions" class="vue page-simple" hidden aria-labelledby="titre-mentions">
+      <h1 id="titre-mentions" tabindex="-1">Mentions légales</h1>
       <div class="carte">
         <h2>Éditeur</h2>
         <p>Escale Digitale Solutions, Issoudun<br>SIRET : 949 409 015 00011</p>
@@ -374,12 +441,12 @@ main{flex:1;padding:28px 0 40px}
         <h2>Hébergeur</h2>
         <p>Cloudflare</p>
       </div>
-      <a class="retour" href="#">Retour à l'accueil</a>
+      <a class="retour" href="#"><span aria-hidden="true">←</span> Retour à l'accueil</a>
     </section>
 
     <!-- ===== Confidentialité ===== -->
-    <section id="vue-confidentialite" class="vue page-simple" hidden>
-      <h1 tabindex="-1">Confidentialité</h1>
+    <section id="vue-confidentialite" class="vue page-simple" hidden aria-labelledby="titre-confidentialite">
+      <h1 id="titre-confidentialite" tabindex="-1">Confidentialité</h1>
       <div class="carte">
         <h2>Vos réponses</h2>
         <p>Vos réponses au diagnostic restent dans votre navigateur. Elles ne sont envoyées à aucun serveur.</p>
@@ -392,7 +459,7 @@ main{flex:1;padding:28px 0 40px}
         <h2>Cookies</h2>
         <p>Ce site n'utilise aucun cookie.</p>
       </div>
-      <a class="retour" href="#">Retour à l'accueil</a>
+      <a class="retour" href="#"><span aria-hidden="true">←</span> Retour à l'accueil</a>
     </section>
 
   </div>
@@ -400,6 +467,7 @@ main{flex:1;padding:28px 0 40px}
 
 <footer class="pied-site pas-impression">
   <div class="conteneur">
+    <span class="pied-marque">CADRE</span>
     <a href="#mentions">Mentions légales</a>
     <a href="#confidentialite">Confidentialité</a>
   </div>
@@ -409,10 +477,10 @@ main{flex:1;padding:28px 0 40px}
 "use strict";
 
 /* À REMPLACER AU DÉPLOIEMENT : URL du Google Apps Script qui reçoit l'email.
-   Tant que cette constante est vide, le bloc email est masqué. */
+   Tant que cette constante est vide, le bloc email est entièrement masqué. */
 const URL_APPS_SCRIPT = "";
 
-/* ===== Données du diagnostic (textes exacts, ne pas reformuler) ===== */
+/* ===== Données du diagnostic (textes exacts, ne jamais reformuler) ===== */
 const AXES = {
   C: "Cartographie des usages IA",
   A: "Acculturation des équipes",
@@ -421,7 +489,7 @@ const AXES = {
   E: "Évaluation continue"
 };
 const ORDRE_AXES = ["C", "A", "D", "R", "E"];
-/* Ordre de départage des priorités en cas d'égalité : D > R > A > C > E */
+/* Départage des priorités en cas d'égalité : D > R > A > C > E */
 const RANG_PRIORITE = { D: 0, R: 1, A: 2, C: 3, E: 4 };
 
 const QUESTIONS = [
@@ -542,7 +610,14 @@ function chargerEtat() {
     if (!brut) return null;
     const e = JSON.parse(brut);
     if (!e || typeof e !== "object" || typeof e.reponses !== "object" || e.reponses === null) return null;
-    if (typeof e.courante !== "number" || e.courante < 0 || e.courante > 14) e.courante = 0;
+    /* on ne garde que des réponses valides (id connu + index d'option existant) */
+    const propres = {};
+    QUESTIONS.forEach(function (q) {
+      const idx = e.reponses[q.id];
+      if (typeof idx === "number" && q.options[idx]) propres[q.id] = idx;
+    });
+    e.reponses = propres;
+    if (typeof e.courante !== "number" || e.courante < 0 || e.courante > QUESTIONS.length - 1) e.courante = 0;
     return e;
   } catch (err) { return null; }
 }
@@ -595,6 +670,9 @@ function formaterDate(iso) {
   const d = iso ? new Date(iso) : new Date();
   return d.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
 }
+function mouvementReduit() {
+  return !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+}
 function svgCoche() {
   const ns = "http://www.w3.org/2000/svg";
   const svg = document.createElementNS(ns, "svg");
@@ -615,19 +693,17 @@ function svgCoche() {
 let minuteurAvance = null;
 let barresDejaAnimees = false;
 let directionNav = 0; /* +1 question suivante, -1 précédente, 0 arrivée directe */
-
-function mouvementReduit() {
-  return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
+let dernierResultat = null;
 
 function afficherVue(nom) {
   document.querySelectorAll(".vue").forEach(function (v) { v.hidden = (v.id !== "vue-" + nom); });
   window.scrollTo(0, 0);
 }
-function focaliser(el) { if (el) el.focus({ preventScroll: true }); }
+function focaliser(el) { if (el) try { el.focus({ preventScroll: true }); } catch (e) { el.focus(); } }
 
 function router() {
   if (minuteurAvance) { clearTimeout(minuteurAvance); minuteurAvance = null; }
+  fermerConfirmation();
   const h = location.hash.replace(/^#\/?/, "");
   if (h === "diagnostic") {
     afficherVue("diagnostic");
@@ -637,15 +713,16 @@ function router() {
       afficherVue("resultats");
       rendreResultats();
     } else {
-      location.hash = nbReponses() > 0 ? "#diagnostic" : "";
-      if (nbReponses() === 0) rendreAccueil();
+      /* on ne peut pas voir les résultats d'un parcours inachevé */
+      if (nbReponses() > 0) { location.hash = "#diagnostic"; }
+      else { rendreAccueil(); afficherVue("accueil"); }
     }
   } else if (h === "mentions") {
     afficherVue("mentions");
-    focaliser(document.querySelector("#vue-mentions h1"));
+    focaliser($("titre-mentions"));
   } else if (h === "confidentialite") {
     afficherVue("confidentialite");
-    focaliser(document.querySelector("#vue-confidentialite h1"));
+    focaliser($("titre-confidentialite"));
   } else {
     rendreAccueil();
     afficherVue("accueil");
@@ -653,10 +730,18 @@ function router() {
 }
 
 /* ===== Accueil ===== */
+function fermerConfirmation() {
+  if ($("confirme-recommencer")) $("confirme-recommencer").hidden = true;
+  if ($("btn-recommencer")) {
+    const n = nbReponses();
+    $("btn-recommencer").hidden = (n === 0);
+  }
+}
 function rendreAccueil() {
   const libelle = $("btn-commencer-texte");
   const note = $("note-reprise");
   const recommencer = $("btn-recommencer");
+  $("confirme-recommencer").hidden = true;
   const n = nbReponses();
   if (n > 0 && !diagnosticComplet()) {
     libelle.textContent = "Reprendre mon diagnostic";
@@ -709,10 +794,12 @@ function rendreQuestion(avecFocus) {
     segments[k].classList.toggle("fini", part === 1 && q.axe !== axe);
   });
   $("diag-question").textContent = q.texte;
+
+  /* transition d'entrée directionnelle */
   const carteQuestion = document.querySelector(".carte-question");
   carteQuestion.classList.remove("entree-suivant", "entree-precedent");
   if (directionNav !== 0 && !mouvementReduit()) {
-    void carteQuestion.offsetWidth; /* relance l'animation d'entrée */
+    void carteQuestion.offsetWidth;
     carteQuestion.classList.add(directionNav > 0 ? "entree-suivant" : "entree-precedent");
   }
   directionNav = 0;
@@ -725,44 +812,56 @@ function rendreQuestion(avecFocus) {
     b.type = "button";
     b.className = "option";
     b.setAttribute("aria-pressed", String(choisi === idx));
+    const gauche = document.createElement("span");
+    gauche.className = "option-texte";
+    const raccourci = document.createElement("span");
+    raccourci.className = "option-raccourci";
+    raccourci.setAttribute("aria-hidden", "true");
+    raccourci.textContent = String(idx + 1);
     const texte = document.createElement("span");
     texte.textContent = opt.texte;
+    gauche.appendChild(raccourci);
+    gauche.appendChild(texte);
     const coche = document.createElement("span");
     coche.className = "option-coche";
     coche.setAttribute("aria-hidden", "true");
     coche.appendChild(svgCoche());
-    b.appendChild(texte);
+    b.appendChild(gauche);
     b.appendChild(coche);
     b.addEventListener("click", function () { choisirOption(q, idx); });
     conteneur.appendChild(b);
   });
 
   $("btn-precedent").disabled = (i === 0);
+  majBoutonSuivant();
+  if (avecFocus !== false) focaliser($("diag-question"));
+}
+
+function majBoutonSuivant() {
+  const q = QUESTIONS[etat.courante];
   const suivant = $("btn-suivant");
   if (etat.reponses[q.id] !== undefined) {
     suivant.hidden = false;
-    suivant.textContent = (i === QUESTIONS.length - 1) ? "Voir mes résultats" : "Suivant";
+    suivant.textContent = (etat.courante === QUESTIONS.length - 1) ? "Voir mes résultats" : "Suivant";
   } else {
     suivant.hidden = true;
   }
-  if (avecFocus !== false) focaliser($("diag-question"));
 }
 
 function choisirOption(q, idx) {
   if (minuteurAvance) clearTimeout(minuteurAvance);
   etat.reponses[q.id] = idx;
   sauverEtat();
-  /* met à jour la sélection sans re-rendre, pour laisser voir le choix */
+  /* mise à jour de la sélection sans re-rendre, pour laisser voir le choix */
   const boutons = $("diag-options").querySelectorAll(".option");
   boutons.forEach(function (b, bIdx) { b.setAttribute("aria-pressed", String(bIdx === idx)); });
-  const suivant = $("btn-suivant");
-  suivant.hidden = false;
-  suivant.textContent = (etat.courante === QUESTIONS.length - 1) ? "Voir mes résultats" : "Suivant";
+  majBoutonSuivant();
   /* passage automatique après 300 ms */
   minuteurAvance = setTimeout(function () { minuteurAvance = null; avancer(); }, 300);
 }
 
 function avancer() {
+  if (minuteurAvance) { clearTimeout(minuteurAvance); minuteurAvance = null; }
   if (etat.courante < QUESTIONS.length - 1) {
     etat.courante += 1;
     sauverEtat();
@@ -792,14 +891,34 @@ function reculer() {
   }
 }
 
+/* raccourcis clavier dans le diagnostic : 1..4 = réponse */
+function clavierDiagnostic(evt) {
+  if ($("vue-diagnostic").hidden) return;
+  if (evt.altKey || evt.ctrlKey || evt.metaKey) return;
+  const cible = evt.target;
+  if (cible && (cible.tagName === "INPUT" || cible.tagName === "TEXTAREA")) return;
+  const q = QUESTIONS[etat.courante];
+  const n = parseInt(evt.key, 10);
+  if (n >= 1 && n <= q.options.length) {
+    evt.preventDefault();
+    const boutons = $("diag-options").querySelectorAll(".option");
+    if (boutons[n - 1]) boutons[n - 1].focus();
+    choisirOption(q, n - 1);
+  }
+}
+
 /* ===== Résultats ===== */
 function compterJusqua(noeud, cible) {
-  if (mouvementReduit()) { noeud.nodeValue = String(cible); return; }
-  const duree = 700;
-  const debut = performance.now();
-  function pas(t) {
-    const p = Math.min((t - debut) / duree, 1);
-    noeud.nodeValue = String(Math.round(cible * (1 - Math.pow(1 - p, 3))));
+  if (mouvementReduit() || typeof requestAnimationFrame !== "function") {
+    noeud.textContent = String(cible);
+    return;
+  }
+  const duree = 750;
+  const debut = (window.performance && performance.now) ? performance.now() : Date.now();
+  function maintenant() { return (window.performance && performance.now) ? performance.now() : Date.now(); }
+  function pas() {
+    const p = Math.min((maintenant() - debut) / duree, 1);
+    noeud.textContent = String(Math.round(cible * (1 - Math.pow(1 - p, 3))));
     if (p < 1) requestAnimationFrame(pas);
   }
   requestAnimationFrame(pas);
@@ -807,24 +926,20 @@ function compterJusqua(noeud, cible) {
 
 function rendreResultats() {
   const resultat = calculerScores(etat.reponses);
+  dernierResultat = resultat;
   const premierAffichage = !barresDejaAnimees;
+  const anime = premierAffichage && !mouvementReduit();
 
-  /* Tampon : animation d'impact et compteur de score, une seule fois */
+  /* Tampon : couleur de seuil, animation d'impact et compteur, une seule fois */
   const tampon = $("tampon");
   const seuilGlobal = seuilAxe(resultat.global);
-  tampon.className = "tampon seuil-" + seuilGlobal.classe + (premierAffichage && !mouvementReduit() ? " tamponne" : "");
-  const score = $("tampon-score");
-  score.innerHTML = "";
-  const noeudScore = document.createTextNode(premierAffichage ? "0" : String(resultat.global));
-  score.appendChild(noeudScore);
-  const surCent = document.createElement("span");
-  surCent.className = "sur-cent";
-  surCent.textContent = "/100";
-  score.appendChild(surCent);
-  if (premierAffichage) compterJusqua(noeudScore, resultat.global);
-  tampon.setAttribute("role", "img");
-  tampon.setAttribute("aria-label", "Score global : " + resultat.global + " sur 100, le " + formaterDate(etat.modifieLe));
+  tampon.setAttribute("class", "tampon seuil-" + seuilGlobal.classe + (anime ? " tamponne" : ""));
+  tampon.setAttribute("aria-label", "Score global : " + resultat.global + " sur 100 — " +
+    libelleGlobal(resultat.global) + ", le " + formaterDate(etat.modifieLe));
   $("tampon-date").textContent = formaterDate(etat.modifieLe);
+  const chiffre = $("tampon-chiffre");
+  if (anime) { chiffre.textContent = "0"; compterJusqua(chiffre, resultat.global); }
+  else { chiffre.textContent = String(resultat.global); }
   $("resultat-libelle").textContent = libelleGlobal(resultat.global);
 
   /* Barres d'axe */
@@ -839,7 +954,12 @@ function rendreResultats() {
     tete.className = "axe-ligne-tete";
     const nom = document.createElement("span");
     nom.className = "axe-nom";
-    nom.textContent = axe + " — " + AXES[axe];
+    const code = document.createElement("span");
+    code.className = "axe-code";
+    code.setAttribute("aria-hidden", "true");
+    code.textContent = axe;
+    nom.appendChild(code);
+    nom.appendChild(document.createTextNode(AXES[axe]));
     const scoreAxe = document.createElement("span");
     scoreAxe.className = "axe-score";
     scoreAxe.textContent = valeur;
@@ -851,10 +971,10 @@ function rendreResultats() {
     tete.appendChild(scoreAxe);
     const piste = document.createElement("div");
     piste.className = "axe-piste";
-    /* décorative : le nom, le score et la puce de seuil donnent déjà l'information */
+    /* décorative : le nom, le score et la puce de seuil portent déjà l'information */
     piste.setAttribute("aria-hidden", "true");
     const remplissage = document.createElement("div");
-    remplissage.className = "axe-remplissage fond-" + seuil.classe + (barresDejaAnimees ? " sans-anim" : "");
+    remplissage.className = "axe-remplissage fond-" + seuil.classe + (anime ? "" : " sans-anim");
     piste.appendChild(remplissage);
     const puce = document.createElement("span");
     puce.className = "puce puce-" + seuil.classe;
@@ -863,25 +983,24 @@ function rendreResultats() {
     ligne.appendChild(piste);
     ligne.appendChild(puce);
     liste.appendChild(ligne);
-    if (barresDejaAnimees) {
-      remplissage.style.width = valeur + "%";
-    } else {
-      /* animation une seule fois : départ à 0, puis largeur cible, en cascade */
+    if (anime) {
       remplissage.style.transitionDelay = (idx * 90) + "ms";
       requestAnimationFrame(function () {
         requestAnimationFrame(function () { remplissage.style.width = valeur + "%"; });
       });
+    } else {
+      remplissage.style.width = valeur + "%";
     }
   });
 
   /* Priorités */
   const prios = axesPrioritaires(resultat.axes);
   const ol = $("liste-priorites");
-  ol.className = premierAffichage ? "" : "sans-entree";
+  ol.className = anime ? "" : "sans-entree";
   ol.innerHTML = "";
   prios.forEach(function (axe, i) {
     const li = document.createElement("li");
-    if (premierAffichage) li.style.animationDelay = (0.25 + i * 0.12) + "s";
+    if (anime) li.style.animationDelay = (0.25 + i * 0.12) + "s";
     const num = document.createElement("span");
     num.className = "prio-num";
     num.setAttribute("aria-hidden", "true");
@@ -889,7 +1008,11 @@ function rendreResultats() {
     const bloc = document.createElement("div");
     const titre = document.createElement("p");
     titre.className = "prio-axe";
-    titre.textContent = axe + " — " + AXES[axe] + " (" + resultat.axes[axe] + "/100)";
+    titre.appendChild(document.createTextNode(axe + " — " + AXES[axe] + " "));
+    const pts = document.createElement("span");
+    pts.className = "prio-pts";
+    pts.textContent = "(" + resultat.axes[axe] + "/100)";
+    titre.appendChild(pts);
     const texte = document.createElement("p");
     texte.className = "prio-texte";
     texte.textContent = RECOMMANDATIONS[axe];
@@ -959,23 +1082,31 @@ function envoyerEmail(evt) {
 
 /* ===== Initialisation ===== */
 construireSegments();
+
 $("btn-commencer").addEventListener("click", function () {
   if (diagnosticComplet()) { location.hash = "#resultats"; return; }
   if (location.hash === "#diagnostic") { rendreQuestion(true); } else { location.hash = "#diagnostic"; }
 });
 $("btn-recommencer").addEventListener("click", function () {
-  if (!window.confirm("Effacer vos réponses et recommencer le diagnostic ?")) return;
+  $("btn-recommencer").hidden = true;
+  $("confirme-recommencer").hidden = false;
+  $("btn-recommencer-oui").focus();
+});
+$("btn-recommencer-non").addEventListener("click", function () {
+  $("confirme-recommencer").hidden = true;
+  $("btn-recommencer").hidden = false;
+  $("btn-recommencer").focus();
+});
+$("btn-recommencer-oui").addEventListener("click", function () {
   try { localStorage.removeItem(CLE_STOCKAGE); } catch (err) { /* rien à faire */ }
   etat = etatNeuf();
+  barresDejaAnimees = false;
   sauverEtat();
-  location.hash = "#diagnostic";
-  if (location.hash === "#diagnostic") rendreQuestion(true);
+  $("confirme-recommencer").hidden = true;
+  if (location.hash === "#diagnostic") { rendreQuestion(true); } else { location.hash = "#diagnostic"; }
 });
 $("btn-precedent").addEventListener("click", reculer);
-$("btn-suivant").addEventListener("click", function () {
-  if (minuteurAvance) { clearTimeout(minuteurAvance); minuteurAvance = null; }
-  avancer();
-});
+$("btn-suivant").addEventListener("click", function () { avancer(); });
 $("btn-imprimer").addEventListener("click", function () { window.print(); });
 $("btn-revoir").addEventListener("click", function () {
   etat.courante = 0;
@@ -985,6 +1116,12 @@ $("btn-revoir").addEventListener("click", function () {
 $("champ-email").addEventListener("input", majBoutonEnvoyer);
 $("case-consentement").addEventListener("change", majBoutonEnvoyer);
 $("form-email").addEventListener("submit", envoyerEmail);
+document.addEventListener("keydown", clavierDiagnostic);
+
+/* avant impression : on fige le score final (au cas où le compteur tourne encore) */
+window.addEventListener("beforeprint", function () {
+  if (dernierResultat) $("tampon-chiffre").textContent = String(dernierResultat.global);
+});
 
 window.addEventListener("hashchange", router);
 router();
